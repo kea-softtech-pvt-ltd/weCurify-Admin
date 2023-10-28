@@ -1,0 +1,23 @@
+[
+    {
+        "allergy":"grass and tree pollen"
+    },
+    {
+        "allergy":"dust mites"
+    },
+    {
+        "allergy":"animal dander"
+    },
+    {
+        "allergy":"tiny flakes of skin or hair"
+    },
+    {
+        "allergy":"food"
+    } ,
+    {
+        "allergy":"insect bites and stings"
+    },
+    {
+        "allergy":"medicines"
+    } 
+]

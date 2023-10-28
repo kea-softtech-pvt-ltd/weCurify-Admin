@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976025917950",
+    "project_id": "keacure-316111",
+    "storage_bucket": "keacure-316111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976025917950:android:43fdc680371722502f48af",
+        "android_client_info": {
+          "package_name": "admin-app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXT6l7EVgGg7hp6mpV-8VWcHR6UXJuBBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

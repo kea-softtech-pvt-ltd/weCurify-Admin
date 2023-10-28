@@ -1,0 +1,146 @@
+# Query: loginId
+
+115 results - 24 files
+
+src\addclinic.js:
+  10:     const { doctorId} = useParams();
+  37:             doctorId:doctorId,
+
+src\AddDoctorClinicInfo.js:
+  12:     const { doctorId } = useParams();
+  24:         fetch(`http://localhost:9000/api/fetchclinic/${doctorId}`).then(res =>{
+
+src\addDoctorEducation.js:
+  10:     const { doctorId } = useParams();
+  52:         formData.append('doctorId', doctorId);
+
+src\addDoctorOwnClinicInfo.js:
+  12:     const { doctorId } = useParams();
+  46:         fetch(`http://localhost:9000/api/fetchownclinic/${doctorId}`).then(res =>{
+
+src\addDoctorProfessionalExperience.js:
+  13:     const { doctorId } = useParams();
+  42:             doctorId     :   doctorId,
+
+src\addOwnClinic.js:
+  10:     const { doctorId } = useParams();
+  26:             doctorId:doctorId,
+
+src\createPatientProfile.js:
+    8:     const { doctorId } = useParams();
+  107:                         <DoctorBookingConfirmPayment doctorId={doctorId}/>
+
+src\Dashboard.js:
+  11:     const { doctorId } = useParams();
+  19:         history.push(`/doctorProfile/${doctorId}`);
+
+src\doctorClinic.js:
+   7:     const {doctorId} = useParams()
+  10:         history.push(`/dashboard/${doctorId}`,{ doctorId: 'doctorId' });
+
+src\doctorPersonalExperience.js:
+  15:     const { doctorId } = useParams();
+  57:         fetch(`http://localhost:9000/api/fetchData/${doctorId}`).then(res =>{
+  97:         axios.post(`http://localhost:9000/api/insertPersonalInfo/${doctorId}`, formData)
+
+src\DoctorProfile.js:
+   5:     const {doctorId} = useParams()
+  27:                                         <li><Link to={`/editdoctorprofile/${doctorId}`}><i className="icon_pencil-edit" title="Edit profile"></i></Link></li>
+  33:                                     <FetchDoctorPersonalDetails doctorId={doctorId}/> 
+
+src\EditDoctorProfile.js:
+  15:     const doctorId =  useRecoilValue(doctorIdState);
+  55:                                 <DoctorPersonalExperience data={goToEducation} doctorId={doctorId}/>
+  59:                                 <DoctorEducation data={goToExperience} doctorId={doctorId}/>
+  63:                                 <DoctorProfessionalExperience data={goToClinic} doctorId={doctorId}/>
+
+src\EditEducation.js:
+  11:     const { doctorId } = useParams();
+  74:         formData.append('doctorId', doctorId);
+
+src\fetchDoctorPersonalDetails.js:
+   5:     const doctorId = props.doctorId;
+  16:         const result = await axios.get(`http://localhost:9000/api/doctor/${doctorId}`); 
+
+src\fetchEducation.js:
+  13:     const { doctorId } = useParams();
+  33:         const result = await axios.get(`http://localhost:9000/api/fetchEduData/${doctorId}`); 
+  49:                                     <EditEducation imageData={education.document} doctorId={doctorId} EduId={education._id} onClick={handleClose} onSubmit={EditData} />
+
+src\fetchExperience.js:
+  11:     const { doctorId } = useParams();
+  31:         fetch(`http://localhost:9000/api/fetchExData/${doctorId}`).then(res =>{
+  76:                             <EditExperience doctorId={doctorId} ExId={experience._id} onSubmit={EditData} />
+
+src\getLoginPatientProfile.js:
+   7:     const { doctorId } = useParams();
+  94:                         <DoctorBookingConfirmPayment doctorId={doctorId}/>
+
+src\Home.js:
+  11: 	const doctorId = useRecoilValue(doctorIdState);
+  39: 					<MostViewedDoctorsInHome doctorId={doctorId}/>
+
+src\import React from 'react';.js:
+   27:     const { doctorId } = useParams();
+  125:         fetch(`/fetchclinic/${doctorId}`).then(res =>{
+  153:         fetch(`/fetchData/${doctorId}`).then(res =>{
+  251:         axios.post(`http://localhost:9000/insert/${doctorId}`, formData)
+
+src\LoginDoctor.js:
+  11:     const [doctorId , setLoginId]  = useRecoilState(setDoctorId)
+  34:                     setLoginId(data._id)
+  72:                                                 <ShowLoginOtp doctorId={doctorId}/>
+
+src\setSession.js:
+  12:     const { doctorId } = useParams();
+  55:             doctorId: doctorId,
+
+src\setTiming.js:
+  12:     const { doctorId } = useParams();
+  19:         doctorId:doctorId,
+
+src\showLoginOtp.js:
+   5:     const {doctorId} = props;
+  24:                     _id: doctorId
+  32:                     fetch(`http://localhost:9000/api/otpIsLoggedIn/${doctorId}`,{
+
+src\img\React App_files\main.chunk.js.download:
+   5318:                       to: "/editdoctorprofile/:doctorId",
+   6718:     doctorId
+   6801:                 doctorId: doctorId
+   6815:                 doctorId: doctorId
+   6829:                 doctorId: doctorId
+   7002:     doctorId
+   7008:     doctorId: doctorId,
+   7072:     formData.append('doctorId', doctorId);
+   8263:   //let {doctorId} = useParams();
+   9788:       path: "/editdoctorprofile/:doctorId",
+  16271:     doctorId
+  16274:     doctorId: doctorId,
+  16734:     doctorId
+  16741:     doctorId: doctorId,
+  17733:     doctorId
+  17800:     fetch(`/fetchclinic/${doctorId}`).then(res => {
+  17807:     fetch(`/fetchownclinic/${doctorId}`).then(res => {
+  18337:     doctorId
+  18340:     doctorId: doctorId,
+  18734:         doctorId: doctorId
+  18902:     doctorId
+  18956:     fetch(`/fetchData/${doctorId}`).then(res => {
+  19019:     axios__WEBPACK_IMPORTED_MODULE_5___default.a.post(`http://localhost:9000/insertPersonalInfo/${doctorId}`, formData).then(function (response) {//  history.push("/dashboard");
+  19582:     doctorId
+  19584:   console.log(doctorId);
+  19586:     doctorId: doctorId,
+  19930:         doctorId: doctorId
+  20080:     doctorId
+  20086:     doctorId: doctorId,
+  20495:     doctorId
+  20515:     fetch(`/fetchEduData/${doctorId}`).then(res => {
+  20562:               doctorId: doctorId,
+  20855:     doctorId
+  20874:     fetch(`/fetchExData/${doctorId}`).then(res => {
+  20920:               doctorId: doctorId,
+  21978:     doctorId
+  22020:         doctorId: doctorId,
+  22297:     doctorId
+  22307:     doctorId: doctorId,

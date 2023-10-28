@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1 ,
+        "PatientName":"shubhangi",
+        "AppointmentDate": "15-9-2021",
+        "PatientContact":24353635356,
+        "ModeofAppointment":"walkin",
+        "ModeofPayment":"Nill"
+       
+
+    },
+    {
+        "id": 2 ,
+        "PatientName":"shubh",
+        "AppointmentDate": "15-9-2021",
+        "PatientContact":24353635356,
+        "ModeofAppointment":"walkin",
+        "ModeofPayment":"Nill"
+    },
+    {
+        "id": 3 ,
+        "PatientName":"shubh",
+        "AppointmentDate": "15-9-2021",
+        "PatientContact":24353635356,
+        "ModeofAppointment":"walkin",
+        "ModeofPayment":"Nill"
+    }
+    
+]

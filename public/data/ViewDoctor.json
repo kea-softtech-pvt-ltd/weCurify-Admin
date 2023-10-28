@@ -1,0 +1,58 @@
+[
+    {
+       
+        "images":"./assets/img/doctor_listing_1.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Watamaniuk",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":3
+
+    },
+    {
+        
+        "images":"./assets/img/doctor_listing_2.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Mantooth",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":4
+
+    },
+    {
+     
+        "images":"./assets/img/doctor_listing_3.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Pullman",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":5
+
+    },
+    {
+      
+        "images":"./assets/img/doctor_listing_4.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Toothaker",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":3
+
+    },
+    {
+      
+        "images":"./assets/img/doctor_listing_5.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Brilliant",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":3
+
+    },
+    {
+     
+        "images":"./assets/img/doctor_listing_6.jpg",
+        "specialization":"PSICOLOGIST",
+        "name":"Dr. Crownover",
+        "description":"Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....",
+        "rating":4
+
+    }
+
+
+]
