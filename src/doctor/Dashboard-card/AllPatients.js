@@ -2,13 +2,10 @@ import React, { useEffect } from "react";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
-import { useRecoilState } from "recoil";
-import { setHelperData } from "../../recoil/atom/setHelperData";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 export default function AllPatients() {
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [patientData, setPatientData] = useState([])
     const { getAllPatient } = PatientApi()
     const history = useHistory()
@@ -68,10 +65,7 @@ export default function AllPatients() {
                 </ul>
             </MainNav>
             <div className='row'>
-                <UserLinks
-                    helperId={helpersData._id}
-                    accessModule={helpersData.access_module}
-                />
+                <UserLinks/>
                 <div className="common_box">
                     <div className='row'>
                         {records.map((details, i) => {

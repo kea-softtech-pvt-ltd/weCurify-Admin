@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import AuthApi from "../../services/AuthApi";
 import { useParams } from "react-router-dom";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
-import UserLinks from "./partial/uselinks";
-import { useRecoilState } from "recoil";
-import { setHelperData } from "../../recoil/atom/setHelperData";
+import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Button, Modal } from "react-bootstrap";
 import SubscriptionApi from "../../services/SubscriptionApi";
 export default function SubscriptionCard() {
@@ -15,7 +12,6 @@ export default function SubscriptionCard() {
     const [subscriptionId, setSubscriptionId] = useState([])
     const { doctorId } = useParams();
     const history = useHistory()
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
 
@@ -72,8 +68,6 @@ export default function SubscriptionCard() {
                 <div className='row'>
                     <UserLinks
                         doctorId={doctorId}
-                        helperId={helpersData._id}
-                        accessModule={helpersData.access_module}
                     />
                     <div className=" col-md-10">
                         <div className="container ">

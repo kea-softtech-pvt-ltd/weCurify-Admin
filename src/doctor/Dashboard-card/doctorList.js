@@ -66,7 +66,7 @@ export default function DoctorList() {
                     <div className="row">
                         <li className='float-none' style={{ fontSize: 'inherit' }}>Doctor-List</li>
                         <div id="custom-search-input">
-                            <input type="text" onChange={(e) => searchDoctor(e.target.value)} className=" search-query" placeholder="Search Doctor" />
+                            <input type="text" onChange={(e) => searchDoctor(e.target.value)} className="search-query" placeholder="Search Doctor" />
                             <input type="submit" className="btn_search" value="Search" />
                         </div>
                         <div className="mx-2 mt-2">

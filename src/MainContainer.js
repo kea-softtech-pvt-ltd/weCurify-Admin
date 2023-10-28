@@ -4,14 +4,13 @@ import LoginDoctor from "./doctor/Profile/LoginDoctor";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
 import PatientMedicalReport from "./doctor/Report/PatientMedicalReport";
-import PatientsClinicHistory from "./doctor/Dashboard-card/PatientsClinicHistory";
 import SearchLocationInput from "./common/demo";
 import User from "./user";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import Logout from "./doctor/Profile/LogoutForm";
-import Subscription from "./doctor/Profile/Subscription";
+import Subscription from "./doctor/Subscription/Subscription"
 import LoginHelper from "./doctor/Profile/LoginHelper";
-import SubscriptionCard from "./doctor/Dashboard-card/SubscriptionCard";
+import SubscriptionCard from "./doctor/Subscription/SubscriptionCard"
 import Helper from "./doctor/helper/Helper";
 import EditHelper from './doctor/helper/EditHelper';
 import DoctorList from "./doctor/Dashboard-card/doctorList";
@@ -64,7 +63,7 @@ function MainContainer() {
       <Route path="/patient-history/:reportId">
         <ViewMedicalReport />
       </Route>
-      <Route path="/subscription/:doctorId">
+      <Route path="/subscription">
         <Subscription />
       </Route>
       {/* <Route path="/Patientsclinichistory/:doctorId">
