@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 
 
-export default function SubscriptionModal(props) {
+export default function EditSubscriptionModal(props) {
     const { onClick } = props;
     const [planData, setPlanData] = useState([])
     const [feature, setFeature] = useState([])

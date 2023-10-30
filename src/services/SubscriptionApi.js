@@ -51,9 +51,9 @@ export default function SubscriptionApi() {
     }
 
     const addSubscriptionPlan = async (bodyData) => {
-        console.log("bodyData=======",bodyData)
         try {
-            const result = await axios.get(`${API}/addsubscriptionplans`, bodyData)
+            const result = await axios.post(`${API}/addsubscriptionplans`, bodyData)
+            console.log("result=======", result)
             return result.data
         }
         catch (err) {
@@ -61,7 +61,7 @@ export default function SubscriptionApi() {
         }
     }
 
-    const deleteSubscriptionPlan = async ({id}) => {
+    const deleteSubscriptionPlan = async ({ id }) => {
         try {
             const result = await axios.get(`${API}/deletesubscriptionplans/${id}`)
             console.log("result-----", result)
@@ -72,7 +72,7 @@ export default function SubscriptionApi() {
         }
     }
 
-    const updateSubscriptionPlan = async ({id}, bodydata) => {
+    const updateSubscriptionPlan = async ({ id }, bodydata) => {
         try {
             const result = await axios.get(`${API}/updatesubscriptionplans/${id}`, bodydata)
             console.log("result-----", result)

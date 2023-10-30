@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MainInput, MainInputBox } from '../../mainComponent/mainInput'
+import { MainInput } from '../../mainComponent/mainInput'
 import { Autocomplete } from '@material-ui/lab'
 import { TextField } from '@mui/material'
 import SubscriptionApi from '../../services/SubscriptionApi'
@@ -58,10 +58,9 @@ export default function SubscriptionModal(props) {
             'name': planData.name,
             'frequency': subscriptionData.planName,
             'amount': subscriptionData.Amount,
-            'features': saveFeatureData.name,
+            'features': saveFeatureData,
             'status': subscriptionData.Status
         }
-        console.log("=====body",bodyData)
         addSubscriptionPlan(bodyData)
         onClick()
     }
@@ -72,13 +71,15 @@ export default function SubscriptionModal(props) {
                 type="text"
                 onChange={(event) => handleChange(event)}
                 value={subscriptionData.name}
-                name="planName">
+                name="planName"
+                placeholder='Plan Name'>
             </MainInput>
             <div align='left' className="patientData"><b >Amount</b></div>
             <MainInput
                 type="text"
                 onChange={(event) => handleChange(event)}
                 value={subscriptionData.name}
+                placeholder='Amount'
                 name="Amount">
             </MainInput>
             <div align='left' className="patientData"><b >Status</b></div>
@@ -86,6 +87,7 @@ export default function SubscriptionModal(props) {
                 type="text"
                 onChange={(event) => handleChange(event)}
                 value={subscriptionData.name}
+                placeholder='Status'
                 name="Status">
             </MainInput>
             <div className='align-left '>
@@ -100,7 +102,7 @@ export default function SubscriptionModal(props) {
                     onChange={handlePlan}
                     getOptionLabel={(Plan) => `${Plan.name}`}
                     options={Plan}
-                    renderInput={(params) => <TextField {...params} label="" />}
+                    renderInput={(params) => <TextField {...params} label="Plan Name" />}
                 />
             </div>
             <div className='align-left '>
@@ -111,15 +113,18 @@ export default function SubscriptionModal(props) {
                     id={feature._id}
                     disablePortal={true}
                     disableClearable
+                    multiple={true}
                     disableCloseOnSelect
+                    value={saveFeatureData.name}
                     onChange={handleFeatureSave}
-                    getOptionLabel={(option) => `${option.name}`}
-                    options={feature}
+                    // getOptionLabel={feature.map((option) => `${option.name}`)}
+                    options={feature.map((option) => `${option.name}`)}
                     renderInput={(params) =>
                     (<TextField {...params}
-                        label=""
+                        label="Add Feature"
                     />)}
                 />
+                
                 <Button variant="primary" style={{ border: '1px solid #1a3c8b',float:'right'}} className="appColor modalbtn" onClick={addSubscription}>
                     Add
                 </Button>
