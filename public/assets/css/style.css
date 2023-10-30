@@ -4822,6 +4822,13 @@ a.box_feat_about h3 {
 	border: 1px solid #ddddf7;
 	margin-bottom: 30px;
 }
+.btn_sub{
+	border:1px solid #ddddf7;
+	float: right;
+}
+.autocompleteWidth{
+	width:100%;
+}
 .eduCard{
 	width: 100%;
 	background-color: #f7f8fa;
@@ -4851,7 +4858,7 @@ a.box_feat_about h3 {
 	color: white;
 }
 .appColor:hover {
-	background-color: rgb(24, 31, 68);
+	background-color: rgb(16, 35, 129);
 }
 .color {
 	color: #1a3c8b;

@@ -20,7 +20,7 @@ export default function UserLinks(props) {
 
     function handleSubscriptionClick(e) {
         e.preventDefault()
-        history.push(`/subscription/${doctorId}`)
+        history.push(`/subscription`)
     }
     function handleReport(e) {
         e.preventDefault()

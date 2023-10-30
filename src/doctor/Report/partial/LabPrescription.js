@@ -6,10 +6,8 @@ import GetLabPrescription from './getLabPrescription';
 import ReportApi from '../../../services/ReportApi';
 
 export default function LabPrescription(props) {
-    //for add new files (priscription)
     const { onChange, reportId, appointmentId } = props
     const { getLabData, insertLabPrescriptionData } = ReportApi()
-    //for whole data
     const [labTestData, setLabTestData] = useState([]);
     //for Selected data
     const [saveLabData, setSaveLabData] = useState('')

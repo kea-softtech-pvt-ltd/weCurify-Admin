@@ -18,7 +18,7 @@ export default function SubscriptionApi() {
         catch (err) {
             return err
         }
-       
+
     }
     const updateSubscriptionData = async ({ _id }, bodyData) => {
         try {
@@ -28,12 +28,69 @@ export default function SubscriptionApi() {
         catch (err) {
             return err
         }
-   
+
+    }
+    const getSubscriptionFeature = async () => {
+        try {
+            const result = await axios.get(`${API}/getfeatures`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const getSubscriptionPlan = async () => {
+        try {
+            const result = await axios.get(`${API}/getsubscriptionplans`)
+            console.log("result-----", result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+
+    const addSubscriptionPlan = async (bodyData) => {
+        console.log("bodyData=======",bodyData)
+        try {
+            const result = await axios.get(`${API}/addsubscriptionplans`, bodyData)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+
+    const deleteSubscriptionPlan = async ({id}) => {
+        try {
+            const result = await axios.get(`${API}/deletesubscriptionplans/${id}`)
+            console.log("result-----", result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+
+    const updateSubscriptionPlan = async ({id}, bodydata) => {
+        try {
+            const result = await axios.get(`${API}/updatesubscriptionplans/${id}`, bodydata)
+            console.log("result-----", result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
     }
 
     return {
         subscription,
         getSubscriptionData,
         updateSubscriptionData,
+        getSubscriptionFeature,
+        getSubscriptionPlan,
+        addSubscriptionPlan,
+        deleteSubscriptionPlan,
+        updateSubscriptionPlan
     }
 }

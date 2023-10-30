@@ -65,10 +65,10 @@ export default function MedicinePrescription(props) {
     };
     const classes = useStyles();
 
-    const handleMealData = ((e, selectedValue) => {
+    const handleMealData = (e, selectedValue) => {
         e.preventDefault()
         setSaveMealData(selectedValue.name)
-    })
+    }
 
     const handleChange = (event, selectedValue) => {
         event.preventDefault()
