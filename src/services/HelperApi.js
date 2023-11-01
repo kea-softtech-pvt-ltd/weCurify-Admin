@@ -8,9 +8,10 @@ export default function HelperApi() {
             return result.data
         }
         catch (err) {
-            return err
+            return err    
         }
     }
+
     const getAccessModule = async () => {
         try {
             const result = await axios.get(`${API}/accessmodule`)
@@ -20,6 +21,7 @@ export default function HelperApi() {
             return err
         }
     }
+
     const loginHelperData = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/helperlogin`, bodyData)
@@ -29,6 +31,7 @@ export default function HelperApi() {
             return err
         }
     }
+    
     const getHelper = async (doctorId) => {
         try {
             const result = await axios.get(`${API}/gethelpers/${doctorId}`)

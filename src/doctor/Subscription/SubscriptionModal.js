@@ -55,8 +55,8 @@ export default function SubscriptionModal(props) {
     }
     const addSubscription = () => {
         const bodyData = {
-            'name': planData.name,
-            'frequency': subscriptionData.planName,
+            'name':  subscriptionData.planName,
+            'frequency':planData.name          ,
             'amount': subscriptionData.Amount,
             'features': saveFeatureData,
             'status': subscriptionData.Status

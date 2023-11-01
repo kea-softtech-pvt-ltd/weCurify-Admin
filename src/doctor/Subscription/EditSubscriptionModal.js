@@ -8,12 +8,12 @@ import { Button } from 'react-bootstrap'
 
 
 export default function EditSubscriptionModal(props) {
-    const { onClick } = props;
+    const { onClick,planId, plan } = props;
     const [planData, setPlanData] = useState([])
     const [feature, setFeature] = useState([])
     const [saveFeatureData, setSaveFeatureData] = useState([])
-    const [subscriptionData, allSubscriptionData] = useState([])
-    const { getSubscriptionFeature, addSubscriptionPlan } = SubscriptionApi()
+    const [subscriptionData, allSubscriptionData] = useState(plan)
+    const { getSubscriptionFeature, updateSubscriptionPlan } = SubscriptionApi()
     const Plan = [
         {
             "_id": 0,
@@ -62,7 +62,7 @@ export default function EditSubscriptionModal(props) {
             'status': subscriptionData.Status
         }
         console.log("=====body",bodyData)
-        addSubscriptionPlan(bodyData)
+        updateSubscriptionPlan(planId,bodyData)
         onClick()
     }
     return (
@@ -78,14 +78,14 @@ export default function EditSubscriptionModal(props) {
             <MainInput
                 type="text"
                 onChange={(event) => handleChange(event)}
-                value={subscriptionData.name}
+                value={subscriptionData.amount}
                 name="Amount">
             </MainInput>
             <div align='left' className="patientData"><b >Status</b></div>
             <MainInput
                 type="text"
                 onChange={(event) => handleChange(event)}
-                value={subscriptionData.name}
+                value={subscriptionData.status}
                 name="Status">
             </MainInput>
             <div className='align-left '>

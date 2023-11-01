@@ -34,6 +34,7 @@ function FetchEducation(props) {
                 setEduData(res.data);
             })
     }
+     
     const deleteEducation = (education) => {
         const id = education._id
         deleteEducationData(id)

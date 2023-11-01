@@ -61,9 +61,9 @@ export default function SubscriptionApi() {
         }
     }
 
-    const deleteSubscriptionPlan = async ({ id }) => {
+    const deleteSubscriptionPlan = async ( id) => {
         try {
-            const result = await axios.get(`${API}/deletesubscriptionplans/${id}`)
+            const result = await axios.delete(`${API}/deletesubscriptionplans/${id}`)
             console.log("result-----", result)
             return result.data
         }
@@ -72,7 +72,7 @@ export default function SubscriptionApi() {
         }
     }
 
-    const updateSubscriptionPlan = async ({ id }, bodydata) => {
+    const updateSubscriptionPlan = async ( id , bodydata) => {
         try {
             const result = await axios.get(`${API}/updatesubscriptionplans/${id}`, bodydata)
             console.log("result-----", result)

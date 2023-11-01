@@ -6,6 +6,7 @@ import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import Image from "../../../../img/avatar2.jpg"
 import ClinicApi from "../../../../services/ClinicApi";
+
 function FetchDoctorPersonalDetails(props) {
     const { doctorId } = props;
     const [clinicList, setClinicList] = useRecoilState(setDoctorClinic);
@@ -32,7 +33,7 @@ function FetchDoctorPersonalDetails(props) {
     return (
         <div className="profile"  >
             <div className="row" key={fetchPersonalData.id}>
-                <div className="col-lg-2">
+                <div className="col-lg-3">
                     <figure>
                         <img
                             src={fetchPersonalData.photo}
@@ -41,7 +42,7 @@ function FetchDoctorPersonalDetails(props) {
                         />
                     </figure>
                 </div>
-                <div className="col-lg-7 fetchDr" align="left">
+                <div className="col-lg-6 fetchDr" align="left">
                     <h1>Dr. {fetchPersonalData.name}</h1>
                     <div className="contacts">
                         <address>
