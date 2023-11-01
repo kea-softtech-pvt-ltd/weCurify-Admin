@@ -39,10 +39,10 @@ export default function SubscriptionApi() {
             return err
         }
     }
-    const getSubscriptionPlan = async () => {
+    const getSubscriptionPlans = async () => {
         try {
             const result = await axios.get(`${API}/getsubscriptionplans`)
-            console.log("result-----", result)
+            console.log("=-=-=-=======", result)
             return result.data
         }
         catch (err) {
@@ -50,10 +50,18 @@ export default function SubscriptionApi() {
         }
     }
 
+    const getSubscriptionPlanById = async (id) => {
+        try {
+            const result = await axios.get(`${API}/getsubscriptionplanById/${id}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     const addSubscriptionPlan = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/addsubscriptionplans`, bodyData)
-            console.log("result=======", result)
             return result.data
         }
         catch (err) {
@@ -64,7 +72,6 @@ export default function SubscriptionApi() {
     const deleteSubscriptionPlan = async ( id) => {
         try {
             const result = await axios.delete(`${API}/deletesubscriptionplans/${id}`)
-            console.log("result-----", result)
             return result.data
         }
         catch (err) {
@@ -74,8 +81,7 @@ export default function SubscriptionApi() {
 
     const updateSubscriptionPlan = async ( id , bodydata) => {
         try {
-            const result = await axios.get(`${API}/updatesubscriptionplans/${id}`, bodydata)
-            console.log("result-----", result)
+            const result = await axios.post(`${API}/updatesubscriptionplans/${id}`, bodydata)
             return result.data
         }
         catch (err) {
@@ -88,7 +94,8 @@ export default function SubscriptionApi() {
         getSubscriptionData,
         updateSubscriptionData,
         getSubscriptionFeature,
-        getSubscriptionPlan,
+        getSubscriptionPlans,
+        getSubscriptionPlanById,
         addSubscriptionPlan,
         deleteSubscriptionPlan,
         updateSubscriptionPlan

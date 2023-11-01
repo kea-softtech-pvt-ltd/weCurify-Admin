@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { MainInput } from '../../mainComponent/mainInput'
 import { Autocomplete } from '@material-ui/lab'
 import { TextField } from '@mui/material'
-import SubscriptionApi from '../../services/SubscriptionApi'
 import { useEffect } from 'react'
 import { Button } from 'react-bootstrap'
-
+import SubscriptionApi from '../../services/SubscriptionApi'
+import ReactSwitch from 'react-switch';
 
 export default function SubscriptionModal(props) {
     const { onClick } = props;
@@ -14,24 +14,34 @@ export default function SubscriptionModal(props) {
     const [saveFeatureData, setSaveFeatureData] = useState([])
     const [subscriptionData, allSubscriptionData] = useState([])
     const { getSubscriptionFeature, addSubscriptionPlan } = SubscriptionApi()
+    const [checked, setChecked] = useState(true);
+
     const Plan = [
         {
             "_id": 0,
-            "name": "Week"
+            "days": 30
         },
         {
             "_id": 1,
-            "name": "Months"
+            "days": 90
         },
 
         {
             "_id": 3,
-            "name": "Year"
+            "days": 180
+        },
+        {
+            "_id": 4,
+            "days": 356
         }
     ]
     useEffect(() => {
         getFeatureData()
     }, [])
+
+    const handleSwitch = val => {
+        setChecked(val)
+    }
     const handleChange = (event, index) => {
         const { name, value } = event.target
         allSubscriptionData({ ...subscriptionData, [name]: value });
@@ -55,11 +65,11 @@ export default function SubscriptionModal(props) {
     }
     const addSubscription = () => {
         const bodyData = {
-            'name':  subscriptionData.planName,
-            'frequency':planData.name          ,
+            'name': subscriptionData.planName,
+            'frequency': planData.days,
             'amount': subscriptionData.Amount,
             'features': saveFeatureData,
-            'status': subscriptionData.Status
+            'status': checked
         }
         addSubscriptionPlan(bodyData)
         onClick()
@@ -82,14 +92,7 @@ export default function SubscriptionModal(props) {
                 placeholder='Amount'
                 name="Amount">
             </MainInput>
-            <div align='left' className="patientData"><b >Status</b></div>
-            <MainInput
-                type="text"
-                onChange={(event) => handleChange(event)}
-                value={subscriptionData.name}
-                placeholder='Status'
-                name="Status">
-            </MainInput>
+
             <div className='align-left '>
                 <div align='left' className="patientData"><b>Billing Frequency</b></div>
                 <Autocomplete
@@ -98,18 +101,16 @@ export default function SubscriptionModal(props) {
                     disableCloseOnSelect
                     className='autocompleteWidth'
                     id={Plan._id}
-                    value={Plan.name}
+                    value={Plan.days}
                     onChange={handlePlan}
-                    getOptionLabel={(Plan) => `${Plan.name}`}
+                    getOptionLabel={(Plan) => `${Plan.days}`}
                     options={Plan}
-                    renderInput={(params) => <TextField {...params} label="Plan Name" />}
+                    renderInput={(params) => <TextField {...params} label="choose one" />}
                 />
             </div>
             <div className='align-left '>
                 <div align='left' className="patientData"><b>Features Name</b></div>
                 <Autocomplete
-                    // style={{ width: 100 }}
-                    className='autocompleteWidth'
                     id={feature._id}
                     disablePortal={true}
                     disableClearable
@@ -117,15 +118,21 @@ export default function SubscriptionModal(props) {
                     disableCloseOnSelect
                     value={saveFeatureData.name}
                     onChange={handleFeatureSave}
-                    // getOptionLabel={feature.map((option) => `${option.name}`)}
                     options={feature.map((option) => `${option.name}`)}
                     renderInput={(params) =>
                     (<TextField {...params}
                         label="Add Feature"
                     />)}
                 />
-                
-                <Button variant="primary" style={{ border: '1px solid #1a3c8b',float:'right'}} className="appColor modalbtn" onClick={addSubscription}>
+                <div className='my-2'>
+                    <div align='left' className='my-2'><b >Status</b></div>
+                    <ReactSwitch
+                        checked={checked}
+                        onChange={handleSwitch}
+                        onColor="#1a3c8b"
+                    />
+                </div>
+                <Button variant="primary" style={{ border: '1px solid #1a3c8b', float: 'right' }} className="appColor modalbtn" onClick={addSubscription}>
                     Add
                 </Button>
             </div>

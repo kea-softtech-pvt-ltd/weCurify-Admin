@@ -21,7 +21,7 @@ export default function DoctorList() {
     const records = doctorData.slice(firstIndex, lastIndex)
     const nPage = Math.ceil(doctorData.length / recordsPerPage)
     const number = [...Array(nPage + 1).keys()].slice(1)
-    
+
     useEffect(() => {
         getDoctorList()
     }, [])
@@ -83,55 +83,51 @@ export default function DoctorList() {
                     <div className='row'>
                         {records.map((details, i) => {
                             return (
-                                <>
-                                    <div key={i} className="col-md-4 ">
-                                        <div className="cardDiv">
-                                            <span className='cardSpan row'>
-                                                <i className='icon-user col-md-1 color patientListIcon' />
-                                                <span align='left' className='patientName col-md-9'>Dr.{details.name}</span>
-                                                <span className='col-md-1'>
-                                                    <Link to="#" onClick={() => handleShowProfile(details)}>
-                                                        <i className="icon-eye  eye-icon " />
-                                                    </Link>
+                                <div key={i} className="col-md-4 ">
+                                    <div className="cardDiv">
+                                        <span className='cardSpan row'>
+                                            <i className='icon-user col-md-1 color patientListIcon' />
+                                            <span align='left' className='patientName col-md-9'>Dr.{details.name}</span>
+                                            <span className='col-md-1'>
+                                                <Link to="#" onClick={() => handleShowProfile(details)}>
+                                                    <i className="icon-eye  eye-icon " />
+                                                </Link>
+                                            </span>
+                                        </span>
+                                        <span className='cardSpan'>
+                                            <i className='icon-mobile-1 color patientListIcon' />
+                                            <span className='patinetInfo'>{details.mobile}</span>
+                                        </span>
+                                        <span className='cardSpan '>
+                                            <i className='icon-building color patientListIcon' />
+                                            <span className='patinetInfo'>{details.address}</span>
+                                        </span>
+                                        <span className='cardSpan '>
+                                            <i className='icon-email color patientListIcon' />
+                                            <span className='patinetInfo'> {details.personalEmail}</span>
+                                        </span>
+                                        <span className='cardSpan '>
+                                            <i className="pe-7s-date timeLink color patientListIcon" />
+                                            <Link className='' onClick={() => handleSubscription(details)} >
+                                                <span className='pl-1 patinetInfo'>
+                                                    {moment(new Date(details.subscription[0].registerDate)).format('YYYY-MM-DD')}
                                                 </span>
-                                            </span>
-                                            <span className='cardSpan'>
-                                                <i className='icon-mobile-1 color patientListIcon' />
-                                                <span className='patinetInfo'>{details.mobile}</span>
-                                            </span>
-                                            <span className='cardSpan '>
-                                                <i className='icon-building color patientListIcon' />
-                                                <span className='patinetInfo'>{details.address}</span>
-                                            </span>
-                                            <span className='cardSpan '>
-                                                <i className='icon-email color patientListIcon' />
-                                                <span className='patinetInfo'> {details.personalEmail}</span>
-                                            </span>
-                                            <span className='cardSpan '>
-                                                <i className="pe-7s-date timeLink color patientListIcon" />
-                                                <Link className='' onClick={() => handleSubscription(details)} >
-                                                    <span className='pl-1 patinetInfo'>
-                                                        {moment(new Date(details.subscription[0].registerDate)).format('YYYY-MM-DD')}
-                                                    </span>
-                                                    <span className="pl-1"> {"(" + details.subscription[0].selected_plan + ")"}</span>
-                                                    <span className="greenColor "> Upgrade </span>
-                                                </Link>
-                                            </span>
+                                                <span className="pl-1"> {"(" + details.subscription[0].selected_plan + ")"}</span>
+                                                <span className="greenColor "> Upgrade </span>
+                                            </Link>
+                                        </span>
 
-                                            <div className='cardSpan appointmentBtn'>
-                                                <Link to={`/loginpatient/${details._id}`} >
-                                                    <button className='btn appColor helperBtn'>Book Appoinment</button>
-                                                </Link>
-                                                <Link to={`/patientappointment/${details._id}`}>
-                                                    <button className='btn appColor helperBtn'>Appoinment</button>
-                                                </Link>
-                                            </div>
+                                        <div className='cardSpan appointmentBtn'>
+                                            <Link to={`/loginpatient/${details._id}`} >
+                                                <button className='btn appColor helperBtn'>Book Appoinment</button>
+                                            </Link>
+                                            <Link to={`/patientappointment/${details._id}`}>
+                                                <button className='btn appColor helperBtn'>Appoinment</button>
+                                            </Link>
                                         </div>
                                     </div>
-
-                                </>
+                                </div>
                             )
-
                         })}
                     </div>
                     {records.length > 0 ?

@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import EditSubscriptionModal from "./EditSubscriptionModal";
 
 export default function Subscription() {
-    const { deleteSubscriptionPlan, getSubscriptionPlan } = SubscriptionApi()
+    const { deleteSubscriptionPlan, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
     console.log("getSubData---------", getSubData)
 
@@ -39,10 +39,10 @@ export default function Subscription() {
 
     useEffect(() => {
         getSubscriptionData()
-    }, [])
+    }, [getSubData])
 
     const getSubscriptionData = () => {
-        getSubscriptionPlan()
+        getSubscriptionPlans()
             .then((res) => {
                 setGetSubData(res);
             })
@@ -50,7 +50,7 @@ export default function Subscription() {
 
     const deleteSubscription = (item) => {
         const id = item._id
-        deleteSubscriptionPlan(id )
+        deleteSubscriptionPlan(id)
             .then(() => {
                 getSubscriptionData()
             })
@@ -94,78 +94,92 @@ export default function Subscription() {
                                     <TableCell align="left"><b>Actions</b></TableCell>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {getSubData.map((item, i) => {
-                                    return (
-                                        <>
-                                            <Modal show={activeModal === i}
-                                                onHide={handleClose}
-                                                id={`education-${item._id}`}
-                                                key={item._id}>
-                                                <Modal.Header closeButton >
-                                                    <Modal.Title>Update Subscription</Modal.Title>
-                                                </Modal.Header>
-                                                <Modal.Body>
-                                                    <EditSubscriptionModal
-                                                        onClick={handleClose}
-                                                        onSubmit={EditData}
-                                                        planId={item._id}
-                                                        plan={item}
-                                                    />
-                                                </Modal.Body>
-                                            </Modal>
+                            {getSubData.length > 0 ?
+                                <TableBody>
+                                    {getSubData.map((item, i) => {
+                                        return (
+                                            <>
+                                                <Modal show={activeModal === i}
+                                                    onHide={handleClose}
+                                                    id={`education-${item._id}`}
+                                                    key={item._id}>
+                                                    <Modal.Header closeButton >
+                                                        <Modal.Title>Update Subscription</Modal.Title>
+                                                    </Modal.Header>
+                                                    <Modal.Body>
+                                                        <EditSubscriptionModal
+                                                            onClick={handleClose}
+                                                            onSubmit={EditData}
+                                                            planId={item._id}
+                                                            plan={item}
+                                                        />
+                                                    </Modal.Body>
+                                                </Modal>
 
-                                            <TableRow>
-                                                <TableCell align="left">
-                                                    {i}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {item.name}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {item.frequency}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {item.amount}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {item["features"].map((data, i) => {
-                                                        return (
-                                                            <span key={i}>
-                                                                {i}. {data}<br />
-                                                            </span>
-                                                        )
-                                                    })}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {item.status}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div className='row'>
-                                                        <Link
-                                                            onClick={e => handleShow(e, i)}
-                                                            to="#"
-                                                            className="editbutton">
-                                                            <i className="icon_pencil-edit"
-                                                                title="Edit profile">
-                                                            </i>
-                                                        </Link>
-                                                        <Link
-                                                            onClick={e => deleteSubscription(item)}
-                                                            to="#"
-                                                            align='right'
-                                                            className="editbutton">
-                                                            <i className="icon-trash-2"
-                                                                title="delete profile">
-                                                            </i>
-                                                        </Link>
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                        </>
-                                    )
-                                })}
-                            </TableBody>
+                                                <TableRow>
+                                                    <TableCell align="left">
+                                                        {i}
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        {item.name}
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        {item.frequency} Days
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        {item.amount}
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        {getSubData.length > 0 ?
+                                                            <>
+                                                                {item["features"].map((data, i) => {
+                                                                    return (
+                                                                        <span key={i}>
+                                                                            {i}. {data}<br />
+                                                                        </span>
+                                                                    )
+                                                                })}
+                                                            </>
+                                                            : null}
+                                                    </TableCell>
+                                                    {
+                                                        item.status === true ?
+                                                            <TableCell align="left">
+                                                                Active
+                                                            </TableCell>
+                                                            :
+                                                            <TableCell align="left">
+                                                                Inactive
+                                                            </TableCell>
+                                                    }
+
+                                                    <TableCell>
+                                                        <div className='row'>
+                                                            <Link
+                                                                onClick={e => handleShow(e, i)}
+                                                                to="#"
+                                                                className="editbutton">
+                                                                <i className="icon_pencil-edit"
+                                                                    title="Edit profile">
+                                                                </i>
+                                                            </Link>
+                                                            <Link
+                                                                onClick={e => deleteSubscription(item)}
+                                                                to="#"
+                                                                align='right'
+                                                                className="editbutton">
+                                                                <i className="icon-trash-2"
+                                                                    title="delete profile">
+                                                                </i>
+                                                            </Link>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </>
+                                        )
+                                    })}
+                                </TableBody>
+                                : null}
                         </Table>
                     </TableContainer>
                 </div>
