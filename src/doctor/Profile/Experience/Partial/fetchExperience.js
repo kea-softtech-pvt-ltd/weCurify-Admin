@@ -1,12 +1,10 @@
 import React from 'react';
-import { API } from "../../../../config";
 import { EditExperience } from "./editExperience";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
-import AuthApi from '../../../../services/AuthApi';
 import ExperienceApi from '../../../../services/ExperienceApi';
 function FetchExperience(props) {
     const { doctorId } = props;

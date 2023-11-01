@@ -101,15 +101,17 @@ function SetSession(props) {
             <ul>
                 {daysKeys.map((item, index) =>
                     <li className="" key={index}>
-                        <div className="my-2 ">
+                        <div className="bottomborder">
                             <div className="row">
-                                <div className="col-md-5">
-                                    {dayList[item]}
+                                <div className="col-md-3 rightborder">
+                                    <div className=" p-2 ">
+                                        {dayList[item]}
+                                    </div>
                                 </div>
                                 {fetchUpdateTime[item]
                                     ?
                                     <>
-                                        <div className="col-md-5" >
+                                        <div className="col-md-7 p-2" >
                                             <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                                 <span>
                                                     {moment(new Date(fetchUpdateTime[item][0].fromTime)).format('HH:mm')}
@@ -147,7 +149,7 @@ function SetSession(props) {
                                                 </div>
                                                 </>
                                                 :
-                                                <div className="col-md-6">
+                                                <div className="col-md-7 p-2">
                                                     <Link to="#" onClick={(e) => handleShow(e, item)} className="">
                                                         Set Session Timing
                                                     </Link>
