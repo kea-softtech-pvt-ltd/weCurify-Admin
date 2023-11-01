@@ -406,6 +406,16 @@ a {
 .modalbtn {
 	/* padding-bottom: 30px; */
 }
+.bottomborder{
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #d7d4d4;
+}
+.rightborder{
+	border-right-style: solid;
+	border-width: 1px;
+	border-color: #d7d4d4;
+}
 .sessionlink {
 	padding: 10px;
 	font-weight: 500;
