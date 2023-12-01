@@ -1,4 +1,3 @@
-import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { ShowLoginOtp } from "../Profile/Partial/showLoginOtp";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
@@ -6,7 +5,6 @@ import { MainInput } from "../../mainComponent/mainInput";
 import AuthApi from "../../services/AuthApi";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
-import { Icon } from "@mui/material";
 import UserLinks from "./partial/uselinks";
 
 export default function AddNewDoctor() {

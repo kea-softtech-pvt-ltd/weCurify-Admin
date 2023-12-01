@@ -24,10 +24,13 @@ import PatientHistory from "./patient/patientHistory";
 import DoctorBookingWithPatientLogin from "./patient/DoctorBookingWithPatientLogin";
 import AddNewDoctor from "./doctor/Dashboard-card/addNewDoctor";
 import PatientAppointment from "./doctor/Dashboard-card/PatientAppointment";
+import SlotConfirmation from "./patient/SlotConfirmation";
+import SubscriptionNewDr from "./doctor/Subscription/SubscriptionNewDr";
+import MedicineList from "./doctor/Dashboard-card/MedicineList";
 function MainContainer() {
   return (
     <Switch>
- 
+
       <Route path="/home">
         <Home />
       </Route>
@@ -119,6 +122,15 @@ function MainContainer() {
       </Route>
       <Route path="/addnewdoctor">
         <AddNewDoctor />
+      </Route>
+      <Route path="/bookingconfirmation/:patientAppointmentId">
+        <SlotConfirmation />
+      </Route>
+      <Route path="/subscriptionnewdr/:doctorId">
+        <SubscriptionNewDr />
+      </Route>
+      <Route path="/medicinelist/:doctorId">
+        <MedicineList />
       </Route>
     </Switch>
   )

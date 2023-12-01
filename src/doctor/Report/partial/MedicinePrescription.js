@@ -10,9 +10,12 @@ import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import AuthApi from '../../../services/AuthApi';
 import GetMedicinePriscription from './GetMedicinePrescription';
 import ReportApi from '../../../services/ReportApi';
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
+
 export default function MedicinePrescription(props) {
     //for add new fiels (priscription)
     const { onChange, reportId, appointmentId } = props;
@@ -23,7 +26,7 @@ export default function MedicinePrescription(props) {
     const [checked, setChecked] = useState([]);
     const [saveMealData, setSaveMealData] = useState([]);
     const { getMedicine, insertMedicinePrescriptionData } = ReportApi();
-    
+
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -57,8 +60,8 @@ export default function MedicinePrescription(props) {
         getMedicineData()
     }, []);
 
-    const getMedicineData =  () => {
-         getMedicine()
+    const getMedicineData = () => {
+        getMedicine()
             .then((res) => {
                 setTabletName(res)
             })
@@ -100,7 +103,7 @@ export default function MedicinePrescription(props) {
         setDuration(e.target.value)
     }
 
-    const saveData =  () => {
+    const saveData = () => {
         const bodyData = {
             "reportId": reportId,
             'patientAppointmentId': appointmentId,
@@ -109,9 +112,10 @@ export default function MedicinePrescription(props) {
             "timing": saveMealData,
             "frequency": selectedSchedule
         }
-         insertMedicinePrescriptionData(bodyData)
+        insertMedicinePrescriptionData(bodyData)
             .then((res) => {
             })
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -167,7 +171,12 @@ export default function MedicinePrescription(props) {
 
                                 <TableCell align="right">
                                     <div className="input">
-                                        <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
+                                        <input
+                                            type="text"
+                                            value={duration}
+                                            onChange={handleDurationValue}
+                                            className="form-control"
+                                            name="duration" />
                                     </div>
                                 </TableCell>
 
@@ -195,6 +204,9 @@ export default function MedicinePrescription(props) {
             <div className="text-right add_top_30 medicinebtn">
                 <input type="submit" onClick={saveData} className="btn_1 medicinebtn" value="Save" />
                 <input type="submit" onClick={onChange} className="btn_1 medicinebtn" value="Next" />
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </div>
 

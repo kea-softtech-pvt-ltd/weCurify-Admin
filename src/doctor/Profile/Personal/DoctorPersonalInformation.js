@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import React from 'react';
+import { toast } from "react-toastify";
 import avatarImage from "../../../img/profile.png";
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
 import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
+import "react-toastify/dist/ReactToastify.css";
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-
+import Toaster from '../../Toaster'
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props
     const [updateData, setUpdateData] = useState([]);
@@ -69,8 +71,10 @@ function DoctorPersonalInformation(props) {
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
+            isSubscribed: true
         }
         submitDoctorInformation({ doctorId, bodyData })
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -163,12 +167,15 @@ function DoctorPersonalInformation(props) {
             </div>
 
             <div className="text-center add_top_30">
-                <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
+                <MainButtonInput onClick={onSubmit}> Save </MainButtonInput>
             </div>
             <div className="text-right add_top_30">
                 <MainButtonInput onClick={data}>Next</MainButtonInput>
             </div>
             {/* </form> */}
+            <div className="row float-right">
+                <Toaster />
+            </div>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { TabPanel } from "../../common/tabpanel";
@@ -9,15 +9,27 @@ import UserLinks from "./partial/uselinks";
 import PatientList from "./PatientList";
 import PatientsClinicHistory from "./PatientsClinicHistory";
 import PatientCancelledApt from "./PatientCancelledApt";
+import AuthApi from "../../services/AuthApi";
 
 export default function PatientAppointment() {
     const { doctorId } = useParams()
+    const { getDrInfo } = AuthApi()
     const [value, setValue] = useState(0);
+    const [DoctorName, setDoctorsName] = useState([])
+    useEffect(() => {
+        doctorInfo()
+    }, []);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorsName(res[0].name)
+            })
+    }
     return (
         <Wrapper>
             <MainNav>
@@ -28,6 +40,8 @@ export default function PatientAppointment() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Patient Information</li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
+
                 </ul>
 
             </MainNav>
@@ -41,7 +55,8 @@ export default function PatientAppointment() {
                         onChange={handleChange}
                         label="Ongoing Appointment"
                         label1="Completed Appointment"
-                    label2="Cancelled Appointment"
+                        label2="Cancelled Appointment"
+                        label3="InComplete Appointment"
                     >
                     </MainTabs>
 

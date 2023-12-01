@@ -3,15 +3,26 @@ import { FetchPatientInfo } from "./fetchPatientInfo";
 import { Wrapper } from "../mainComponent/Wrapper";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
-import { setHelperData } from "../recoil/atom/setHelperData";
 import { MainNav } from "../mainComponent/mainNav";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
+import { useEffect, useState } from "react";
+import AuthApi from "../services/AuthApi";
 export default function GetLoginPatientProfile() {
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { patientId } = useParams()
+    const { getDrInfo } = AuthApi()
+    const [DoctorName, setDoctorsName] = useState([])
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const doctorId = DoctorId
+    useEffect(() => {
+        doctorInfo()
+    }, [])
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorsName(res[0].name)
+            })
+    }
     return (
         <>
             <Wrapper>
@@ -23,14 +34,12 @@ export default function GetLoginPatientProfile() {
                             </Link>
                         </li>
                         <li className='float-none' style={{ fontSize: 'inherit' }}>Walkin Patient</li>
+                        <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
+
                     </ul>
                 </MainNav>
                 <div className='row'>
-                    <UserLinks
-                        doctorId={doctorId}
-                        helperId={helpersData._id}
-                        accessModule={helpersData.access_module}
-                    />
+                    <UserLinks />
                     <div className="container margin_60">
                         <div className="row patientFetch">
                             <div className=" col-md-8">

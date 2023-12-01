@@ -9,6 +9,7 @@ import moment from "moment/moment";
 import { Icon } from "@mui/material";
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
+    console.log("------",doctorData)
     const [filterData, setFilterData] = useState([])
     const { getdoctors } = AuthApi()
     const history = useHistory()
@@ -19,6 +20,7 @@ export default function DoctorList() {
     const lastIndex = activePageNo * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = doctorData.slice(firstIndex, lastIndex)
+    console.log("--records----",records)
     const nPage = Math.ceil(doctorData.length / recordsPerPage)
     const number = [...Array(nPage + 1).keys()].slice(1)
 
@@ -79,6 +81,7 @@ export default function DoctorList() {
             </MainNav>
             <div className='row'>
                 <UserLinks />
+
                 <div className="common_box">
                     <div className='row'>
                         {records.map((details, i) => {
@@ -87,10 +90,9 @@ export default function DoctorList() {
                                     <div className="cardDiv">
                                         <span className='cardSpan row'>
                                             <i className='icon-user col-md-1 color patientListIcon' />
-                                            <span align='left' className='patientName col-md-9'>Dr.{details.name}</span>
-                                            <span className='col-md-1'>
-                                                <Link to="#" onClick={() => handleShowProfile(details)}>
-                                                    <i className="icon-eye  eye-icon " />
+                                            <span align='left' className='patientName col-md-9'>
+                                                <Link to="#" className='underLine' onClick={() => handleShowProfile(details)}>
+                                                    Dr.{details.name}
                                                 </Link>
                                             </span>
                                         </span>
@@ -106,15 +108,15 @@ export default function DoctorList() {
                                             <i className='icon-email color patientListIcon' />
                                             <span className='patinetInfo'> {details.personalEmail}</span>
                                         </span>
-                                        <span className='cardSpan '>
-                                            <i className="pe-7s-date timeLink color patientListIcon" />
-                                            <Link className='' onClick={() => handleSubscription(details)} >
-                                                <span className='pl-1 patinetInfo'>
-                                                    {moment(new Date(details.subscription[0].registerDate)).format('YYYY-MM-DD')}
-                                                </span>
-                                                <span className="pl-1"> {"(" + details.subscription[0].selected_plan + ")"}</span>
-                                                <span className="greenColor "> Upgrade </span>
-                                            </Link>
+                                        <span className='row'>
+                                            <span className=' '>
+                                                <i className="pe-7s-date col-md-1 color patientListIcon" />
+                                                <Link className='' onClick={() => handleSubscription(details)} >
+                                                    <span className="col-md-2"> {"(" + details.subscription[0].selected_plan + ")"}</span>
+                                                    {moment(new Date(details.subscription[0].expiryDate)).format('YYYY-MM-DD')}
+                                                    <span className="greenColor col-md-2" > Upgrade </span>
+                                                </Link>
+                                            </span>
                                         </span>
 
                                         <div className='cardSpan appointmentBtn'>
@@ -122,7 +124,7 @@ export default function DoctorList() {
                                                 <button className='btn appColor helperBtn'>Book Appoinment</button>
                                             </Link>
                                             <Link to={`/patientappointment/${details._id}`}>
-                                                <button className='btn appColor helperBtn'>Appoinment</button>
+                                                <button className='btn appColor helperBtn'>View Appoinments</button>
                                             </Link>
                                         </div>
                                     </div>
@@ -130,35 +132,38 @@ export default function DoctorList() {
                             )
                         })}
                     </div>
-                    {records.length > 0 ?
-                        <nav aria-label="" className="add_top_20">
-                            <ul className="pagination pagination-sm">
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={prePage}>
-                                        Previous
-                                    </Link>
-                                </li>
-                                {
-                                    number.map((n, i) => {
-                                        return (
-                                            <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                                <Link className="page-link"
-                                                    to="#" onClick={() => changeCPage(n)}>
-                                                    {n}</Link>
-                                            </li>
-                                        )
-                                    })
-                                }
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={nextPage}>
-                                        Next
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        : <div className="clinicHistory" ><b>Doctor is not Available</b></div>}
+                    {
+                        records.length > 0 ?
+                            <nav aria-label="" className="add_top_20">
+                                <ul className="pagination pagination-sm">
+                                    <li className="page-item">
+                                        <Link className="page-link"
+                                            to="#" onClick={prePage}>
+                                            Previous
+                                        </Link>
+                                    </li>
+                                    {
+                                        number.map((n, i) => {
+                                            return (
+                                                <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
+                                                    <Link className="page-link"
+                                                        to="#" onClick={() => changeCPage(n)}>
+                                                        {n}</Link>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                    <li className="page-item">
+                                        <Link className="page-link"
+                                            to="#" onClick={nextPage}>
+                                            Next
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                            : <div className="clinicHistory"><b>Loading...</b></div>
+                    }
+
                 </div >
             </div>
         </Wrapper>

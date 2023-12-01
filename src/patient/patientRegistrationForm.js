@@ -23,7 +23,7 @@ function PatientRegistrationForm(props) {
         register("mobile", { required: true });
     }, [])
 
-    async function getPatientDetails() {
+     function getPatientDetails() {
         fetchPatient({ patientId })
             .then((result) => {
                 setUpdatePatientData(result[0])

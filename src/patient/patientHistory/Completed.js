@@ -94,7 +94,8 @@ export default function Completed(props) {
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className='slotTime'>
-                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                            {details.slotTime}
                                             <span className='timeS'>
                                                 <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
                                                 {details.timeSlot} Min.

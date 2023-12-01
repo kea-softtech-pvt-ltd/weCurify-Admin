@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { TabPanel } from "../common/tabpanel";
@@ -11,16 +11,30 @@ import Cancelled from "./patientHistory/Cancelled";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
+import PatientApi from "../services/PatientApi";
 
 export default function PatientHistory() {
     const { patientId } = useParams();
-    //for using tab
+    const { fetchPatient } = PatientApi()
     const [value, setValue] = useState(0);
+    const [patientName, setPatientName] = useState([]);
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
+
+    useEffect(() => {
+        patientData()
+    }, [])
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const patientData = () => {
+        fetchPatient({ patientId })
+            .then((res) => {
+                console.log("==ressss", res[0].name)
+                setPatientName(res[0].name)
+            })
 
+    }
 
     return (
         <Wrapper>
@@ -32,13 +46,14 @@ export default function PatientHistory() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Patient Information</li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Patient - {patientName}</li>
+
                 </ul>
 
             </MainNav>
             <div className="row">
-                <UserLinks
-                    doctorId={DoctorId}
-                />
+                <UserLinks />
+
                 <div className="common_box">
                     <MainTabs
                         value={value}
@@ -48,7 +63,7 @@ export default function PatientHistory() {
                         label2="Cancelled Appointment">
                     </MainTabs>
 
-                    <TabPanel  value={value} index={0}>
+                    <TabPanel value={value} index={0}>
                         <Ongoing doctorId={DoctorId} patientId={patientId} />
                     </TabPanel>
 

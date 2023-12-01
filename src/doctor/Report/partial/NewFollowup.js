@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import DatePicker from 'react-date-picker';
 import { useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
-// import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Payment from './Payment';
 import ReportApi from '../../../services/ReportApi';
+import "react-toastify/dist/ReactToastify.css"
+import { toast } from 'react-toastify';
+import Toaster from '../../Toaster';
 export default function NewFollowup(props) {
-    //for datepicker
     const { insertNewFollowUpDate, getMedicineReport } = ReportApi()
     const { onChange, reportId, fees } = props
     const [date, setDate] = useState();
@@ -28,6 +28,7 @@ export default function NewFollowup(props) {
             "new_follow_up": date,
         }
         insertNewFollowUpDate({ reportId }, bodyData)
+        toast.success("Saved Successfully!")
     }
     useEffect(() => {
         medicalReportData()
@@ -78,16 +79,13 @@ export default function NewFollowup(props) {
                     className="btn_1 medicinebtn"
                     value="Add"
                 />
-                {/* <div className="text-right  float-right"> */}
+
                 <input
                     type="submit"
-                    // onClick={getPrescriptionData}
                     className="btn_1 medicinebtn"
                     value="Make Payment"
                     onClick={handleShow}
-
                 />
-                {/* </div> */}
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Payment</Modal.Title>
@@ -97,7 +95,9 @@ export default function NewFollowup(props) {
                     </Modal.Body>
                 </Modal>
             </div>
-
+            <div className="row float-right">
+                <Toaster />
+            </div>
         </div>
 
     )

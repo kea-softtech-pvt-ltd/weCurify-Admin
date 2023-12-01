@@ -3,7 +3,6 @@ import { ShowDoctorInClinicAppointment } from "./showDoctorInClinicAppointment";
 import PatientApi from "../services/PatientApi";
 
 const DoctorAppointmentType = (props) => {
-    // const { doctorId } = props;
     const { doctorId } = props.clinicData;
     const clinicId = props.clinicData._id
     const [clinicSession, setClinicSession] = useState([])

@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import AuthApi from '../../services/AuthApi';
 import { useParams } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
 import PatientApi from '../../services/PatientApi';
 import ReportApi from '../../services/ReportApi';
+import { Wrapper } from '../../mainComponent/Wrapper';
+import { MainNav } from '../../mainComponent/mainNav';
+import UserLinks from '../Dashboard-card/partial/uselinks';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
+import AuthApi from '../../services/AuthApi';
 
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
     const { getMedicineReport } = ReportApi();
+    const { getDrInfo } = AuthApi();
     const { patientDetailsData } = PatientApi();
     const [viewData, setViewData] = useState([]);
+    const [doctorId, setDoctorId] = useState([]);
+    const [doctorName, setDoctorName] = useState([]);
     const [patientDetails, setPatientDetails] = useState([]);
 
     useEffect(() => {
         getMedicineReportData()
+        doctorInfo()
 
     }, [])
 
     const getMedicineReportData = () => {
         getMedicineReport({ reportId })
-            .then(async (res) => {
+            .then((res) => {
                 setViewData(res[0])
+                setDoctorId(res[0].doctorId)
                 const patientId = res[0].patientId
                 patientDetailsData({ patientId })
                     .then((response) => {
@@ -31,21 +40,31 @@ export default function ViewMedicalReport() {
             })
 
     }
-
+   
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorName(res[0].name)
+            })
+    }
     return (
-        <main>
-            <div className="container margin_120_95">
-                <div className="row">
-                    <div className="col-lg-12 ">
-                        <nav id="secondary_nav">
-                            {/* <Link to={`/Patientsclinichistory/${doctorId}`}>
-                                <i className="arrow_back backArrow m-3" title="back button"></i>
-                            </Link> */}
-                            <span><b>Prescription</b></span>
-                        </nav>
-                    </div>
-                </div>
-                <div className="box_form ">
+        <Wrapper>
+            <MainNav>
+                <ul className="clearfix">
+                    <li>
+                        <Link to={`/patientappointment/${doctorId}`}>
+                            <i className="arrow_back backArrow m-3" title="back button"></i>
+                        </Link>
+                    </li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>Prescription</li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {doctorName}</li>
+
+                </ul>
+
+            </MainNav>
+            <div className="row">
+                <UserLinks />
+                <div className="common_box ">
                     <h6 align="left">
                         <b>Patient Information</b>
                     </h6>
@@ -123,15 +142,15 @@ export default function ViewMedicalReport() {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="whiteBox viewMreport">
                         <GetMedicinePriscription reportId={reportId} />
                     </div>
 
-                    <div>
+                    <div className="whiteBox viewMreport">
                         <GetLabPrescription reportId={reportId} />
                     </div>
 
-                    <div>
+                    <div className="whiteBox viewMreport">
                         <GetSymptomsData reportId={reportId} />
                     </div>
 
@@ -159,6 +178,6 @@ export default function ViewMedicalReport() {
                 </div>
 
             </div>
-        </main >
+        </Wrapper >
     )
 }

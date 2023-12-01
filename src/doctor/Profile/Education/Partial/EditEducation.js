@@ -97,7 +97,7 @@ function EditEducation(props) {
     return (
         <form onSubmit={EditData} id={"EditData"} encType='multipart/form-data'>
             <div className="row">
-                <div className="col-md-6 ">
+                <div className="col-md-12 ">
                     <label><b>Doctor Degree</b></label>
                     <MainSelect
                         name="degree"
@@ -128,9 +128,6 @@ function EditEducation(props) {
                             <option key={index}>{option}</option>
                         ))}
                     </MainSelect>
-                </div>
-
-                <div className="col-md-6">
                     <label><b>Specialization</b></label>
                     <MainSelect
                         name="specialization"
@@ -142,6 +139,7 @@ function EditEducation(props) {
                         ))}
                     </MainSelect>
                 </div>
+
             </div>
 
             <div className="text-center add_top_30">

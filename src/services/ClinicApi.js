@@ -1,6 +1,7 @@
 import axios from "axios"
 import { API } from "../config"
 export default function ClinicApi() {
+
     const getAllClinicsData = async ({ doctorId }) => {
         try {
             const result = await axios.get(`${API}/fetchclinic/${doctorId}`)
@@ -38,11 +39,21 @@ export default function ClinicApi() {
             return err
         }
     }
+    const getServicess = async () => {
+        try {
+            const result = await axios.get(`${API}/clinicservicess`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     return {
 
         getAllClinicsData,
         insertOwnClinics,
         getAllOwnClinic,
         insertClinicData,
+        getServicess
     }
 }

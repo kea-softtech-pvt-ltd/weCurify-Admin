@@ -12,18 +12,18 @@ function PatientLifestyle(props) {
         setShowLifeStyleInfo(true)
     }
 
-    function GoToDashboard() {
-        history.push(`/patientDashboard/${patientId}`)
-    }
+    // function GoToDashboard() {
+    //     history.push(`/patientDashboard/${patientId}`)
+    // }
     return (
         <>
             {showLifeStyleInfo === true ?
                 <AddPatientLifestyleInfo patientId={patientId} addRecords={addLifestyleRecords} />
                 : <FetchPatientLifestyleData patientId={patientId} />
             }
-            <div className="text-right add_top_30">
+            {/* <div className="text-right add_top_30">
                 <MainButtonInput onClick={GoToDashboard}>Next</MainButtonInput>
-            </div>
+            </div> */}
         </>
     )
 }

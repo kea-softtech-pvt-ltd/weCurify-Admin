@@ -15,14 +15,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import EditSubscriptionModal from "./EditSubscriptionModal";
+import AddFeature from "./AddFeature";
 
 export default function Subscription() {
     const { deleteSubscriptionPlan, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
-    console.log("getSubData---------", getSubData)
-
     const [subModal, setSubModal] = useState(false)
     const [activeModal, setActiveModal] = useState();
+    const [feature, setFeature] = useState(false)
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -69,13 +69,33 @@ export default function Subscription() {
     }
     const handleSubShow = () => {
         setSubModal(true)
+
+    }
+    const handleFeatureClose = () => {
+        setFeature(false)
+    }
+    const handleFeatureShow = () => {
+        setFeature(true)
     }
     return (
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
-                    <li className='float-none' style={{ fontSize: 'inherit' }}>Subscription</li>
-                    <Button type="submit" onClick={handleSubShow} variant="default" className='appColor btn_sub'>Add New Plan</Button>
+                    <li className='float-none' style={{ fontSize: 'inherit', }}>Subscription</li>
+                    <Button
+                        type="submit"
+                        onClick={()=>handleSubShow()}
+                        variant="default"
+                        className='appColor btn_sub'>
+                        Add New Plan
+                    </Button>
+                    <Button
+                        type="submit"
+                        onClick={()=>handleFeatureShow()}
+                        variant="default"
+                        className='appColor btn_sub mr-3'>
+                        Add Feature
+                    </Button>
                 </ul>
             </MainNav>
             <div className='row'>
@@ -85,7 +105,6 @@ export default function Subscription() {
                         <Table className={classes.table} size="large" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left"><b>Sr.No</b></TableCell>
                                     <TableCell align="left"><b>Plan Name</b></TableCell>
                                     <TableCell align="left"><b>Billing cycle</b></TableCell>
                                     <TableCell align="left"><b>Amount</b></TableCell>
@@ -117,9 +136,7 @@ export default function Subscription() {
                                                 </Modal>
 
                                                 <TableRow>
-                                                    <TableCell align="left">
-                                                        {i}
-                                                    </TableCell>
+
                                                     <TableCell align="left">
                                                         {item.name}
                                                     </TableCell>
@@ -135,7 +152,7 @@ export default function Subscription() {
                                                                 {item["features"].map((data, i) => {
                                                                     return (
                                                                         <span key={i}>
-                                                                            {i}. {data}<br />
+                                                                            {i + 1}. {data}<br />
                                                                         </span>
                                                                     )
                                                                 })}
@@ -193,6 +210,15 @@ export default function Subscription() {
                     <SubscriptionModal onClick={handleSubClose} />
                 </Modal.Body>
 
+            </Modal>
+
+            <Modal show={feature} onHide={handleFeatureClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Feature</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AddFeature onClick={handleFeatureClose} />
+                </Modal.Body>
             </Modal>
         </Wrapper>
     )

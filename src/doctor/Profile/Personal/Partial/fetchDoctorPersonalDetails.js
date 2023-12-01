@@ -9,7 +9,7 @@ import ClinicApi from "../../../../services/ClinicApi";
 
 function FetchDoctorPersonalDetails(props) {
     const { doctorId } = props;
-    const [clinicList, setClinicList] = useRecoilState(setDoctorClinic);
+    const [clinicList, setClinicList] = useState(null);
     const { getDrInfo } = AuthApi()
     const { getAllClinicsData } = ClinicApi()
     const [fetchPersonalData, setFetchPersonalData] = useState([])
@@ -42,7 +42,7 @@ function FetchDoctorPersonalDetails(props) {
                         />
                     </figure>
                 </div>
-                <div className="col-lg-6 fetchDr" align="left">
+                <div className="col-lg-5 fetchDr" align="left">
                     <h1>Dr. {fetchPersonalData.name}</h1>
                     <div className="contacts">
                         <address>
@@ -54,33 +54,35 @@ function FetchDoctorPersonalDetails(props) {
                                     <Experience experienceData={fetchPersonalData.experienceList}></Experience>
                                 ) : null
                             }
-                            <p><Link to="#"> <b>View on map</b></Link></p>
 
                         </address>
                     </div>
                 </div>
-                <div className="col-lg-3">
-                    <h5 align='left'>Clinic List</h5>
-                    {clinicList.map((item, i) => {
-                        return (
-                            <div key={i} className='adminClinic row'>
-                                <figure className="col-lg-5">
-                                    <img
-                                        className='doctorProfile'
-                                        src={Image}
-                                        alt="Clinic Logo"
-                                    />
-                                </figure>
-                                <div className="col-lg-7">
-                                    <div>{item.clinicName}</div>
-                                    <span className="icon-location color">
-                                        {item.address}
-                                    </span>
+                {clinicList ?
+                    <div className="col-lg-3">
+                        <h5 align='left'>Clinic List</h5>
+                        {clinicList.map((item, i) => {
+                            return (
+                                <div key={i} className='adminClinic row'>
+                                    <figure className="col-lg-5">
+                                        <img
+                                            className='doctorProfile'
+                                            src={item.clinicLogo}
+                                            alt="Clinic Logo"
+                                        />
+                                    </figure>
+                                    <div className="col-lg-7">
+                                        <div>{item.clinicName}</div>
+                                        <span className="icon-location color">
+                                            {item.address}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                </div>
+                            )
+                        })
+                        }
+                    </div>
+                    : null}
             </div>
 
         </div>

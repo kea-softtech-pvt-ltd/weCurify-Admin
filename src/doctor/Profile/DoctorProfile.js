@@ -28,12 +28,8 @@ export default function DoctorProfile() {
                             <i className="arrow_back backArrow" title="back button"> </i>
                         </Link>
                     </li>
-                    <li>
-                        <Link
-                            to="#section_1" className="active">
-                            General info
-                        </Link>
-                    </li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>General info</li>
+                  
                     <li>
                         <Link
                             to={`/editdoctorprofile/${doctorId}`}>

@@ -79,6 +79,7 @@ function SetTiming(props) {
         if (sessionTime.fromTime < sessionTime.toTime) {
             setSessionTimeData(setTimeData)
                 .then(res => {
+                    console.log('==',res)
                     let setTime = {}
                     setTime[sessionTime.day] = [res.data]
                     setCoilSessionTimining({ ...coilSessionTimining, ...setTime })
@@ -96,16 +97,26 @@ function SetTiming(props) {
                 <div className="row">
                     <div className="col-lg-6">
                         <label><b>Select Time Slot</b></label>
-                        <MainSelect name="timeSlot" defaultValue="20 min" onChange={handleInputChange} value={sessionTime.timeSlot} >
-                            <option selected="selected" value={20}> 20 min</option>
+                        <MainSelect
+                            name="timeSlot"
+                            defaultValue="20 min"
+                            onChange={handleInputChange}
+                            value={sessionTime.timeSlot} >
+                            <option selected="selected" value={15}> 15 min</option>
+                            <option value={20}> 20 min</option>
                             <option value={30}> 30 min</option>
-                            <option value={15}> 15 min</option>
                         </MainSelect>
                     </div>
 
                     <div className="col-lg-6">
                         <label><b>Clinic Fees</b></label>
-                        <MainInput type="text" name="fees" onChange={handleInputChange} value={sessionTime.fees} placeholder="Enter fees" ></MainInput>
+                        <MainInput
+                            type="text"
+                            name="fees"
+                            onChange={handleInputChange}
+                            value={sessionTime.fees}
+                            placeholder="Enter fees" >
+                        </MainInput>
                     </div>
                 </div>
 
@@ -150,23 +161,29 @@ function SetTiming(props) {
                     <section className="borderSlots">
                         {selectedSlots.map((item, index) => (
                             <div key={index}>
-                                <MainInputBox
-                                    type="checkbox"
-                                    onChange={(event) => handleChange(event, index)}
-                                    value={item}
-                                    name="selectedSlots"
-                                    checked={item.status ? true : false}
+                                <div
+                                    id="ck-button"
+                                    style={item.status === false ?
+                                        { backgroundColor: 'rgb(228, 217, 217)', color: 'black' }
+                                        : null}
                                 >
-                                    <label className="btn_1">
-                                        {item.time}
+                                    <label>
+                                        <input
+                                            onChange={(event) => handleChange(event, index)}
+                                            type="checkbox"
+                                            checked={item.status ? true : false}
+                                            value="1"
+                                            name="selectedSlots"
+                                        />
+                                        <span>{item.time}</span>
                                     </label>
-                                </MainInputBox>
+                                </div>
                             </div>
                         ))}
                     </section>
                     : null
-               }
- 
+                }
+
                 <div className="text-center p-2 add_top_30">
                     <MainButtonInput>Set</MainButtonInput>
                 </div>

@@ -4,6 +4,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import GetLabPrescription from './getLabPrescription';
 import ReportApi from '../../../services/ReportApi';
+import "react-toastify/dist/ReactToastify.css"
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
 
 export default function LabPrescription(props) {
     const { onChange, reportId, appointmentId } = props
@@ -33,6 +36,7 @@ export default function LabPrescription(props) {
         }
         insertLabPrescriptionData(bodyData)
         // onChange()
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -79,6 +83,9 @@ export default function LabPrescription(props) {
                         value="Next"
                     />
                 </div>
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </>
     )

@@ -1,30 +1,39 @@
+import React, { useEffect, useState } from "react";
 import { PatientLoginForm } from "../patient/patientLoginForm";
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { MainNav } from "../mainComponent/mainNav";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
+import AuthApi from "../services/AuthApi";
+import { useRecoilState } from "recoil";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 
 export default function LoginPatient() {
+    const [DoctorName, setDoctorsName] = useState([])
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const { doctorId } = useParams()
+    const { getDrInfo } = AuthApi()
 
-    useEffect(()=>{
+    useEffect(() => {
+        doctorInfo()
+    }, [])
+    const doctorInfo = () => {
         setDoctorsId(doctorId)
-    })
-
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorsName(res[0].name)
+            })
+    }
     return (
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Add-Patient</li>
-
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
                 </ul>
             </MainNav>
             <div className='row'>
-                <UserLinks/>
+                <UserLinks />
                 <div className="">
                     <div className="common_box ">
                         <PatientLoginForm doctorId={doctorId} redirection="dashboard" />

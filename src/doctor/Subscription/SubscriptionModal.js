@@ -105,7 +105,7 @@ export default function SubscriptionModal(props) {
                     onChange={handlePlan}
                     getOptionLabel={(Plan) => `${Plan.days}`}
                     options={Plan}
-                    renderInput={(params) => <TextField {...params} label="choose one" />}
+                    renderInput={(params) => <TextField {...params} label="choose one (days)" />}
                 />
             </div>
             <div className='align-left '>

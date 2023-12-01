@@ -2,19 +2,23 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { useState, useEffect } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import GetSymptomsData from './GetSymptomsData'
 import ReportApi from '../../../services/ReportApi';
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 export default function Symptoms(props) {
     const { onChange, reportId } = props
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
-    const [otherSymptom, setOtherSymptoms] = useState('')
+    const [inputSymptom, setInputSymptoms] = useState([])
+
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = ReportApi();
 
     useEffect(() => {
         getSymptomsData();
     }, [])
+
     const getSymptomsData = () => {
         symptomsData()
             .then((result) => {
@@ -27,36 +31,42 @@ export default function Symptoms(props) {
         setSaveSymptoms(selectedValue)
     }
 
-    const handleOtherChangeValue = (e) => {
-        setOtherSymptoms(e.target.value)
+    const addInputBox = () => {
+        const value = [...inputSymptom,[]]
+        setInputSymptoms(value)
     }
-    // const clearData = () => {
-    //     setOtherSymptoms('')
-    //     setSymptoms()
-    // }
 
+    const handleInputChange = (onChangeValue, i) => {
+        const inputData = [...inputSymptom]
+        inputData[i] = onChangeValue.target.value;
+        setInputSymptoms(inputData)
+    }
+    const handleDelete = (i) => {
+        const deleteVal = [...inputSymptom]
+        deleteVal.splice(i)
+        setInputSymptoms(deleteVal)
+    }
     const addSymptoms = () => {
-        saveSymptoms.push(otherSymptom)
+        const symptom = saveSymptoms.push(...inputSymptom)
         const bodyData = {
             "symptoms": saveSymptoms,
         }
         insertSymptoms({ reportId }, bodyData)
             .then(() => {
                 const other = {
-                    "symptoms": otherSymptom,
+                    "symptoms": symptom,
                 }
                 insertSymptom_masterTable(other)
             })
+        toast.success("Saved Successfully!")
 
-        // onChange()
-        // clearData()
     }
 
 
     return (
         <div>
-            <div className='symptomsData w-100'>
-                <div className='w-40'>
+            <div className='symptomsData row'>
+                <div className='col-md-3'>
                     <label className='left'>Choose Symptoms</label>
                     <Autocomplete
                         style={{ width: 250 }}
@@ -75,19 +85,40 @@ export default function Symptoms(props) {
                             />}
                     />
                 </div>
-                <div className="symptomsInput w-30">
+                <div className="symptomsInput col-sm-4">
                     <span className="vital-signInput ">
-                        <label className='left' >Other</label>
-                        <input
-                            type="text"
-                            className="form-control "
-                            onChange={handleOtherChangeValue}
-                            placeholder="Enter your symptoms"
-                        />
+
+                        {
+                            inputSymptom.map((data, i) => {
+                                return (
+                                    <div className=' d-flex'>
+                                        <input
+                                            type="text"
+                                            className="form-control mb-2"
+                                            onChange={(e) => handleInputChange(e, i)}
+                                            placeholder="Enter your symptoms"
+                                        />
+                                        <input
+                                            type="submit"
+                                            onClick={() => handleDelete(i)}
+                                            className="btn_1 patientinfo ml-2"
+                                            value="Delete"
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
+                        <div>
+                            <input
+                                type="submit"
+                                onClick={() => addInputBox()}
+                                className="btn_1 addSymptomBtn "
+                                value="Add Symptoms"
+                            />
+                        </div>
                     </span>
                 </div>
-
-                <div className='getSymptoms w-30'  >
+                <div className='getSymptoms col-md-3'>
                     <GetSymptomsData reportId={reportId} />
                 </div>
             </div>
@@ -98,6 +129,7 @@ export default function Symptoms(props) {
                     className="btn_1 patientinfo"
                     value="Save"
                 />
+
                 <input
                     type="submit"
                     onClick={onChange}
@@ -105,6 +137,9 @@ export default function Symptoms(props) {
                     value="Next"
                 />
 
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </div>
     )

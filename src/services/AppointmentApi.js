@@ -35,13 +35,24 @@ export default function AppointmentApi() {
         }
         catch (err) {
             return err
-
         }
     };
+
+    const getappointment = async ({patientAppointmentId}) => {
+        try {
+            const result = await axios.get(`${API}/getappointment/${patientAppointmentId}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    };
+
     return {
         cancelPatientAppointment,
         downloadPrescription,
         getPatientListDetails,
-        createPDF
+        createPDF,
+        getappointment
     }
 }

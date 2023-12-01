@@ -136,7 +136,7 @@ export default function AllPatients() {
                                 </li>
                             </ul>
                         </nav>
-                        : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+                        : <div className="clinicHistory" ><b>Loading...</b></div>}
 
                 </div >
             </div>

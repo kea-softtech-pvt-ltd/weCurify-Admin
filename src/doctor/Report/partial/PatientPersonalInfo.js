@@ -1,8 +1,11 @@
-import React, { useState, useRef } from 'react';
-import AuthApi from '../../../services/AuthApi';
+import React, { useState } from 'react';
 import ReportApi from '../../../services/ReportApi';
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 export default function PatientPersonalInfo(props) {
-    const { reportId,onChange } = props
+    const { reportId, onChange } = props
     const { insertPatientVitalSignsData } = ReportApi()
     const [changeData, setChangeData] = useState({
         age: "",
@@ -34,7 +37,7 @@ export default function PatientPersonalInfo(props) {
     //     })
 
     // }
-    const saveData =  (e) => {
+    const saveData = (e) => {
         e.preventDefault();
         const bodyData = {
             "age": changeData.age,
@@ -46,12 +49,14 @@ export default function PatientPersonalInfo(props) {
             "pulse": changeData.pulse,
             "problem": changeData.problem,
         }
-         insertPatientVitalSignsData({ reportId }, bodyData)
+        insertPatientVitalSignsData({ reportId }, bodyData)
             .then((res) => {
                 //     setSavingData(res)
                 //     // setPatientId(res.patientId)
             })
-       // clearData()
+        toast.success("Saved Successfully!")
+        // clearData()
+
     }
 
 
@@ -62,7 +67,7 @@ export default function PatientPersonalInfo(props) {
                     <div className="row">
                         <div className="">
                             <div align='left'>
-                                <label>Message</label>
+                                <label>Problem</label>
                             </div>
                             <textarea
                                 type="text"
@@ -177,6 +182,10 @@ export default function PatientPersonalInfo(props) {
                             className="btn_1 medicinebtn"
                             value="Next"
                         />
+
+                    </div>
+                    <div className="row float-right">
+                        <Toaster />
                     </div>
                 </div>
 

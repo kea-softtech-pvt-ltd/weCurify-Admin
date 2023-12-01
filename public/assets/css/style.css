@@ -47,7 +47,7 @@ ul#cat_nav {
 	font-size: 20px;
 }
 
-.edubutton{
+.edubutton {
 	float: right;
 	color: #1a3c8b;
 	margin-right: 5px;
@@ -406,12 +406,12 @@ a {
 .modalbtn {
 	/* padding-bottom: 30px; */
 }
-.bottomborder{
+.bottomborder {
 	border-bottom-style: solid;
 	border-width: 1px;
 	border-color: #d7d4d4;
 }
-.rightborder{
+.rightborder {
 	border-right-style: solid;
 	border-width: 1px;
 	border-color: #d7d4d4;
@@ -511,15 +511,15 @@ a.btn_1 {
 }
 .symptomsData {
 	display: flex;
-	/* margin-right: -15px; */
-	/* margin-left: -15px; */
 }
+.addSymptomBtn{
+	position: relative;
+    right: 43px;
+}
+
 .getSymptoms {
-	/* margin-left: 80px; */
 	position: relative;
 	left: 200px;
-	/* bottom: 150px; */
-	/* float: right; */
 }
 
 .patientInfobtn {
@@ -2130,6 +2130,10 @@ a.wish_bt:hover:after {
 	color: #999;
 	text-decoration: underline;
 }
+.underLine {
+	color: #1a3c8b;
+	text-decoration: underline;
+}
 .infoBox {
 	padding-right: 50px !important;
 }
@@ -3358,6 +3362,11 @@ a.btn_2 .full-width {
 	position: relative;
 	left: 125px;
 }
+.PatientDataS {
+	text-align: left;
+	padding-top: 15px;
+	font-size: large;
+}
 .patientDetails {
 	height: 100%;
 }
@@ -3397,11 +3406,9 @@ a.btn_2 .full-width {
 	accent-color: #1a3c8b;
 }
 .card {
-	height: 325px;
-	width: 28%;
 	border-radius: 10px;
-	padding: 25px;
-	margin: 22px;
+	padding: 22px;
+	margin: 15px;
 }
 
 .helperLabel {
@@ -3507,7 +3514,7 @@ input[type="radio"]:checked + label {
 	height: 100%;
 	border-radius: 50%;
 }
-.marginBottom{
+.marginBottom {
 	margin-top: 50px;
 }
 .doctorphotoPatient {
@@ -4787,7 +4794,8 @@ a.box_feat_about h3 {
 	color: #5bb444;
 	font-size: larger;
 	font-weight: bold;
-	margin-left: 75px;
+	text-decoration: underline;
+	/* margin-left: 75px; */
 }
 .eye-icon {
 	font-size: 18px;
@@ -4815,12 +4823,16 @@ a.box_feat_about h3 {
 .fontSize {
 	font-size: 15px;
 }
+.fontS {
+	font-size: 20px;
+}
 .timeSlot {
 	margin-left: 115px;
 }
 .timeS {
 	margin-left: 85px;
 }
+
 .time {
 	font-weight: 600;
 }
@@ -4832,14 +4844,46 @@ a.box_feat_about h3 {
 	border: 1px solid #ddddf7;
 	margin-bottom: 30px;
 }
-.btn_sub{
-	border:1px solid #ddddf7;
+
+ 
+
+#ck-button {
+	margin: 4px;
+	background-color: #1a3c8b;
+	border-radius: 4px;
+	color: white;
+	float: left;
+}
+
+#ck-button:hover {
+	background: #072364;
+	color: rgb(245, 243, 243);
+}
+
+#ck-button label {
+	float: left;
+	width: 4em;
+}
+
+#ck-button label span {
+	text-align: center;
+	padding: 3px 0px;
+	display: block;
+}
+
+#ck-button label input {
+	position: absolute;
+	top: -135px;
+}
+
+.btn_sub {
+	border: 1px solid #ddddf7;
 	float: right;
 }
-.autocompleteWidth{
-	width:100%;
+.autocompleteWidth {
+	width: 100%;
 }
-.eduCard{
+.eduCard {
 	width: 100%;
 	background-color: #f7f8fa;
 	border-radius: 5px;
@@ -4867,6 +4911,20 @@ a.box_feat_about h3 {
 	background-color: #1a3c8b;
 	color: white;
 }
+.clinicLogo {
+	height: 60px;
+	width: 60px;
+	border-radius: 5px;
+}
+.clinicLocation {
+	position: relative;
+	left: 90px;
+	bottom: 20px;
+}
+.clinicData {
+	display: flex;
+}
+
 .appColor:hover {
 	background-color: rgb(16, 35, 129);
 }
@@ -4901,6 +4959,9 @@ a.box_feat_about h3 {
 }
 .input input[type="text"] {
 	width: 100px;
+}
+.toaster {
+	z-index: 2;
 }
 .payment {
 	width: 100px;
@@ -4944,8 +5005,8 @@ a.box_feat_about h3 {
 	top: 10px;
 }
 
- .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
-  padding: 9px !important;
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+	padding: 9px !important;
 }
 
 textarea.form-control {
@@ -4987,15 +5048,16 @@ textarea.form-control {
 	border-bottom: 1px solid #e1e8ed;
 	padding: 10px 10px;
 }
+
 .dashSpace {
 	line-height: 65px;
 }
 .wrapperCss {
 	width: 100%;
 }
-.color-box{
+.color-box {
 	background-color: #f5f8fa;
-	padding:10px;
+	padding: 10px;
 }
 .common_box {
 	background-color: hsl(0, 7%, 97%);

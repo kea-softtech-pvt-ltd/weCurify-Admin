@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const ShowInClinicAppointSlots = (props) => {
-    const { sessionSlot, selectedDate, session, slotDate } = props;
+    const { sessionSlot, selectedDate, session, slotDate, doctorId } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
     const [bookingSlots, setBookingSlots] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
-    const [data, setData] = useState([])
     const { paymentInfo, getbookedSlots } = PatientApi();
-    const history = useHistory()
+    const history = useHistory();
+
     useEffect(() => {
         availableSlots()
     }, [])
@@ -25,15 +25,15 @@ const ShowInClinicAppointSlots = (props) => {
     }
     const handleDeleteClose = () => {
         setShowDelete(false)
-        history.push(`/allpatient`)
     }
 
     const handleSelectedSlot = (item) => {
         const startDate = (selectedDate + " " + item.time)
+        const slotId = item._id
         const transactionData = {
             "DoctorId": session.doctorId,
             "ClinicId": session.clinicId,
-            "slotId": item._id,
+            "slotId": slotId,
             "patientId": patientId,
             // "order_id": payCheck.orderId,
             "transactionId": '123',
@@ -52,15 +52,17 @@ const ShowInClinicAppointSlots = (props) => {
         paymentInfo(transactionData)
             .then((res) => {
                 handleDeleteClose()
+                history.push(`/bookingconfirmation/${res._id}`)
             })
+
     }
     const availableSlots = () => {
         getbookedSlots(session.doctorId, session.clinicId)
             .then((result) => {
                 const data = result.filter((item) => {
                     if (item.date === slotDate)
-                        return item
-                })
+                    return item
+            })
                 setBookingSlots(data)
             })
 

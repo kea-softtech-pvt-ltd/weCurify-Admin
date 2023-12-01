@@ -4,14 +4,30 @@ import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
-import { setHelperData } from "../recoil/atom/setHelperData";
+import { setDoctorId } from "../recoil/atom/setDoctorId";
+import AuthApi from "../services/AuthApi";
+import { useEffect, useState } from "react";
 
 export default function CreatePatientProfile() {
     const history = useHistory()
     const { patientId } = useParams()
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const { getDrInfo } = AuthApi()
+    const [DoctorName, setDoctorsName] = useState([])
+    const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
+    const doctorId = DoctorId
+
+    useEffect(() => {
+        doctorInfo()
+    }, [])
+
     function handalChange() {
         history.push(`/getLoginPatientProfile/${patientId}`)
+    }
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorsName(res[0].name)
+            })
     }
     return (
         <Wrapper>
@@ -23,13 +39,12 @@ export default function CreatePatientProfile() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Walkin Patient</li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
+
                 </ul>
             </MainNav>
             <div className='row'>
-                <UserLinks
-                    helperId={helpersData._id}
-                    accessModule={helpersData.access_module}
-                />
+                <UserLinks />
                 <div className="container margin_60">
                     <div className="patientFetch">
                         <div className="Form-data">

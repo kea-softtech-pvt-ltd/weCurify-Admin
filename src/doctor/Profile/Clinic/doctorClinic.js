@@ -1,11 +1,12 @@
 import { AddDoctorClinicInfo } from "./Partial/AddDoctorClinicInfo";
 // import { AddDoctorOwnClinicInfo } from "./Partial/addDoctorOwnClinicInfo";
 
-function DoctorClinic() {
+function DoctorClinic(props) {
+    const {doctorId} = props
     return (
         <>
-            <div className="row">
-                <AddDoctorClinicInfo />
+            <div className="">
+                <AddDoctorClinicInfo doctorId={doctorId}/>
                 {/* <AddDoctorOwnClinicInfo /> */}
             </div>
 

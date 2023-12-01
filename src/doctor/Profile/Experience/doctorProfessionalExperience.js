@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from "react";
-import Icon from '@material-ui/core/Icon';
+import { useState } from "react";
 import { FetchExperience } from "./Partial/fetchExperience";
 import { AddDoctorProfessionalExperience } from "./Partial/addDoctorProfessionalExperience";
 import { Link } from '@material-ui/core';
@@ -8,7 +7,7 @@ import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
 function DoctorProfessionalExperience(props) {
     const { doctorId } = props
-    const [showExperience, setShowExperience] = useState(false);
+    const [showExperience, setShowExperience] = useState(true);
     function handleAdd() {
         setShowExperience(!showExperience)
     }
@@ -23,7 +22,7 @@ function DoctorProfessionalExperience(props) {
             <div className="row float-right">
                 <div className="my-2 ">
                     <Link to="#" onClick={() => handleAdd()}>
-                        <Icon className="addiconbutton">add</Icon>
+                        <MainButtonInput>Add</MainButtonInput>
                     </Link>
                 </div>
                 <div className="m-2">

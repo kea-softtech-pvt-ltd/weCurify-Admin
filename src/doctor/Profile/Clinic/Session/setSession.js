@@ -24,13 +24,13 @@ function SetSession(props) {
     const [showDelete, setShowDelete] = useState(false);
     const { allSessions, deleteSlot } = SessionApi()
     const dayList = {
-        "sun": "Sunday",
-        "mon": "Monday",
-        "tue": "Tuesday",
-        "wed": "Wednesday",
-        "thu": "Thursday",
-        "fri": "Friday",
-        "sat": "Saturday",
+        "mon": "Mon",
+        "tue": "Tues",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun",
     }
     const daysKeys = Object.keys(dayList)
 
@@ -111,16 +111,15 @@ function SetSession(props) {
                                 {fetchUpdateTime[item]
                                     ?
                                     <>
-                                        <div className="col-md-7 p-2" >
+                                        <div className="col-md-7 p-2 " >
                                             <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
-                                                <span>
+                                                <span >
                                                     {moment(new Date(fetchUpdateTime[item][0].fromTime)).format('HH:mm')}
                                                     -
                                                     {moment(new Date(fetchUpdateTime[item][0].toTime)).format('HH:mm')}
                                                     <span className='ml-3'>
-                                                        <FaRupeeSign />
+                                                        {fetchUpdateTime[item][0].fees}/-
                                                     </span>
-                                                    {fetchUpdateTime[item][0].fees}/-
                                                 </span>
                                             </Link>
                                         </div>
@@ -135,18 +134,24 @@ function SetSession(props) {
                                         <>
                                             {fetchTime[item]
                                                 ?
-                                                <> <div className="col-md-6" >
-                                                    <Link onClick={(e) => handleUpdate(e, fetchTime[item])} >
-                                                        <span>
-                                                            {moment(new Date(fetchTime[item][0].fromTime)).format('HH:mm')}
-                                                            -
-                                                            {moment(new Date(fetchTime[item][0].toTime)).format('HH:mm')}
-                                                            <FaRupeeSign />
-                                                            {fetchTime[item][0].fees}/-
-                                                        </span>
-                                                    </Link>
-
-                                                </div>
+                                                <>
+                                                    <div className="col-md-7 p-2" >
+                                                        <Link onClick={(e) => handleUpdate(e, fetchTime[item])} >
+                                                            <span>
+                                                                {moment(new Date(fetchTime[item][0].fromTime)).format('HH:mm')}
+                                                                -
+                                                                {moment(new Date(fetchTime[item][0].toTime)).format('HH:mm')}
+                                                                <span className='ml-3'>
+                                                                    {fetchTime[item][0].fees}/-
+                                                                </span>
+                                                            </span>
+                                                        </Link>
+                                                    </div>
+                                                    <span className="col-md-2 ">
+                                                        <Link to="#" onClick={() => handleDeleteShow(item)}>
+                                                            <Icon className="icon-trash-2" style={{ fontSize: 17 }} ></Icon>
+                                                        </Link>
+                                                    </span>
                                                 </>
                                                 :
                                                 <div className="col-md-7 p-2">
@@ -170,7 +175,12 @@ function SetSession(props) {
                     <Modal.Title>Add Session</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SetTiming doctorId={doctorId} clinicId={clinicId} day={dayName} onSubmit={handleTimeClick} />
+                    <SetTiming
+                        doctorId={doctorId}
+                        clinicId={clinicId}
+                        day={dayName}
+                        onSubmit={handleTimeClick}
+                    />
                 </Modal.Body>
             </Modal>
             <Modal show={updateTime} onHide={handleUpdateClose}>
@@ -178,7 +188,12 @@ function SetSession(props) {
                     <Modal.Title>Update Session</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SetUpdateTime doctorId={doctorId} day={dayName} update={updateItem} onSubmit={handleUpdateTimeClick} />
+                    <SetUpdateTime
+                        doctorId={doctorId}
+                        day={dayName}
+                        update={updateItem}
+                        onSubmit={handleUpdateTimeClick}
+                    />
                 </Modal.Body>
             </Modal>
             <div>

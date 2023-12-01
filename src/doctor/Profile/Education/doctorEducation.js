@@ -8,7 +8,7 @@ import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
 function DoctorEducation(props) {
     const { doctorId } = props
-    const [showEducation, setShowEducation] = useState(false);
+    const [showEducation, setShowEducation] = useState(true);
 
     function handleAdd() {
         setShowEducation(!showEducation);
@@ -24,7 +24,7 @@ function DoctorEducation(props) {
             <div className="row float-right">
                 <div className="my-2 ">
                     <Link onClick={() => handleAdd()}>
-                        <Icon className="addiconbutton " style={{fontSize:150}}>add</Icon>
+                        <MainButtonInput>Add</MainButtonInput>
                     </Link>
                 </div>
                 <div className="m-2 ">
@@ -32,13 +32,13 @@ function DoctorEducation(props) {
                 </div>
             </div>
             <div className='my-5'>
-            {showEducation === false ? (
-                <div>
-                    <AddDoctorEducation doctorId={doctorId} recordAdded={handleRecordAdded} />
-                </div>
-            ) : null}
-</div>
+                {showEducation === false ? (
+                    <div>
+                        <AddDoctorEducation doctorId={doctorId} recordAdded={handleRecordAdded} />
+                    </div>
+                ) : null}
+            </div>
         </>
     )
 }
-export { DoctorEducation }
+export { DoctorEducation } 

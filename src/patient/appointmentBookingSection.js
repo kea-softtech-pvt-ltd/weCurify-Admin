@@ -3,16 +3,13 @@ import { DoctorAppointmentType } from "../patient/doctorAppointmentType";
 import { MainAccordion } from "../mainComponent/MainAccordion";
 import { FaClinicMedical } from "react-icons/fa";
 import AuthApi from "../services/AuthApi";
-import { useRecoilState } from "recoil";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { MainNav } from "../mainComponent/mainNav";
-import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
 function AppointmentBookingSection() {
     const [clinicData, setClinicData] = useState([])
     const { doctorId } = useParams();
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorName, setDoctorName] = useState([])
     const { getDrInfo } = AuthApi()
 
@@ -42,11 +39,7 @@ function AppointmentBookingSection() {
                 </ul>
             </MainNav>
             <div className='row'>
-                <UserLinks
-                    doctorId={doctorId}
-                    helperId={helpersData._id}
-                    accessModule={helpersData.access_module}
-                />
+                <UserLinks />
                 <div className="white-box booking">
                     {clinicData.map((clinicItem, id) => (
                         <>

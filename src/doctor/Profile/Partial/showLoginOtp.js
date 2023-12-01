@@ -23,12 +23,9 @@ function ShowLoginOtp(props) {
                 if (getOTP !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {
-                    if (isLoggedIn === true) {
-                        history.push(`/dashboard/${_id}`)
-                    } else {
-                        history.push(`/subscription/${_id}`);
-                    }
+                    history.push(`/subscriptionnewdr/${_id}`);
                 }
+
             })
     }
 

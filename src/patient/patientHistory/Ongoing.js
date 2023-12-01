@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import AuthApi from "../../services/AuthApi";
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import PatientApi from '../../services/PatientApi';
@@ -34,19 +33,7 @@ export default function Ongoing(props) {
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-    // async function saveData(item) {
-    //     const bodyData = {
-    //         "doctorId": doctorId,
-    //         "patientId": item.patientId,
-    //         'patientAppointmentId': item._id,
-    //         'clinicId': item.clinicId,
-    //         "fees": item.fees
-    //     }
-    //     await MedicineReportData(bodyData)
-    //         .then((res) => {
-    //             history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
-    //         })
-    // }
+   
     function getPatientDetails() {
         getpaymentData({ patientId })
             .then((result) => {
