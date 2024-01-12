@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditExperience } from "./editExperience";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
@@ -11,6 +11,18 @@ function FetchExperience(props) {
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)
     const [activeModal, setActiveModal] = useState()
     const { fetchExperienceData, removeExperience } = ExperienceApi();
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
+
+    useEffect(() => {
+        getAllExperience()
+    }, [])
+
+    const handleDeleteShow = (item) => {
+        setItem(item)
+        setShowDelete(true)
+    }
+    const handleDeleteClose = () => setShowDelete(false)
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -22,10 +34,6 @@ function FetchExperience(props) {
     const EditData = () => {
         handleClose(true);
     };
-
-    useEffect(() => {
-        getAllExperience()
-    }, [fetchExperience])
 
     const getAllExperience = () => {
         fetchExperienceData({ doctorId })
@@ -62,6 +70,7 @@ function FetchExperience(props) {
             .then(() => {
                 getAllExperience()
             })
+            handleDeleteClose()
     }
 
     return (
@@ -71,16 +80,23 @@ function FetchExperience(props) {
                     return (
                         <div className='col-sm-5 mx-3'>
                             <div className="" key={index}>
-                                <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
+                                <Modal
+                                    show={activeModal === index}
+                                    onHide={handleClose}
+                                    id={`experience-${experience._id}`}
+                                    key={experience._id}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Edit Experience Data</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <EditExperience doctorId={doctorId} ExId={experience._id} onSubmit={EditData} />
+                                        <EditExperience
+                                            doctorId={doctorId}
+                                            ExId={experience._id}
+                                            onSubmit={EditData} />
                                     </Modal.Body>
                                 </Modal>
                                 <div className="row">
-                                    <div className="eduCard">
+                                    <div className="grayBox">
                                         <div className="row">
                                             <div className='col-md-9'>
                                                 <div className="" align='left'>
@@ -139,7 +155,7 @@ function FetchExperience(props) {
                                                 </Link>
                                                 <Link
                                                     to="#"
-                                                    onClick={e => removeExperienceData(experience, e)}
+                                                    onClick={() => handleDeleteShow(experience)}
                                                     className="editbutton">
                                                     <i className="icon-trash-2"
                                                         title="Delete profile">
@@ -155,6 +171,25 @@ function FetchExperience(props) {
                         </div>
                     )
                 })}
+                <div>
+                    <Modal show={showDelete} onHide={handleDeleteClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Are You Sure?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="alert alert-danger">You Want To Delete This Session</div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="default" className='appColor' onClick={()=>removeExperienceData(Item)}>
+                                Yes
+                            </Button>
+                            <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                                No
+                            </Button>
+
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             </div >
         </>
     )

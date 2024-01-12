@@ -10,6 +10,7 @@ import PatientList from "./PatientList";
 import PatientsClinicHistory from "./PatientsClinicHistory";
 import PatientCancelledApt from "./PatientCancelledApt";
 import AuthApi from "../../services/AuthApi";
+import PatientIncompleteApt from "./PatientIncompleteApt";
 
 export default function PatientAppointment() {
     const { doctorId } = useParams()
@@ -59,7 +60,6 @@ export default function PatientAppointment() {
                         label3="InComplete Appointment"
                     >
                     </MainTabs>
-
                     <TabPanel value={value} index={0}>
                         <PatientList doctorId={doctorId} />
                     </TabPanel>
@@ -70,6 +70,9 @@ export default function PatientAppointment() {
 
                     <TabPanel value={value} index={2}>
                         <PatientCancelledApt doctorId={doctorId} />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        <PatientIncompleteApt doctorId={doctorId} />
                     </TabPanel>
 
                 </div>

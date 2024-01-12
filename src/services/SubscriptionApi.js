@@ -96,6 +96,7 @@ export default function SubscriptionApi() {
             return err
         }
     }
+   
     return {
         subscription,
         getSubscriptionData,

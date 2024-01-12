@@ -5,17 +5,20 @@ import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Button, Modal } from "react-bootstrap";
+import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
 export default function SubscriptionCard() {
-    const { updateSubscriptionData, getSubscriptionData } = SubscriptionApi()
+    const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
     const [subscriptionId, setSubscriptionId] = useState([])
     const { doctorId } = useParams();
     const history = useHistory()
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
+    const [getSubscription, setGetSubscription] = useState([])
 
     useEffect(() => {
+        getSubscriptionPlan()
         fetchSubscription()
     }, [])
 
@@ -39,15 +42,31 @@ export default function SubscriptionCard() {
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
-            "plan": plan,
+            "expiryDate": new Date(),
+            "plan": plan.name,
+            "duration": plan.frequency
         }
         updateSubscriptionData({ _id }, bodyData)
             .then(() => {
-                history.push(`/doctorlist/${doctorId}`)
+                history.push(`/doctorprofile/${doctorId}`)
                 setGetSubData(plan)
-                handleClose()
             })
+        handleClose()
 
+    }
+    const getSubscriptionPlan = () => {
+        getSubscriptionPlans()
+            .then((res) => {
+                subscriptionPlan(res)
+            })
+    }
+    const subscriptionPlan = (res) => {
+        const data = res.filter((sub) => {
+            if (sub.status === true) {
+                return (sub)
+            }
+        })
+        setGetSubscription(data)
     }
 
     return (
@@ -69,116 +88,42 @@ export default function SubscriptionCard() {
                     <UserLinks
                         doctorId={doctorId}
                     />
-                    <div className=" col-md-10">
-                        <div className="container ">
-                            <div className="row">
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">Free-Trial</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === 'free-trial' ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        >Subscribed
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow('free-trial')}
-                                            className="sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">6-Month</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === '6-month' ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        >Get Started
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow('6-month')}
-                                            className="sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">Yearly</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === "yearly" ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        > Subscribed
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow("yearly")}
-                                            className="sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                            </div>
+                    <div className="col-sm-10">
+                        <div className='row'>
+                            {getSubscription.map((item, i) => {
+                                return (
+                                    <div className="whiteCard  col-3" key={i}>
+                                        <span>
+                                            <h4 className="add_top_20 ">{item.name}</h4>
+                                        </span>
+                                        <h5> <FaRupeeSign />-{item.amount}</h5>
+                                        <ul className="card-text cardListScroll underline" >
+                                            {item.features.map((data, i) => {
+                                                return (
+                                                    <li key={i} className="card-list">
+                                                        <i className="icon-right-circled" title="right-tick"></i>
+                                                        {data}
+                                                    </li>
+                                                )
+                                            })}
 
+                                        </ul>
+                                        {getSubData === item.name ?
+                                            <button
+                                                onClick={handleClose}
+                                                className="btn disabled-card add_bottom_15 shadow-none disabled"
+                                            >Subscribed
+                                            </button>
+                                            : <button
+                                                onClick={() => handleShow(item)}
+                                                className="sub-card-btn add_bottom_15 shadow-none btn btn-primary">
+                                                Get Started
+                                            </button>
+                                        }
+
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                     <Modal show={show} onHide={handleClose}>

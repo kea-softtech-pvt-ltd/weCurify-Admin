@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AddHelper from './partial/AddHelper';
 import HelperList from './partial/helperList';
 import { useParams, Link } from 'react-router-dom';
-import AuthApi from '../../services/AuthApi';
 import { MainNav } from '../../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
 import { Wrapper } from '../../mainComponent/Wrapper';

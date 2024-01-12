@@ -10,11 +10,8 @@ import { Wrapper } from "../mainComponent/Wrapper";
 export default function PatientDashboard() {
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
-    console.log("=/////",doctorId)
     const { patientId } = useParams()
-    // console.log('===....', patientId)
     let history = useHistory();
-    // const doctorId = getDoctorId;
     function handleClick() {
         history.push(`/appointment/${patientId}`);
     }

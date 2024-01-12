@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from '@material-ui/core/Icon';
 import { FetchEducation } from "./Partial/fetchEducation";
 import { AddDoctorEducation } from "./Partial/addDoctorEducation";
 import { useState } from "react";

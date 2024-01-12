@@ -21,7 +21,6 @@ export default function SlotConfirmation() {
     const [doctorData, setDoctorData] = useState([])
     const [patientData, setPatientData] = useState([])
     const [AppoinmentData, setAppointmentData] = useState([])
-    console.log("--AppoinmentData-", AppoinmentData)
     const { getappointment } = AppointmentApi()
     useEffect(() => {
         doctorInfo()

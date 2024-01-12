@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import SubscriptionApi from '../../../src/services/SubscriptionApi'
 import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
-import SubscriptionApi from "../../services/SubscriptionApi";
-export default function SubscriptionNewDr() {
+export default function Subscription() {
     const { subscription, getSubscriptionPlans } = SubscriptionApi()
     const [show, setShow] = useState(false);
     const [getSubData, setGetSubData] = useState([])
@@ -63,29 +63,27 @@ export default function SubscriptionNewDr() {
                                 {getSubscription.map((item, i) => {
                                     return (
 
-                                        <div className="col-md-4 " >
-                                            <div className="card " key={i}>
-                                                <span>
-                                                    <h4 className="">{item.name}</h4>
-                                                </span>
-                                                <h5> <FaRupeeSign />-{item.amount}</h5>
-                                                <ul className="card-text" >
-                                                    {item.features.map((data, i) => {
-                                                        return (
-                                                            <li key={i} className="card-list">
-                                                                <i className="icon-right-circled" title="right-tick"></i>
-                                                                {data}
-                                                            </li>
-                                                        )
-                                                    })}
+                                        <div className="whiteCard  col-3" key={i}>
+                                            <span>
+                                                <h4 className="add_top_20">{item.name}</h4>
+                                            </span>
+                                            <h5> <FaRupeeSign />-{item.amount}</h5>
+                                            <ul className=" card-text cardListScroll underline" >
+                                                {item.features.map((data, i) => {
+                                                    return (
+                                                        <li key={i} className="card-list">
+                                                            <i className="icon-right-circled" title="right-tick"></i>
+                                                            {data}
+                                                        </li>
+                                                    )
+                                                })}
 
-                                                </ul>
-                                                <button
-                                                    onClick={() => handleShow(item)}
-                                                    className="sub-card-btn shadow-none btn btn-primary">
-                                                    Get Started
-                                                </button>
-                                            </div>
+                                            </ul>
+                                            <button
+                                                onClick={() => handleShow(item)}
+                                                className=" sub-card-btn add_bottom_15 shadow-none btn btn-primary">
+                                                Get Started
+                                            </button>
                                         </div>
                                     )
                                 })}

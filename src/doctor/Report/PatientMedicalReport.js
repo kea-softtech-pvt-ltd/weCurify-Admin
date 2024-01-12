@@ -39,16 +39,14 @@ function TabPanel(props) {
 
 export default function PatientMedicalReport() {
     const { reportId } = useParams();
-    const { getMedicineReport } = ReportApi()
     const { getDrInfo } = AuthApi()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [DoctorName, setDoctorsName] = useState([])
-
     const { state } = useLocation()
     const { fees } = state.data
+
     useEffect(() => {
-        medicalReportData()
         doctorInfo()
     }, [])
     //for tab
@@ -61,19 +59,12 @@ export default function PatientMedicalReport() {
     function changeTab(tabIndex) {
         setValue(tabIndex);
     }
-    const medicalReportData = () => {
-        getMedicineReport({ reportId })
-            .then((res) => {
-                // setDoctorId(res[0].doctorId)
-            })
-
-    }
+ 
 
 
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                console.log("===res",res[0])
                 setDoctorsName(res[0].name)
             })
     }

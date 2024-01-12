@@ -27,22 +27,22 @@ function FetchDoctorPersonalDetails(props) {
     const getAllClinics = () => {
         getAllClinicsData({ doctorId })
             .then(jsonRes => {
-                setClinicList(jsonRes)
+                setClinicList(jsonRes.clinicData)
             });
     }
     return (
         <div className="profile"  >
             <div className="row" key={fetchPersonalData.id}>
-                <div className="col-lg-3">
-                    <figure>
+                <div className="col-lg-5 col-md-4">
+                   
                         <img
                             src={fetchPersonalData.photo}
                             alt="doctorProfile"
-                            className='doctorProfile'
+                            className='doctorPic borderRadius'
                         />
-                    </figure>
+                   
                 </div>
-                <div className="col-lg-5 fetchDr" align="left">
+                <div className="col-lg-7 col-md-8" align="left">
                     <h1>Dr. {fetchPersonalData.name}</h1>
                     <div className="contacts">
                         <address>
@@ -58,7 +58,7 @@ function FetchDoctorPersonalDetails(props) {
                         </address>
                     </div>
                 </div>
-                {clinicList ?
+                {/* {clinicList ?
                     <div className="col-lg-3">
                         <h5 align='left'>Clinic List</h5>
                         {clinicList.map((item, i) => {
@@ -66,13 +66,13 @@ function FetchDoctorPersonalDetails(props) {
                                 <div key={i} className='adminClinic row'>
                                     <figure className="col-lg-5">
                                         <img
-                                            className='doctorProfile'
+                                            className='doctorProfile borderRadius'
                                             src={item.clinicLogo}
                                             alt="Clinic Logo"
                                         />
                                     </figure>
-                                    <div className="col-lg-7">
-                                        <div>{item.clinicName}</div>
+                                    <div className="col-lg-7" >
+                                        <div >{item.clinicName}</div>
                                         <span className="icon-location color">
                                             {item.address}
                                         </span>
@@ -82,7 +82,7 @@ function FetchDoctorPersonalDetails(props) {
                         })
                         }
                     </div>
-                    : null}
+                    : null} */}
             </div>
 
         </div>

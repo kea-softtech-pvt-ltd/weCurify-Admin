@@ -9,45 +9,26 @@ import moment from "moment/moment";
 import { Icon } from "@mui/material";
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
-    console.log("------",doctorData)
     const [filterData, setFilterData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState();
     const { getdoctors } = AuthApi()
     const history = useHistory()
 
-    //For Pagination
-    const [activePageNo, setActivePageNo] = useState(1)
-    const recordsPerPage = 6;
-    const lastIndex = activePageNo * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = doctorData.slice(firstIndex, lastIndex)
-    console.log("--records----",records)
-    const nPage = Math.ceil(doctorData.length / recordsPerPage)
-    const number = [...Array(nPage + 1).keys()].slice(1)
 
     useEffect(() => {
-        getDoctorList()
-    }, [])
+        getDoctorList(currentPage)
+    }, [currentPage])
 
-    //For Pagination
-    function prePage() {
-        if (activePageNo !== 1) {
-            setActivePageNo(activePageNo - 1)
-        }
-    }
-    function changeCPage(id) {
-        setActivePageNo(id)
-    }
-    function nextPage() {
-        if (activePageNo !== nPage) {
-            setActivePageNo(activePageNo + 1)
 
-        }
-    }
+
     const getDoctorList = () => {
-        getdoctors()
+        const pageSize = 6;
+        getdoctors(currentPage, pageSize)
             .then((result) => {
-                setFilterData(result)
-                setDoctorData(result)
+                setFilterData(result.doctorList)
+                setDoctorData(result.doctorList)
+                setTotalPages(result.doctorListPages)
             })
     }
     const searchDoctor = (value) => {
@@ -60,7 +41,19 @@ export default function DoctorList() {
     const handleSubscription = (details) => {
         history.push(`/subscriptioncard/${details._id}`)
     }
-
+    const handlePrevPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    function changeCPage() {
+        setCurrentPage(currentPage * totalPages)
+    }
+    const handleNextPage = () => {
+        if (currentPage !== totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
     return (
         <Wrapper>
             <MainNav>
@@ -73,18 +66,19 @@ export default function DoctorList() {
                         </div>
                         <div className="mx-2 mt-2">
                             <Link to={`/addnewdoctor`}>
-                                <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
+                                <Icon className="addiconbutton" style={{ fontSize: 50 }}>add</Icon>
                             </Link>
                         </div>
                     </div>
                 </ul>
             </MainNav>
+
             <div className='row'>
                 <UserLinks />
 
                 <div className="common_box">
                     <div className='row'>
-                        {records.map((details, i) => {
+                        {doctorData.map((details, i) => {
                             return (
                                 <div key={i} className="col-md-4 ">
                                     <div className="cardDiv">
@@ -132,38 +126,32 @@ export default function DoctorList() {
                             )
                         })}
                     </div>
-                    {
-                        records.length > 0 ?
-                            <nav aria-label="" className="add_top_20">
-                                <ul className="pagination pagination-sm">
-                                    <li className="page-item">
-                                        <Link className="page-link"
-                                            to="#" onClick={prePage}>
-                                            Previous
-                                        </Link>
-                                    </li>
-                                    {
-                                        number.map((n, i) => {
-                                            return (
-                                                <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                                    <Link className="page-link"
-                                                        to="#" onClick={() => changeCPage(n)}>
-                                                        {n}</Link>
-                                                </li>
-                                            )
-                                        })
-                                    }
-                                    <li className="page-item">
-                                        <Link className="page-link"
-                                            to="#" onClick={nextPage}>
-                                            Next
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </nav>
-                            : <div className="clinicHistory"><b>Loading...</b></div>
-                    }
+                    <ul className="pagination pagination-sm">
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </Link>
+                        </li>
 
+                        {/* <li className='page-item '>
+                            <Link className="page-link"
+                                to="#" onClick={() => changeCPage()}>
+                                {currentPage}
+                            </Link>
+                        </li> */}
+
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={handleNextPage}
+                                disabled={currentPage === totalPages}>
+                                Next
+                            </Link>
+                        </li>
+
+                    </ul>
                 </div >
             </div>
         </Wrapper>

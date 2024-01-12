@@ -12,6 +12,7 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import PatientApi from "../services/PatientApi";
+import Incomplete from "./patientHistory/Incomplete";
 
 export default function PatientHistory() {
     const { patientId } = useParams();
@@ -30,7 +31,6 @@ export default function PatientHistory() {
     const patientData = () => {
         fetchPatient({ patientId })
             .then((res) => {
-                console.log("==ressss", res[0].name)
                 setPatientName(res[0].name)
             })
 
@@ -60,7 +60,8 @@ export default function PatientHistory() {
                         onChange={handleChange}
                         label="Ongoing Appointment"
                         label1="Completed Appointment"
-                        label2="Cancelled Appointment">
+                        label2="Cancelled Appointment"
+                        label3="Incomplete Appointment">
                     </MainTabs>
 
                     <TabPanel value={value} index={0}>
@@ -75,6 +76,9 @@ export default function PatientHistory() {
                         <Cancelled doctorId={DoctorId} patientId={patientId} />
                     </TabPanel>
 
+                    <TabPanel value={value} index={3}>
+                        <Incomplete doctorId={DoctorId} patientId={patientId} />
+                    </TabPanel>
                 </div>
 
             </div>

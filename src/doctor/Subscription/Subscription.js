@@ -135,8 +135,7 @@ export default function Subscription() {
                                                     </Modal.Body>
                                                 </Modal>
 
-                                                <TableRow>
-
+                                                <TableRow className="rowHieght">
                                                     <TableCell align="left">
                                                         {item.name}
                                                     </TableCell>
@@ -146,7 +145,7 @@ export default function Subscription() {
                                                     <TableCell align="left">
                                                         {item.amount}
                                                     </TableCell>
-                                                    <TableCell align="left">
+                                                    <TableCell align="left" className="scroll">
                                                         {getSubData.length > 0 ?
                                                             <>
                                                                 {item["features"].map((data, i) => {

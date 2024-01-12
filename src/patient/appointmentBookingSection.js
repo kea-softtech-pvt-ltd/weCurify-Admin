@@ -8,8 +8,8 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { MainNav } from "../mainComponent/mainNav";
 import { Wrapper } from "../mainComponent/Wrapper";
 function AppointmentBookingSection() {
-    const [clinicData, setClinicData] = useState([])
     const { doctorId } = useParams();
+    const [clinicData, setClinicData] = useState([])
     const [doctorName, setDoctorName] = useState([])
     const { getDrInfo } = AuthApi()
 

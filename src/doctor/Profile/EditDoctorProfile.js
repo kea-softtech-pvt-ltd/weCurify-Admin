@@ -14,6 +14,8 @@ import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import { Button } from 'react-bootstrap';
 import AuthApi from '../../services/AuthApi';
+import { MainButtonInput } from '../../mainComponent/mainButtonInput';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 export default function EditDoctorProfile() {
     const { getDrInfo } = AuthApi()
     const { doctorId } = useParams();
@@ -21,7 +23,7 @@ export default function EditDoctorProfile() {
     //for using tab
     const [tabValue, setTabValue] = useState(0);
     const [DoctorName, setDoctorsName] = useState([])
-
+    const history = useHistory()
     useEffect(() => {
         doctorInfo()
     }, [])
@@ -46,6 +48,9 @@ export default function EditDoctorProfile() {
             })
     }
 
+    const DoneClick = () => {
+        history.push(`/doctorlist`)
+    }
     return (
         <Wrapper>
             <MainNav>
@@ -69,11 +74,14 @@ export default function EditDoctorProfile() {
                 />
                 <div className="white-box">
                     <div align='right'>
-                        <Button className='appColor '  >
+                        {/* <Button className='appColor '  >
                             <Link className='appColor  ' to={`/doctorlist`}>
                                 Done
                             </Link>
-                        </Button>
+                        </Button> */}
+                        <div className="text-right add_top_30">
+                            <MainButtonInput onClick={DoneClick}>Done</MainButtonInput>
+                        </div>
                     </div>
                     <MainTabs
                         value={tabValue}

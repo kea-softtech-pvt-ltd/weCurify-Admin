@@ -7,44 +7,38 @@ import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 export default function AllPatients() {
     const [patientData, setPatientData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0);
     const { getAllPatient } = PatientApi()
     const history = useHistory()
 
-    //For Pagination
-    const [activePageNo, setActivePageNo] = useState(1)
-    const recordsPerPage = 6;
-    const lastIndex = activePageNo * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = patientData.slice(firstIndex, lastIndex)
-    const nPage = Math.ceil(patientData.length / recordsPerPage)
-    const number = [...Array(nPage + 1).keys()].slice(1)
-
-
     useEffect(() => {
-        getPatientList()
-    }, [])
+        getPatientList(currentPage)
+    }, [currentPage])
 
-    //For Pagination
-    function prePage() {
-        if (activePageNo !== 1) {
-            setActivePageNo(activePageNo - 1)
-        }
-    }
-    function changeCPage(id) {
-        setActivePageNo(id)
-    }
-    function nextPage() {
-        if (activePageNo !== nPage) {
-            setActivePageNo(activePageNo + 1)
-
-        }
-    }
     const getPatientList = () => {
-        getAllPatient()
+        const pageSize = 6;
+        getAllPatient(currentPage, pageSize)
             .then((res) => {
-                setPatientData(res)
+                setPatientData(res.patientList)
+                setTotalPages(totalPages)
             })
     }
+
+    const handlePrevPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    function changeCPage() {
+        setCurrentPage(currentPage * totalPages)
+    }
+    const handleNextPage = () => {
+        if (currentPage !== totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+    
     const handleShowProfile = (details) => {
         history.push(`/patientprofile/${details._id}`)
     }
@@ -65,13 +59,14 @@ export default function AllPatients() {
                 </ul>
             </MainNav>
             <div className='row'>
-                <UserLinks/>
+                <UserLinks />
                 <div className="common_box">
+
                     <div className='row'>
-                        {records.map((details, i) => {
+                        {patientData.map((details, i) => {
                             return (
                                 <>
-                                    <div className="col-md-4 ">
+                                    <div className="col-md-4 " key={i}>
                                         <div className="cardDiv">
                                             <span className='cardSpan '>
                                                 <i className='icon-user color patientListIcon' />
@@ -108,36 +103,33 @@ export default function AllPatients() {
 
                         })}
                     </div>
-                    {records.length > 0 ?
-                        <nav aria-label="" className="add_top_20">
-                            <ul className="pagination pagination-sm">
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={prePage}>
-                                        Previous
-                                    </Link>
-                                </li>
-                                {
-                                    number.map((n, i) => {
-                                        return (
-                                            <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                                <Link className="page-link"
-                                                    to="#" onClick={() => changeCPage(n)}>
-                                                    {n}</Link>
-                                            </li>
-                                        )
-                                    })
-                                }
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={nextPage}>
-                                        Next
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        : <div className="clinicHistory" ><b>Loading...</b></div>}
 
+                    <ul className="pagination pagination-sm">
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </Link>
+                        </li>
+
+                        <li className='page-item '>
+                            <Link className="page-link"
+                                to="#" onClick={() => changeCPage()}>
+                                {currentPage}
+                            </Link>
+                        </li>
+
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={handleNextPage}
+                                disabled={patientData === null}>
+                                Next
+                            </Link>
+                        </li>
+
+                    </ul>
                 </div >
             </div>
         </Wrapper>

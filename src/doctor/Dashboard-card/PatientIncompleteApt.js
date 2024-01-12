@@ -1,50 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-import moment from 'moment';
-import { Button } from 'react-bootstrap';
-import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
-import AppointmentApi from '../../services/AppointmentApi';
-import Sharing from './partial/Sharing';
-const { getStorage, ref, getDownloadURL } = require("firebase/storage");
+import { useEffect, useState } from "react";
+import AccessTimeRounded from "@material-ui/icons/AccessTimeRounded"
+import moment from "moment";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import AppointmentApi from "../../services/AppointmentApi";
 
-export default function PatientsClinicHistory(props) {
+export default function PatientIncompleteApt(props) {
     const { doctorId } = props
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
-    const { downloadPrescription, getPatientListDetails } = AppointmentApi()
-
-    const storage = getStorage();
+    const { getPatientListDetails } = AppointmentApi()
 
     useEffect(() => {
-        getPatientHistory();
-    }, [])
+        getPatientHistory(currentPage);
+    }, [currentPage]);
+
 
     function getPatientHistory() {
         const pageSize = 6;
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('=result=', result)
-                const totalPages = result.totalCompletedPages;
+                console.log('----', result)
+                const totalPages = result.totalIncompletePage;
                 setTotalPages(totalPages)
-                setPatientHistoryData(result.completed)
+                setPatientHistoryData(result.incomplete)
             })
     }
-
-
-    const downloadPdf = async (details) => {
-        const reportId = details.medicalReportId
-        downloadPrescription(reportId)
-            .then((result) => {
-                let alink = document.createElement('a');
-                alink.href = result;
-                alink.setAttribute("target", "_blank")
-                alink.download = 'Prescription.pdf';
-                alink.click();
-            })
-
-    }
-
 
     const handlePrevPage = () => {
         if (currentPage !== 1) {
@@ -60,55 +41,46 @@ export default function PatientsClinicHistory(props) {
         }
     };
     return (
-        <div className="">
+        <>
             <div className='row'>
                 {patientHistoryData.map((details, i) => {
                     return (
                         <>
-
                             <div className="col-md-4 " key={i}>
                                 <div className="cardDiv">
-                                    <span className='cardSpan'>
+                                    <span className='cardSpan '>
                                         <i className='icon-user color patientListIcon' />
-                                        <span className=' patientName'>
-                                            {details['patientDetails'][0].name}
-                                        </span>
+                                        <span className='patientName'>{details['patientDetails'][0].name}</span>
                                     </span>
                                     <span className='cardSpan'>
                                         <i className='icon-mobile-1 color patientListIcon' />
-                                        {details['patientDetails'][0].mobile}
+                                        <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
                                     </span>
                                     {/* <span className='cardSpan '>
                                         <i className='icon-hospital-1 color patientListIcon' />
-                                        {details['clinicList'][0].clinicName}
+                                        <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
                                     </span> */}
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className='slotTime'>
-                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                            <span className=' ml-2'>
+                                        <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                            <span className='ml-2'>
                                                 {details.slotTime}
                                             </span>
-                                            <span className=' timeS'>
-                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                            <span className='timeSlot'>
+                                                <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
                                                 {details.timeSlot} Min.
                                             </span>
                                         </span>
                                     </span>
 
-                                    <div className='cardSpan appointmentBtn historyBtn'>
-                                        <Link to={`/patient-history/${details.medicalReportId}`}>
-                                            <Button className="appColor helperBtn" > View</Button>
-                                        </Link>
-                                        <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
-                                        <Sharing reportId={details.medicalReportId} />
-                                    </div>
                                 </div>
                             </div>
+
                         </>
                     )
 
                 })}
+
             </div>
             {patientHistoryData.length > 0 ?
                 <ul className="pagination pagination-sm">
@@ -122,11 +94,11 @@ export default function PatientsClinicHistory(props) {
                     </li>
 
                     {/* <li className='page-item '>
-                    <Link className="page-link"
-                        to="#" onClick={() => changeCPage()}>
-                        {currentPage}
-                    </Link>
-                </li> */}
+                <Link className="page-link"
+                    to="#" onClick={() => changeCPage()}>
+                    {currentPage}
+                </Link>
+            </li> */}
 
                     <li className="page-item">
                         <Link className="page-link"
@@ -136,7 +108,8 @@ export default function PatientsClinicHistory(props) {
                         </Link>
                     </li>
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
-        </div>
+                : <div className="clinicHistory" ><b>Data is not Available</b></div>
+            }
+        </>
     )
 }

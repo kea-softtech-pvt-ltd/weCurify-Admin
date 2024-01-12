@@ -19,10 +19,19 @@ export default function AppointmentApi() {
             return err
         }
     }
-    const getPatientListDetails = async ({ doctorId }) => {
+    const getPatientListDetails = async ({ doctorId }, currentPage, pageSize) => {
         try {
-            const result = await axios.get(`${API}/getBookingData/${doctorId}`);
+            const result = await axios.get(`${API}/getBookingData/${doctorId}?page=${currentPage}&pageSize=${pageSize}`);
             return result.data;
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const updateIncompleteStatus = async (patientAppointmentId, bodyData) => {
+        try {
+            const result = await axios.post(`${API}/updateIncompleteStatus/${patientAppointmentId}`, bodyData)
+            return result.data
         }
         catch (err) {
             return err
@@ -53,6 +62,7 @@ export default function AppointmentApi() {
         downloadPrescription,
         getPatientListDetails,
         createPDF,
-        getappointment
+        getappointment,
+        updateIncompleteStatus
     }
 }

@@ -10,7 +10,7 @@ function PatientMedicalInformation(props) {
         setShowMedicalInfo(true)
     }
     return (
-        <>
+        <div className=''>
             {showMedicalInfo === true ?
                 <AddPatientMedicalInfo patientId={patientId} addMedicalRecord={handleRecordAdded} />
                 :
@@ -20,7 +20,7 @@ function PatientMedicalInformation(props) {
             <div className="text-right  add_top_30">
                 <MainButtonInput onClick={props.Medical}>Next</MainButtonInput>
             </div>
-        </>
+        </div>
 
 
     )

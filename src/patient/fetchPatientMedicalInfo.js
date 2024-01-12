@@ -36,8 +36,11 @@ function FetchPatientMedicalInfo(props) {
     return (
         <>
             {fetchPatientdata.map((item, index) => (
-                <div className="box_form">
-                    <Link onClick={e => handleShow(e, index)} className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
+                <div className="grayBox">
+                    <Link
+                     onClick={e => handleShow(e, index)} className="editbutton">
+                        <i className="icon_pencil-edit mr-3 mt-3" title="Edit profile"></i>
+                            </Link>
                     <Modal show={activeModal === index} onHide={handleClose} id={`item-${item._id}`} key={item._id}>
                         <Modal.Header closeButton>
                             <Modal.Title>Edit Patient Data</Modal.Title>

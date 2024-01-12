@@ -1,21 +1,27 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import React from 'react';
-import { toast } from "react-toastify";
-import avatarImage from "../../../img/profile.png";
+import avatarImage from '../../../img/profile.png'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
 import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
-import "react-toastify/dist/ReactToastify.css";
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import Toaster from '../../Toaster'
+import Toaster from "../../Toaster";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 function DoctorPersonalInformation(props) {
-    const { data, doctorId } = props
+    const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
-    const { addDoctorInformation, submitDoctorInformation } = AuthApi();
+
+    const {
+        addDoctorInformation,
+        submitDoctorInformation
+    } = AuthApi();
+
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -23,22 +29,31 @@ function DoctorPersonalInformation(props) {
                 ['address']: address
             }
         })
+        setValue("address", address)
     }
-
 
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
+        setValue(name, value)
     };
 
     useEffect(() => {
+        register("name", { required: true });
+        register("gender", { required: true });
+        register("personalEmail", { required: true });
+        register("address", { required: true });
+        addDrInfo()
+    }, [])
+
+    const addDrInfo = () => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
                 setUpdateData(jsonRes)
             });
-    }, [])
 
+    }
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -53,17 +68,12 @@ function DoctorPersonalInformation(props) {
             xhr.open("GET", uri, true);
             xhr.send(null);
         });
-
         const fileRef = ref(getStorage(), uuid.v4());
-
         const result = await uploadBytes(fileRef, blob);
-
-        // blob.close();
         return await getDownloadURL(fileRef);
     }
-
-    const { formState: { errors } } = useForm();
-    const onSubmit = async () => {
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const onSubmit = async (data) => {
         const resultUrl = await uploadImageAsync(updateData.photo)
         const bodyData = {
             photo: resultUrl,
@@ -74,15 +84,17 @@ function DoctorPersonalInformation(props) {
             isSubscribed: true
         }
         submitDoctorInformation({ doctorId, bodyData })
+            .then(() => {
+            })
         toast.success("Saved Successfully!")
+
     }
 
     return (
-        <>
-            {/* <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'> */}
+        <form encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6 ">
-                    <div className="row">
+                    <div className="row mb-10">
                         <div className="col-md-5">
                             <div className="doctorphoto">
                                 {updateData.photo ?
@@ -114,38 +126,53 @@ function DoctorPersonalInformation(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="marginBottom">
-                        <div className="text-left">
-                            <label><b>Gender</b></label>
-                        </div>
-                        <div className="col-6 ">
-                            <MainRadioGroup
-                                name="gender"
-                                value="female"
-                                value1="male"
-                                value2="other"
-                                onChange={handleInputChange}
-                                label="Female"
-                                label1="male"
-                                label2="other">
-                            </MainRadioGroup>
-                            {errors.gender && <span className="validation">Please Select your gender</span>}
-                        </div>
+                    <div className="text-left">
+                        <label><b>Gender *</b></label>
+                    </div>
+                    <div className="col-6 radioButton">
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
+                            name="gender"
+                            onChange={handleInputChange}
+                            checked={updateData.gender === 'female'}
+                        />
+                        <span>Female</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
+                            name="gender"
+                            checked={updateData.gender === 'male'}
+                            onChange={handleInputChange}
+                        />
+                        <span>Male</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
+                            name="gender"
+                            checked={updateData.gender === 'other'}
+                            onChange={handleInputChange}
+                        />
+                        <span>Other</span>
+                        {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null}
                     </div>
                 </div>
                 <div className="col-md-5">
                     <div className="text-left">
-                        <label><b>Full Name</b></label>
+                        <label><b>Full Name *</b></label>
                     </div>
                     <MainInput
                         name="name"
                         value={updateData.name}
                         onChange={handleInputChange}
                         placeholder="Name">
-                        {errors.name && <span className="validation">Please enter your first name</span>}
+                        { errors.name && <span className="validation">User Name is Required</span> }
                     </MainInput>
                     <div className="text-left">
-                        <label><b>Personal EmailId</b></label>
+                        <label><b>Personal EmailId *</b></label>
                     </div>
                     <MainInput
                         type="email"
@@ -153,30 +180,29 @@ function DoctorPersonalInformation(props) {
                         name="personalEmail"
                         onChange={handleInputChange}
                         placeholder="Personal EmailId">
-                        {errors.personalEmail && <span className="validation">Please enter your personal Email</span>}
+                        { errors.personalEmail && <span className="validation"> Email is Required</span> }
                     </MainInput>
                     <div align='left'>
                         <PlacesAutocompleteInput
+                            name='address'
                             value={updateData.address}
                             onChange={handleChangeAddress}>
-                            <label ><b>City & Area</b></label>
+                            <label ><b>City & Area *</b></label>
                         </PlacesAutocompleteInput>
                     </div>
-                    {errors.address && <span className="validation">Please enter your location</span>}
+                    { errors.address && <span className="validation">Location is Required</span>}
                 </div>
             </div>
-
-            <div className="text-center add_top_30">
-                <MainButtonInput onClick={onSubmit}> Save </MainButtonInput>
-            </div>
-            <div className="text-right add_top_30">
-                <MainButtonInput onClick={data}>Next</MainButtonInput>
-            </div>
-            {/* </form> */}
             <div className="row float-right">
+                <div className="text-left m-2 add_top_30">
+                    <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
+                </div>
+                <div className="text-left m-2 add_top_30">
+                    <MainButtonInput onClick={data}>Next</MainButtonInput>
+                </div>
                 <Toaster />
             </div>
-        </>
+        </form>
     )
 }
 export { DoctorPersonalInformation }

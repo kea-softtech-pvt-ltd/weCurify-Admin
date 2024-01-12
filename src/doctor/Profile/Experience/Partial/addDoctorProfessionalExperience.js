@@ -7,23 +7,29 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import ExperienceApi from '../../../../services/ExperienceApi';
+import { toast } from 'react-toastify';
+import Toaster from '../../../Toaster';
+import "react-toastify/dist/ReactToastify.css";
+
 function AddDoctorProfessionalExperience(props) {
-    const { doctorId } = props
+    const { doctorId} = props
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
     const [error, setError] = useState('')
     const [startYear, setStartYear] = useState(new Date())
     const [endYear, setEndYear] = useState(new Date())
     const [experienceData, setExperienceData] = useState([]);
     const { insertDrExperience } = ExperienceApi();
+
     const handleStartYearChange = (date) => {
-        // const splitDate = date.split("")
-        // const year = splitDate[0]
-        // const month = splitDate[1]
-        // const dateString =`${year}-${month}`
         setStartYear(date)
     }
     const handleEndYearChange = (date) => {
-        setEndYear(date)
+        if (startYear < date) {
+            setEndYear(date)
+        }
+        else {
+            setError("Select Valid Year")
+        }
     }
 
     useEffect(() => {
@@ -48,17 +54,13 @@ function AddDoctorProfessionalExperience(props) {
             startYear: startYear,
             description: data.description
         }
-        if (endYear < startYear) {
-            setError("end year should be greater than start year")
-        }
-        else {
-            insertDrExperience(newDoctorData)
-                .then((res) => {
-                    const reArrangedData = manipulateExperience(res.data)
-                    setCoilDoctorExperience(coilDoctorExperience.concat(reArrangedData))
-                    props.addRecords()
-                })
-        }
+        insertDrExperience(newDoctorData)
+            .then((res) => {
+                const reArrangedData = manipulateExperience(res)
+                setCoilDoctorExperience(coilDoctorExperience.concat(reArrangedData))
+            })
+
+            toast.success("Saved Successfully!")
     }
 
     function manipulateExperience(data) {
@@ -87,30 +89,30 @@ function AddDoctorProfessionalExperience(props) {
         <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6">
-                <div className="row">
-                    <div className="col-md-6 ">
-                    <div className=" text-left">
-                        <MainMuiPickers
-                            name="startYear"
-                            value={startYear}
-                            onChange={handleStartYearChange}>Start year
-                        </MainMuiPickers>
+                    <div className="row">
+                        <div className="col-md-6 ">
+                            <div className=" text-left">
+                                <MainMuiPickers
+                                    name="startYear"
+                                    value={startYear}
+                                    onChange={handleStartYearChange}>Start year
+                                </MainMuiPickers>
+                            </div>
                         </div>
-                        {error && <span className="validation">select valid year</span>}
-                    </div>
-                    <div className="col-md-6">
-                    <div className=" text-left">
-                        <MainMuiPickers
-                            name="endYear"
-                            value={endYear}
-                            onChange={handleEndYearChange}>End Year
-                        </MainMuiPickers>
+                        <div className="col-md-6">
+                            <div className=" text-left">
+                                <MainMuiPickers
+                                    name="endYear"
+                                    value={endYear}
+                                    onChange={handleEndYearChange}>End Year
+                                </MainMuiPickers>
+                            </div>
+                            <span className="validation">{error}</span>
                         </div>
                     </div>
-                    </div>
-                    <div className="col-md-14 ">
-                    <div className=" text-left">
-                        <label><b>Clinic/Hospital Name</b></label>
+                    <div className="col-md-14 marginTop ">
+                        <div className="text-left">
+                            <label><b>Clinic/Hospital Name</b></label>
                         </div>
                         <MainInput
                             type="text"
@@ -118,14 +120,14 @@ function AddDoctorProfessionalExperience(props) {
                             value={experienceData.clinicName}
                             onChange={handleInputChange}
                             placeholder="clinic name">
-                            {errors.clinicName && <span className="validation">Please enter clinic name</span>}
                         </MainInput>
+                        {errors.clinicName && <span className="validation">Please enter clinic name</span>}
                     </div>
-                    </div>
-                    <div className="col-lg-6">
-                        <div className=" text-left">
-                            <label><b>Description</b></label>
-                            <div>
+                </div>
+                <div className="col-lg-6">
+                    <div className="form-group text-left">
+                        <label><b>Description</b></label>
+                        <div>
                             <textarea
                                 type="text"
                                 name="description"
@@ -134,16 +136,19 @@ function AddDoctorProfessionalExperience(props) {
                                 className="form-textarea p-2"
                                 placeholder="description"
                             />
-                            </div>
                         </div>
-                        {errors.description && <span className="validation">Type something here</span>}
                     </div>
-
+                    {errors.description && <span className="validation">Type something here</span>}
                 </div>
 
-                <div className="text-center my-2">
-                    <MainButtonInput>Save</MainButtonInput>
-                </div>
+            </div>
+
+            <div className="text-center my-2">
+                <MainButtonInput>Save</MainButtonInput>
+            </div>
+            <div className="row float-right toaster">
+                <Toaster />
+            </div>
         </form>
     )
 }

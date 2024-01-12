@@ -48,12 +48,22 @@ export default function ClinicApi() {
             return err
         }
     }
+    const clinicDelete = async (clinicId) => {
+        try {
+            const result = await axios.delete(`${API}/deleteclinic/${clinicId}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     return {
 
         getAllClinicsData,
         insertOwnClinics,
         getAllOwnClinic,
         insertClinicData,
-        getServicess
+        getServicess,
+        clinicDelete
     }
 }

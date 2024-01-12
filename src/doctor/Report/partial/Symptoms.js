@@ -12,7 +12,6 @@ export default function Symptoms(props) {
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
     const [inputSymptom, setInputSymptoms] = useState([])
-
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = ReportApi();
 
     useEffect(() => {
@@ -32,7 +31,7 @@ export default function Symptoms(props) {
     }
 
     const addInputBox = () => {
-        const value = [...inputSymptom,[]]
+        const value = [...inputSymptom, []]
         setInputSymptoms(value)
     }
 
@@ -47,16 +46,18 @@ export default function Symptoms(props) {
         setInputSymptoms(deleteVal)
     }
     const addSymptoms = () => {
-        const symptom = saveSymptoms.push(...inputSymptom)
+        saveSymptoms.push(...inputSymptom)
         const bodyData = {
             "symptoms": saveSymptoms,
         }
         insertSymptoms({ reportId }, bodyData)
             .then(() => {
-                const other = {
-                    "symptoms": symptom,
-                }
-                insertSymptom_masterTable(other)
+                inputSymptom.map((data, i) => {
+                    const other = {
+                        "symptoms": data,
+                    }
+                    insertSymptom_masterTable(other)
+                })
             })
         toast.success("Saved Successfully!")
 
@@ -138,7 +139,7 @@ export default function Symptoms(props) {
                 />
 
             </div>
-            <div className="row float-right">
+            <div className="row float-right toaster">
                 <Toaster />
             </div>
         </div>

@@ -467,7 +467,7 @@ a.btn_1 {
 }
 .labData {
 	position: relative;
-	left: 200px;
+	left: 50px;
 }
 .medicinebtn {
 	margin: 10px;
@@ -519,7 +519,7 @@ a.btn_1 {
 
 .getSymptoms {
 	position: relative;
-	left: 200px;
+	left: 50px;
 }
 
 .patientInfobtn {
@@ -3156,6 +3156,9 @@ a.social_bt {
 	height: 75%;
 	width: 75%;
 }
+.doctorPic{
+	height: 200px;
+}
 .patientData {
 	margin-bottom: 10px;
 }
@@ -3182,7 +3185,25 @@ a.social_bt {
 .profile ul.contacts li {
 	margin-bottom: 15px;
 }
-
+.whiteCard{
+	background-color: white;
+	margin: 20px;
+    margin-right: 25px;
+    margin-left: 55px;
+	border-radius: 5px;
+}
+.cardListScroll{
+	height: 200px;
+	overflow: auto;
+}
+.Nav-active{
+	background-color:#e1e9fa;
+	color:white;
+    position: relative;
+    top: 4px;
+    left: 7px;
+    border-radius: 5px;
+}
 .profile ul.contacts li h6 {
 	font-size: 14px;
 	font-size: 0.875rem;
@@ -3348,12 +3369,11 @@ a.btn_2 .full-width {
 .patientDataStyle {
 	text-align: left;
 	padding-top: 15px;
-	margin-left: 40px;
-	margin-bottom: 40px;
-	display: flex;
-	justify-content: center;
+	font-size: medium;
+}
+.buttonPatient {
+	width: 200px;
 	align-items: center;
-	font-size: large;
 }
 .getPatientData {
 	text-align: left;
@@ -3440,9 +3460,7 @@ a.btn_2 .full-width {
 	line-height: 35px;
 }
 .adminClinic {
-	/* padding:10px; */
-	/* border:1px solid  #1a3c8b; */
-	margin: 5px;
+	margin-left: 15px;
 }
 /*radio button*/
 section {
@@ -3514,14 +3532,26 @@ input[type="radio"]:checked + label {
 	height: 100%;
 	border-radius: 50%;
 }
-.marginBottom {
-	margin-top: 50px;
+.marginTop {
+	margin-top: 6px;
 }
+
 .doctorphotoPatient {
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
 	margin-top: 10px;
+}
+/* .fixHeader{
+	position: sticky;
+	z-index: 1;
+} */
+.box_general_4 {
+	background-color: #fff;
+	padding: 30px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #e1e8ed;
 }
 .documentStyle {
 	margin: 5px;
@@ -3996,6 +4026,16 @@ ul.treatments.checkout li strong {
 .appLogo {
 	height: 50px;
 	width: 140px;
+	/* z-index: 1; */
+}
+.radioButton{
+	font-size: 0.875rem;
+    min-height: 40px;
+}
+.radio_button{
+	accent-color: #1a3c8b;
+	color: white;
+	margin: 10px;
 }
 .viewMreport {
 	padding: 10px;
@@ -4509,6 +4549,7 @@ input[type="file"]::-webkit-file-upload-button {
 .validation {
 	color: red;
 	float: right;
+
 }
 .drValidation {
 	color: red;
@@ -4517,10 +4558,9 @@ input[type="file"]::-webkit-file-upload-button {
 .adminLogin {
 	margin-top: 20px;
 }
-.adminLabel {
-}
-.adminbtn {
-	margin-top: 15px;
+
+.margin_top_30 {
+	margin-top: 30px;
 }
 .handleAdd Icon {
 	font-size: 20px;
@@ -4579,6 +4619,7 @@ input[type="file"]::-webkit-file-upload-button {
 .whiteBox {
 	background-color: white;
 }
+
 .addiconbutton {
 	border: none;
 	background-color: #1a3c8b;
@@ -4827,8 +4868,10 @@ a.box_feat_about h3 {
 	font-size: 20px;
 }
 .timeSlot {
-	margin-left: 115px;
+	position: relative;
+	left:90px
 }
+
 .timeS {
 	margin-left: 85px;
 }
@@ -4876,6 +4919,11 @@ a.box_feat_about h3 {
 	top: -135px;
 }
 
+.cardListScroll{
+	height: 200px;
+	overflow: auto;
+}
+
 .btn_sub {
 	border: 1px solid #ddddf7;
 	float: right;
@@ -4883,7 +4931,7 @@ a.box_feat_about h3 {
 .autocompleteWidth {
 	width: 100%;
 }
-.eduCard {
+.grayBox {
 	width: 100%;
 	background-color: #f7f8fa;
 	border-radius: 5px;
@@ -4914,6 +4962,8 @@ a.box_feat_about h3 {
 .clinicLogo {
 	height: 60px;
 	width: 60px;
+}
+.borderRadius{
 	border-radius: 5px;
 }
 .clinicLocation {
@@ -4927,6 +4977,7 @@ a.box_feat_about h3 {
 
 .appColor:hover {
 	background-color: rgb(16, 35, 129);
+	color: white;
 }
 .color {
 	color: #1a3c8b;
@@ -4938,7 +4989,7 @@ a.box_feat_about h3 {
 .form-textarea {
 	height: 120px;
 	margin-top: 10px;
-	width: 350px;
+	width: 100%;
 }
 .medicine-checkbox {
 	font-size: 100px;
@@ -4960,12 +5011,10 @@ a.box_feat_about h3 {
 .input input[type="text"] {
 	width: 100px;
 }
-.toaster {
-	z-index: 2;
-}
+
 .payment {
-	width: 100px;
-	padding: 5px;
+	width: 70px;
+	padding: 3px;
 	margin-left: 5px;
 	border: 1px solid #e0ecf5;
 	border-radius: 5px;
@@ -5046,7 +5095,7 @@ textarea.form-control {
 }
 .dashboard {
 	border-bottom: 1px solid #e1e8ed;
-	padding: 10px 10px;
+	padding: 25px 10px;
 }
 
 .dashSpace {

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import { useEffect, useState } from "react";
 import AuthApi from "../services/AuthApi";
+import GetDependent from "./getDependent";
 export default function GetLoginPatientProfile() {
     const { patientId } = useParams()
     const { getDrInfo } = AuthApi()
@@ -39,34 +40,20 @@ export default function GetLoginPatientProfile() {
                     </ul>
                 </MainNav>
                 <div className='row'>
-                    <UserLinks />
+                    <UserLinks/>
                     <div className="container margin_60">
-                        <div className="row patientFetch">
-                            <div className=" col-md-8">
-                                <div className="box_general_3 cart" >
-                                    <FetchPatientInfo patientId={patientId} />
-                                    <div align='right'>
-                                        <div className="buttonLink appColor" align='center'>
-                                            <Link to={`/appointmentbookingsection/${doctorId}`} className="btn">
-                                                <span className=" appColor">Select Slot</span>
-                                            </Link>
-                                        </div>
-                                    </div>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <div className="box_general_4 cart patientDetails">
+                                    <FetchPatientInfo  doctorId={doctorId}  patientId={patientId} />
                                 </div>
                             </div>
-                            {/* <DoctorBookingConfirmation doctorId={doctorId} patientId={patientId} /> */}
-                            {/* <div className="row">
-                                <div className=" col-sm-6">
-                                    <div className="box_general_3 cart">
-                                        <FetchPatientInfo patientId={patientId} />
-                                    </div>
-                                </div>
-                                <DoctorBookingConfirmation doctorId={doctorId} patientId={patientId} />
-                            </div> */}
+                            <GetDependent doctorId={doctorId} patientId={patientId} />
                         </div>
                     </div>
                 </div>
-            </Wrapper>
+          
+        </Wrapper >
         </>
     )
 }

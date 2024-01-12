@@ -1,9 +1,8 @@
 import React from 'react';
 import { EditEducation } from "./EditEducation";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { FetchImages } from "./fetchImages";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
 import EducationApi from '../../../../services/EducationApi';
@@ -12,7 +11,15 @@ function FetchEducation(props) {
     const { doctorId } = props
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
     const [activeModal, setActiveModal] = useState();
-    const { fetchAllEducations, deleteEducationData } = EducationApi();
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
+    const { fetchAllEducations, deleteEducationData } = EducationApi()
+   
+    const handleDeleteShow = (item) => {
+        setItem(item)
+        setShowDelete(true)
+    }
+    const handleDeleteClose = () => setShowDelete(false)
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -31,16 +38,16 @@ function FetchEducation(props) {
     const getAllEducations = () => {
         fetchAllEducations({ doctorId })
             .then((res) => {
-                setEduData(res.data);
+                setEduData(res);
             })
     }
-     
     const deleteEducation = (education) => {
         const id = education._id
         deleteEducationData(id)
             .then(() => {
                 getAllEducations()
             })
+            handleDeleteClose()
     }
 
     return (
@@ -69,7 +76,7 @@ function FetchEducation(props) {
                                         </Modal.Body>
                                     </Modal>
                                     <div className='row'>
-                                        <div className='eduCard'>
+                                        <div className='grayBox'>
                                             <div className='row'>
                                                 <div className='col-md-9'>
                                                     <div className="" align='left'>
@@ -109,7 +116,7 @@ function FetchEducation(props) {
                                                         </i>
                                                     </Link>
                                                     <Link
-                                                        onClick={e => deleteEducation(education, e)}
+                                                        onClick={() => handleDeleteShow(education)}
                                                         to="#"
                                                         align='right'
                                                         className="editbutton">
@@ -130,6 +137,25 @@ function FetchEducation(props) {
                     }
                 </div>
                 : null}
+            <div>
+                <Modal show={showDelete} onHide={handleDeleteClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are You Sure?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="alert alert-danger">You Want To Delete This Session</div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="default" className='appColor' onClick={() => deleteEducation(Item)}>
+                            Yes
+                        </Button>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                            No
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </>
     )
 }

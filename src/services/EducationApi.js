@@ -5,7 +5,7 @@ export default function EducationApi() {
     const addEducation = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/education`,bodyData);
-            return result;
+            return result.data;
         }
         catch (err) {
             return err
@@ -14,7 +14,7 @@ export default function EducationApi() {
     const fetchAllEducations = async ({ doctorId }) => {
         try {
             const result = await axios.get(`${API}/fetchEduData/${doctorId}`);
-            return result;
+            return result.data;
         }
         catch (err) {
             return err

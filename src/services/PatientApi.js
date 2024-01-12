@@ -31,18 +31,18 @@ export default function PatientApi() {
         }
     };
     // fetch patientList after payment
-    const getpaymentData = async ({ patientId }) => {
+    const getpaymentData = async ({ patientId }, currentPage, pageSize) => {
         try {
-            const result = await axios.get(`${API}/getBookings/${patientId}`)
+            const result = await axios.get(`${API}/getBookings/${patientId}?page=${currentPage}&pageSize=${pageSize}`)
             return result.data
         }
         catch (err) {
             return err
         }
     };
-    const getAllPatient = async () => {
+    const getAllPatient = async (currentPage, pageSize) => {
         try {
-            const result = await axios.post(`${API}/patient`)
+            const result = await axios.post(`${API}/patient?page=${currentPage}&pageSize=${pageSize}`)
             return result.data
         }
         catch (err) {
@@ -96,7 +96,7 @@ export default function PatientApi() {
     }
     const getPatientLifestyle = async (patientId) => {
         try {
-            const result =  await axios.get(`${API}/fetchPatientLifestyleInfo/${patientId}`);
+            const result = await axios.get(`${API}/fetchPatientLifestyleInfo/${patientId}`);
             return result.data
         }
         catch (err) {
@@ -105,7 +105,7 @@ export default function PatientApi() {
     }
     const addPatientMedical = async (patientData) => {
         try {
-            const result =await axios.post(`${API}/patientMedicalInfo`, patientData)
+            const result = await axios.post(`${API}/patientMedicalInfo`, patientData)
             return result.data
         }
         catch (err) {
@@ -114,7 +114,7 @@ export default function PatientApi() {
     }
     const getPatientMedical = async (patientId) => {
         try {
-            const result =  await axios.get(`${API}/fetchPatientMedicalInfo/${patientId}`);
+            const result = await axios.get(`${API}/fetchPatientMedicalInfo/${patientId}`);
             return result.data
         }
         catch (err) {
@@ -123,16 +123,16 @@ export default function PatientApi() {
     }
     const addPatientLifestyle = async (lifestyleData) => {
         try {
-            const result =  await axios.post(`${API}/insertPatientLifestyleInfo`, lifestyleData)
+            const result = await axios.post(`${API}/insertPatientLifestyleInfo`, lifestyleData)
             return result.data
         }
         catch (err) {
             return err
         }
     }
-    const updatePatientLifestyle = async (lifeStyleId,updateMedical) => {
+    const updatePatientLifestyle = async (lifeStyleId, updateMedical) => {
         try {
-            const result =  await axios.post(`${API}/updatePatientLifestyleInfo/${lifeStyleId}`, updateMedical)
+            const result = await axios.post(`${API}/updatePatientLifestyleInfo/${lifeStyleId}`, updateMedical)
             return result
         }
         catch (err) {
@@ -141,7 +141,7 @@ export default function PatientApi() {
     }
     const fetchUpdatePatientLifestyle = async (lifeStyleId) => {
         try {
-            const result =  await axios.get(`${API}/fetchUpdatedPatientLifestyle/${lifeStyleId}`)
+            const result = await axios.get(`${API}/fetchUpdatedPatientLifestyle/${lifeStyleId}`)
             return result
         }
         catch (err) {

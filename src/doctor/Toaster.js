@@ -10,6 +10,7 @@ export default function Toaster() {
             hideProgressBar={false}
             // newestOnTop={false}
             closeOnClick
+            style={{top:'80px'}}
             rtl={false}
             // pauseOnFocusLoss
             // draggable

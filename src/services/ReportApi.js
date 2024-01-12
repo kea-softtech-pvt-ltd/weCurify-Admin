@@ -142,6 +142,7 @@ export default function ReportApi() {
     const getMedicineReport = async ({ reportId }) => {
         try {
             const result = await axios.get(`${API}/fetchMedicalReport/${reportId}`)
+            console.log('===result',result)
             return result.data
         }
         catch (err) {

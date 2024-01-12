@@ -24,6 +24,7 @@ export default function ExperienceApi() {
     const fetchExperienceData = async ({ doctorId }) => {
         try {
             const result = await axios.get(`${API}/fetchExData/${doctorId}`)
+            console.log('==...=', result)
             return result.data
         }
         catch (err) {

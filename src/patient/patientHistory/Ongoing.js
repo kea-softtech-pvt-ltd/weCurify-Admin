@@ -9,45 +9,50 @@ import GetDoctorData from './getDoctorData';
 import AppointmentApi from '../../services/AppointmentApi';
 
 export default function Ongoing(props) {
-    const { patientId, doctorId } = props
+    const { patientId } = props
     const [patientList, setPatientList] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [id, setId] = useState()
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0);
     const { cancelPatientAppointment } = AppointmentApi()
     const { getpaymentData } = PatientApi()
-    //For Pagination
-    const [activePageNo, setActivePageNo] = useState(1)
-    const recordsPerPage = 6;
-    const lastIndex = activePageNo * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = patientList.slice(firstIndex, lastIndex)
-    const nPage = Math.ceil(patientList.length / recordsPerPage)
-    const number = [...Array(nPage + 1).keys()].slice(1)
+
 
     useEffect(() => {
-        getPatientDetails();
-    }, [])
+        getPatientDetails(currentPage);
+    }, [currentPage])
+
     const handleDeleteShow = (details) => {
         setId(details._id)
         setShowDelete(true)
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-   
     function getPatientDetails() {
-        getpaymentData({ patientId })
+        const pageSize = 6;
+        getpaymentData({ patientId }, currentPage, pageSize)
             .then((result) => {
-                patientData(result)
+                const totalPages = result.totalOngoingPages;
+                setTotalPages(totalPages)
+                setPatientList(result.ongoing)
             })
     }
-    const patientData = (list) => {
-        const data = list.filter((patient) => {
-            if (patient.status === "Ongoing") {
-                return patient;
-            }
-        })
-        setPatientList(data)
-    }
+
+    const handlePrevPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    // function changeCPage() {
+    //     setCurrentPage(currentPage * 15)
+    // }
+    const handleNextPage = () => {
+        if (currentPage !== totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     function cancelAppointment(id) {
         cancelPatientAppointment(id)
             .then(() => {
@@ -56,25 +61,11 @@ export default function Ongoing(props) {
             })
 
     }
-    //For Pagination
-    function prePage() {
-        if (activePageNo !== 1) {
-            setActivePageNo(activePageNo - 1)
-        }
-    }
-    function changeCPage(id) {
-        setActivePageNo(id)
-    }
-    function nextPage() {
-        if (activePageNo !== nPage) {
-            setActivePageNo(activePageNo + 1)
 
-        }
-    }
     return (
         <>
             <div className='row'>
-                {records && records.map((details, i) => {
+                {patientList.map((details, i) => {
                     return (
                         <>
                             <div key={i} className="col-md-4">
@@ -111,34 +102,33 @@ export default function Ongoing(props) {
 
                 })}
             </div>
-            {records.length > 0 ?
-                <nav aria-label="" className="add_top_20">
-                    <ul className="pagination pagination-sm">
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={prePage}>
-                                Previous
-                            </Link>
-                        </li>
-                        {
-                            number.map((n, i) => {
-                                return (
-                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                        <Link className="page-link"
-                                            to="#" onClick={() => changeCPage(n)}>
-                                            {n}</Link>
-                                    </li>
-                                )
-                            })
-                        }
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={nextPage}>
-                                Next
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
+            {patientList.length > 0 ?
+                <ul className="pagination pagination-sm">
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </Link>
+                    </li>
+
+                    {/* <li className='page-item '>
+                <Link className="page-link"
+                    to="#" onClick={() => changeCPage()}>
+                    {currentPage}
+                </Link>
+            </li> */}
+
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handleNextPage}
+                            disabled={currentPage === totalPages}>
+                            Next
+                        </Link>
+                    </li>
+
+                </ul>
                 : <div className="clinicHistory" ><b>Data is not Available</b></div>}
 
             <Modal show={showDelete} onHide={handleDeleteClose}>

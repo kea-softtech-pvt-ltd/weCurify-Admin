@@ -6,7 +6,6 @@ import { PatientPersonalInformation } from "../patient/patientPersonalInformatio
 import { PatientMedicalInformation } from "../patient/patientMedicalInformation";
 import { PatientLifestyle } from "../patient/patientLifestyle";
 import { MainNav } from "../mainComponent/mainNav";
-import { MainWrapper } from "../mainComponent/mainWrapper";
 import { MainTabs } from "../mainComponent/mainTabs";
 import { Wrapper } from "../mainComponent/Wrapper";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";

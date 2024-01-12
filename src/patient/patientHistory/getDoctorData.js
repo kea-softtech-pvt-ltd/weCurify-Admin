@@ -25,14 +25,14 @@ export default function GetDoctorData(props) {
     return (
         <>
             <div className='row'>
-                <div className='col-md-4'>
+                <div className='col-md-5'>
                     <img
                         src={doctorData.photo}
                         alt="doctorProfile"
                         className='doctorphotoPatient'
                     />
                 </div>
-                <div className='col-md-8' align='left'>
+                <div className='col-md-7' align='left'>
                     <span className='patientName'>
                         Dr.{doctorData.name}
                     </span>

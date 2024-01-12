@@ -9,7 +9,6 @@ import PatientApi from "../services/PatientApi";
 function PatientPersonalInformation(props) {
     const { patientId, onChange } = props;
     const [updateData, setUpdateData] = useState([])
-    const [patientPhoto, setPatientPhoto] = useState(avatarImage);
     const { insertPatientData, fetchPatient } = PatientApi()
     useEffect(() => {
         getPatientPersonalInfo();
@@ -31,52 +30,9 @@ function PatientPersonalInformation(props) {
         fetchPatient({ patientId })
             .then((jsonRes) => {
                 setUpdateData(jsonRes[0])
-
-                // const allKeys = Object.keys(jsonRes)
-                // allKeys.map(function(k,v) {
-                //     if(k === 'photo' && typeof jsonRes[k] === "object") {
-                //         setValue(k, jsonRes[k])
-                //         setUpdateData({...updateData, k: jsonRes[k]});
-                //     } 
-                //     else if((k !== 'photo')) {
-                //         setValue(k, jsonRes[k])
-                //         setUpdateData({...updateData, k: jsonRes[k]});
-                //     }
-                // })
-                // setUpdateData(jsonRes)
-                // if(jsonRes.photo) {
-                //     setPatientPhoto(`../patientImages/${jsonRes.photo}`)
-                // }
             });
     }
-    //location 
-    const handleChangeAddress = (address) => {
-        setUpdateData(prevInput => {
-            return {
-                ...prevInput,
-                ['address']: address
-            }
-        })
-        setValue("address", address)
-    }
 
-    //for doctor profilephoto onChange method
-    const uploadedImage = React.useRef(null);
-    const handlePhoto = (e) => {
-        e.preventDefault();
-        const [file] = e.target.files;
-        setUpdateData({ ...updateData, photo: file });
-        setValue("photo", file)
-        if (file) {
-            const reader = new FileReader();
-            const { current } = uploadedImage;
-            current.file = file;
-            reader.onload = (e) => {
-                current.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-    }
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -84,11 +40,9 @@ function PatientPersonalInformation(props) {
         setValue(name, value)
     };
 
-    //let history = useHistory();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const onSubmit = data => {
         const formData = new FormData();
-        // formData.append('photo', data.photo);
         formData.append('name', data.name);
         formData.append('email', data.email);
         formData.append('mobile', updateData.mobile);
@@ -117,7 +71,7 @@ function PatientPersonalInformation(props) {
                         value={updateData.name}
                         onChange={handleInputChange}
                         placeholder="Name" name="name" >
-                        {errors.name && <span className="validation">Please enter your first name</span>}
+                        {errors.name && <span className="validation">User Name is Required</span>}
                     </MainInput>
                     <div align='left' className="patientData"><b>Email</b></div>
                     <MainInput
@@ -155,22 +109,36 @@ function PatientPersonalInformation(props) {
                     </div>
                     <div className="col-6">
                         <div align='left' className="patientData"><b>Gender</b></div>
-                        <MainRadioGroup
-                            defaultValue="female"
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
                             name="gender"
-                            value="female"
-                            value1="male"
-                            value2="other"
                             onChange={handleInputChange}
-                            label="Female"
-                            label1="Male"
-                            label2="Other">
-                        </MainRadioGroup>
+                            checked={updateData.gender === 'female'}
+                        />
+                        <span>Female</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
+                            name="gender"
+                            checked={updateData.gender === 'male'}
+                            onChange={handleInputChange}
+                        />
+                        <span>Male</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value={updateData.gender}
+                            name="gender"
+                            checked={updateData.gender === 'other'}
+                            onChange={handleInputChange}
+                        />
+                        <span>Other</span>
                         {errors.gender && <span className="validation">Please Select your gender</span>}
                     </div>
-
                 </div>
-
 
                 <div className="col-md-6 ">
                     <div className="row">
@@ -233,7 +201,9 @@ function PatientPersonalInformation(props) {
                             </div>
                             <MainInput
                                 value={updateData.address}
-                                onChange={handleChangeAddress}>
+                                name="address"
+                                onChange={handleInputChange}
+                                placeholder="Address">
                             </MainInput>
                         </div>
                     </div>

@@ -1,10 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import AuthApi from "../../services/AuthApi";
-import { MainNav } from '../../mainComponent/mainNav';
-import UserLinks from './partial/uselinks';
-import { Wrapper } from '../../mainComponent/Wrapper';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import AppointmentApi from '../../services/AppointmentApi';
@@ -12,7 +7,6 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function Report(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { getPatientListDetails } = AppointmentApi();
     const [patientData, setPatientData] = useState([]);
     const [total, setTotal] = useState([]);
@@ -24,6 +18,7 @@ export default function Report(props) {
      function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
+                console.log('========',result)
                 const data = result.filter((patient) => {
                     if (patient.status === "Completed") {
                         return patient;

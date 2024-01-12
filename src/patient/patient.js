@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import AuthApi from '../services/AuthApi';
 import { MainNav } from '../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
 import { Wrapper } from '../mainComponent/Wrapper';
@@ -11,7 +10,7 @@ import PatientList from '../doctor/Dashboard-card/PatientList';
 import { PatientLoginForm } from './patientLoginForm';
 import AppointmentApi from '../services/AppointmentApi';
 export default function Patient() {
-    const [patientList, setPatientList] = useState([]);
+    const [patientList, setPatientList] = useState(null);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { getPatientListDetails } = AppointmentApi()
@@ -44,9 +43,9 @@ export default function Patient() {
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
-                    <li className='float-none' style={{ fontSize: 'inherit' }} >Appoinment</li>
+                    <h2 className='float-none' style={{ fontSize: 'inherit' }} >Appoinment</h2>
                     <li>
-                        <Link onClick={() => setActive(true)} >
+                        <Link onClick={() => setActive(!active)} >
                             <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
                         </Link>
                     </li>
@@ -59,13 +58,15 @@ export default function Patient() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="common_box">
-                    <>
-                        {!active && patientList.length > 0 ?
-                            <PatientList doctorId={doctorId} />
-                            :
-                            <PatientLoginForm doctorId={doctorId} />
-                        }
-                    </>
+                    {patientList ?
+                        <>
+                            {!active && patientList.length > 0 ?
+                                <PatientList doctorId={doctorId} />
+                                :
+                                <PatientLoginForm doctorId={doctorId} />
+                            }
+                        </>
+                        : null}
                 </div>
 
             </div>
