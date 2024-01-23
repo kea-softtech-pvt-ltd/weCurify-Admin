@@ -12,6 +12,8 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import { useRecoilState } from "recoil";
+import { FetchPatientLifestyleData } from "./fetchPatientLifestyleData";
+import { FetchPatientMedicalInfo } from "./fetchPatientMedicalInfo";
 export default function PatientProfile() {
   const { patientId } = useParams();
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
@@ -66,11 +68,11 @@ export default function PatientProfile() {
               </TabPanel>
 
               <TabPanel value={value} index={1}>
-                <PatientMedicalInformation Medical={goToLifestyle} patientId={patientId} />
+                <FetchPatientMedicalInfo Medical={goToLifestyle} patientId={patientId} />
               </TabPanel>
 
               <TabPanel value={value} index={2}>
-                <PatientLifestyle patientId={patientId} />
+                <FetchPatientLifestyleData patientId={patientId} />
               </TabPanel>
             </div>
           </div>

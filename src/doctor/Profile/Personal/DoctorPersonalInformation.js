@@ -16,7 +16,8 @@ import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
-
+    const [radioData, setRadioData] = useState('');
+    console.log('=====radioData', radioData)
     const {
         addDoctorInformation,
         submitDoctorInformation
@@ -39,6 +40,9 @@ function DoctorPersonalInformation(props) {
         setValue(name, value)
     };
 
+    const handleInputRadio = (e) => {
+        setRadioData(e.target.value)
+    }
     useEffect(() => {
         register("name", { required: true });
         register("gender", { required: true });
@@ -50,6 +54,7 @@ function DoctorPersonalInformation(props) {
     const addDrInfo = () => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
+                console.log('=jsonRes', jsonRes)
                 setUpdateData(jsonRes)
             });
 
@@ -78,11 +83,12 @@ function DoctorPersonalInformation(props) {
         const bodyData = {
             photo: resultUrl,
             name: updateData.name,
-            gender: updateData.gender,
+            gender: radioData,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
             isSubscribed: true
         }
+        console.log('===bodyData', bodyData)
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {
             })
@@ -135,8 +141,8 @@ function DoctorPersonalInformation(props) {
                             type="radio"
                             value={updateData.gender}
                             name="gender"
-                            onChange={handleInputChange}
-                            checked={updateData.gender === 'female'}
+                            onChange={handleInputRadio}
+                            // checked={radioData === 'female'}
                         />
                         <span>Female</span>
                         <input
@@ -144,8 +150,8 @@ function DoctorPersonalInformation(props) {
                             type="radio"
                             value={updateData.gender}
                             name="gender"
-                            checked={updateData.gender === 'male'}
-                            onChange={handleInputChange}
+                            // checked={radioData === 'male'}
+                            onChange={handleInputRadio}
                         />
                         <span>Male</span>
                         <input
@@ -153,11 +159,11 @@ function DoctorPersonalInformation(props) {
                             type="radio"
                             value={updateData.gender}
                             name="gender"
-                            checked={updateData.gender === 'other'}
-                            onChange={handleInputChange}
+                            // checked={radioData === 'other'}
+                            onChange={handleInputRadio}
                         />
                         <span>Other</span>
-                        {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null}
+                        {/* {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null} */}
                     </div>
                 </div>
                 <div className="col-md-5">
@@ -169,7 +175,7 @@ function DoctorPersonalInformation(props) {
                         value={updateData.name}
                         onChange={handleInputChange}
                         placeholder="Name">
-                        { errors.name && <span className="validation">User Name is Required</span> }
+                        {/* { errors.name && <span className="validation">User Name is Required</span> } */}
                     </MainInput>
                     <div className="text-left">
                         <label><b>Personal EmailId *</b></label>
@@ -180,7 +186,7 @@ function DoctorPersonalInformation(props) {
                         name="personalEmail"
                         onChange={handleInputChange}
                         placeholder="Personal EmailId">
-                        { errors.personalEmail && <span className="validation"> Email is Required</span> }
+                        {/* { errors.personalEmail && <span className="validation"> Email is Required</span> } */}
                     </MainInput>
                     <div align='left'>
                         <PlacesAutocompleteInput
@@ -190,7 +196,7 @@ function DoctorPersonalInformation(props) {
                             <label ><b>City & Area *</b></label>
                         </PlacesAutocompleteInput>
                     </div>
-                    { errors.address && <span className="validation">Location is Required</span>}
+                    {/* { errors.address && <span className="validation">Location is Required</span>} */}
                 </div>
             </div>
             <div className="row float-right">

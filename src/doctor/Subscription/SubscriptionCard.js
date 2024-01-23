@@ -16,6 +16,7 @@ export default function SubscriptionCard() {
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
+    // const [expiryDate, setExpiryDate] = useState([])
 
     useEffect(() => {
         getSubscriptionPlan()
@@ -26,6 +27,7 @@ export default function SubscriptionCard() {
         getSubscriptionData({ doctorId })
             .then((result) => {
                 setGetSubData(result[0].selected_plan)
+                // setExpiryDate(result[0].selected_plan)
                 setSubscriptionId(result[0]._id)
             })
 
@@ -48,11 +50,11 @@ export default function SubscriptionCard() {
         }
         updateSubscriptionData({ _id }, bodyData)
             .then(() => {
-                history.push(`/doctorprofile/${doctorId}`)
+                // history.push(`/doctorprofile/${doctorId}`)
                 setGetSubData(plan)
+                history.push(`/subscriptionconfirmation/${doctorId}`)
             })
         handleClose()
-
     }
     const getSubscriptionPlan = () => {
         getSubscriptionPlans()

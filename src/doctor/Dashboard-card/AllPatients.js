@@ -16,13 +16,21 @@ export default function AllPatients() {
         getPatientList(currentPage)
     }, [currentPage])
 
+    const pageSize = 6;
     const getPatientList = () => {
-        const pageSize = 6;
         getAllPatient(currentPage, pageSize)
             .then((res) => {
                 setPatientData(res.patientList)
-                setTotalPages(totalPages)
+                setTotalPages(res.totalPages)
             })
+    }
+
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+        return pages
     }
 
     const handlePrevPage = () => {
@@ -30,21 +38,21 @@ export default function AllPatients() {
             setCurrentPage(currentPage - 1);
         }
     };
-    function changeCPage() {
-        setCurrentPage(currentPage * totalPages)
-    }
+    // function changeCPage() {
+    //     if (currentPage) {
+    //         setCurrentPage(currentPage + 1)
+    //     }
+    // }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
-    
+
     const handleShowProfile = (details) => {
         history.push(`/patientprofile/${details._id}`)
     }
-    const handleSubscription = (details) => {
-        history.push(`/subscriptioncard/${details._id}`)
-    }
+
 
     return (
         <Wrapper>
@@ -85,7 +93,6 @@ export default function AllPatients() {
                                                 <span className='patinetInfo'>{details.email}</span>
                                             </span>
 
-
                                             <div className='cardSpan appointmentBtn'>
                                                 <Link to="#" onClick={() => handleShowProfile(details)}>
                                                     <button className="btn appColor helperBtn ">View Profile</button>
@@ -114,12 +121,16 @@ export default function AllPatients() {
                             </Link>
                         </li>
 
-                        <li className='page-item '>
-                            <Link className="page-link"
-                                to="#" onClick={() => changeCPage()}>
-                                {currentPage}
-                            </Link>
-                        </li>
+                        {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                            <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                <Link className="page-link"
+                                    key={pageNo}
+                                    to="#"
+                                    onClick={() => setCurrentPage(pageNo)}>
+                                    {pageNo}
+                                </Link>
+                            </li>
+                        )}
 
                         <li className="page-item">
                             <Link className="page-link"

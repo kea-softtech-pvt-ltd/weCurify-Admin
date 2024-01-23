@@ -177,7 +177,7 @@ function FetchExperience(props) {
                             <Modal.Title>Are You Sure?</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="alert alert-danger">You Want To Delete This Session</div>
+                            <div className="alert alert-danger">You Want To Delete This Experience Details</div>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="default" className='appColor' onClick={()=>removeExperienceData(Item)}>

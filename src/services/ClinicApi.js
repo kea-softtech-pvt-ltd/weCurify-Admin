@@ -57,6 +57,46 @@ export default function ClinicApi() {
             return err
         }
     }
+
+    const getClinic = async () => {
+        try {
+            const result = await axios.get(`${API}/clinics`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const addClinic = async (newClinicData,doctorId) => {
+        try {
+            const result = await axios.post(`${API}/addclinicid/${doctorId}`, newClinicData)
+            console.log('result----//////-', result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const addAnotherClinic = async (newClinicData, doctorId) => {
+        console.log('==///==', newClinicData,doctorId)
+        try {
+            const result = await axios.post(`${API}/clinics/${doctorId}`, newClinicData)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const getSingleClinic = async ( clinicId) => {
+        try {
+            const result = await axios.post(`${API}/getclinic/${clinicId}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+
     return {
 
         getAllClinicsData,
@@ -64,6 +104,10 @@ export default function ClinicApi() {
         getAllOwnClinic,
         insertClinicData,
         getServicess,
-        clinicDelete
+        clinicDelete,
+        getClinic,
+        addClinic,
+        addAnotherClinic,
+        getSingleClinic
     }
 }

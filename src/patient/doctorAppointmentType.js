@@ -3,10 +3,11 @@ import { ShowDoctorInClinicAppointment } from "./showDoctorInClinicAppointment";
 import PatientApi from "../services/PatientApi";
 
 const DoctorAppointmentType = (props) => {
-    const { doctorId } = props.clinicData;
+    const { doctorId ,clinicData} = props;
     const clinicId = props.clinicData._id
     const [clinicSession, setClinicSession] = useState([])
     const { fetchSessionSlotsData } = PatientApi()
+
     useEffect(() => {
         fetchSessionSlots()
     }, [])
@@ -19,6 +20,7 @@ const DoctorAppointmentType = (props) => {
     }
 
     return (
+        
         <div>
             {clinicSession.length > 0 ? (
                 <ShowDoctorInClinicAppointment doctorId={doctorId} clinicId={clinicId} setSessions={clinicSession} />

@@ -11,7 +11,7 @@ const ShowInClinicAppointSlots = (props) => {
     const { sessionSlot, selectedDate, session, slotDate, doctorId } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
     const [bookingSlots, setBookingSlots] = useState([]);
-    const [showDelete, setShowDelete] = useState(false);
+    const [show, setShow] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
     const { paymentInfo, getbookedSlots } = PatientApi();
     const history = useHistory();
@@ -19,12 +19,12 @@ const ShowInClinicAppointSlots = (props) => {
     useEffect(() => {
         availableSlots()
     }, [])
-    const handleDeleteShow = (item) => {
-        setShowDelete(true)
+    const handleShow = (item) => {
+        setShow(true)
         setbookSlot(item)
     }
-    const handleDeleteClose = () => {
-        setShowDelete(false)
+    const handleClose = () => {
+        setShow(false)
     }
 
     const handleSelectedSlot = (item) => {
@@ -51,7 +51,7 @@ const ShowInClinicAppointSlots = (props) => {
         }
         paymentInfo(transactionData)
             .then((res) => {
-                handleDeleteClose()
+                handleClose()
                 history.push(`/bookingconfirmation/${res._id}`)
             })
 
@@ -61,8 +61,8 @@ const ShowInClinicAppointSlots = (props) => {
             .then((result) => {
                 const data = result.filter((item) => {
                     if (item.date === slotDate)
-                    return item
-            })
+                        return item
+                })
                 setBookingSlots(data)
             })
 
@@ -73,41 +73,43 @@ const ShowInClinicAppointSlots = (props) => {
                 <span style={{ color: "black" }}>
                     <b>{slotDate}  </b>
                     <b>  Fees - <FaRupeeSign /> {session.fees} /-</b></span>
-                <section className=" radiobutton">
-                    {sessionSlot.map((item, index) => (
-                        <>
-                            <div key={index}>
-                                {bookingSlots.some(func =>
-                                    func.slotId === item._id && func.status !== "Cancelled")
-                                    ?
-                                    <div>
-                                        <div
-                                            onClick={() => handleDeleteShow(item)}
-                                            className="disabled-div"
-                                            type="radio"
-                                            // aria-disabled="true"
-                                            time={slots}>
-                                            <label>{item.time}</label>
+                    
+                    <section className=" radiobutton">
+                        {sessionSlot.map((item, index) => (
+                            <>
+                                <div key={index}>
+                                    {bookingSlots.some(func =>
+                                        func.slotId === item._id && func.status !== "Cancelled")
+                                        ?
+                                        <div>
+                                            <div
+                                                onClick={() => handleShow(item)}
+                                                className="disabled-div"
+                                                type="radio"
+                                                // aria-disabled="true"
+                                                time={slots}>
+                                                <label>{item.time}</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    :
-                                    <div>
-                                        <Link
-                                            to='#'
-                                            onClick={() => handleDeleteShow(item)}
-                                            className="btn_1"
-                                            type="radio"
-                                            time={slots}>
-                                            <label>{item.time}</label>
-                                        </Link>
-                                    </div>
-                                }
-                            </div>
+                                        :
+                                        <div>
+                                            <Link
+                                                to='#'
+                                                onClick={() => handleShow(item)}
+                                                className="btn_1"
+                                                type="radio"
+                                                time={slots}>
+                                                <label>{item.time}</label>
+                                            </Link>
+                                        </div>
+                                    }
+                                </div>
 
-                        </>
-                    ))}
-                </section>
-                <Modal show={showDelete} onHide={handleDeleteClose}>
+                            </>
+                        ))}
+                    </section>
+                 
+                <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are You Sure?</Modal.Title>
                     </Modal.Header>
@@ -118,10 +120,9 @@ const ShowInClinicAppointSlots = (props) => {
                         <Button variant="default" className='appColor' onClick={() => handleSelectedSlot(bookSlot)}>
                             Yes
                         </Button>
-                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
                             No
                         </Button>
-
                     </Modal.Footer>
                 </Modal>
             </div>

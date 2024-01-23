@@ -27,6 +27,7 @@ import PatientAppointment from "./doctor/Dashboard-card/PatientAppointment";
 import SlotConfirmation from "./patient/SlotConfirmation";
 import SubscriptionNewDr from "./doctor/Subscription/SubscriptionNewDr";
 import MedicineList from "./doctor/Dashboard-card/MedicineList";
+import SubscriptionConfirmation from "./doctor/Subscription/SubscriptionConfirmation";
 function MainContainer() {
   return (
     <Switch>
@@ -128,6 +129,9 @@ function MainContainer() {
       </Route>
       <Route path="/subscriptionnewdr/:doctorId">
         <SubscriptionNewDr />
+      </Route>
+      <Route path="/subscriptionconfirmation/:doctorId">
+        <SubscriptionConfirmation />
       </Route>
       {/* <Route path="/medicinelist/:doctorId">
         <MedicineList />

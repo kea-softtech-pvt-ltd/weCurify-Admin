@@ -67,6 +67,7 @@ function AddDoctorEducation(props) {
                 
             });
             toast.success("Saved Successfully!")
+            props.addRecords()
     }
 
     //for all input onchange method

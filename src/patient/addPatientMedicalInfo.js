@@ -81,16 +81,16 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.allergies}
                         placeholder="Allergies">
-                        {errors.allergies && <span className="validation">Please enter your current allergies</span>}
+                        {/* {errors.allergies && <span className="validation">Please enter your current allergies</span>} */}
                     </MainInput>
                     <div align='left' className="patientData"><b>Current Medications</b></div>
                     <MainInput
                         type="text"
-                        name="allergies"
+                        name="cmedication"
                         onChange={handleInputChange}
                         value={updateData.cmedication}
                         placeholder="Current Medications">
-                        {errors.cmedication && <span className="validation">Please enter your current medication</span>}
+                        {/* {errors.cmedication && <span className="validation">Please enter your current medication</span>} */}
                     </MainInput>
 
                     <div align='left' className="patientData"><b>Past Medications</b></div>
@@ -100,7 +100,7 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.pmedication}
                         placeholder="Past Medications">
-                        {errors.pmedication && <span className="validation">Please enter your post medication</span>}
+                        {/* {errors.pmedication && <span className="validation">Please enter your post medication</span>} */}
                     </MainInput>
                 </div>
 
@@ -112,7 +112,7 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.diseases}
                         placeholder="Chronic diseases">
-                        {errors.diseases && <span className="validation">Please enter your diseases</span>}
+                        {/* {errors.diseases && <span className="validation">Please enter your diseases</span>} */}
                     </MainInput>
                     <div align='left' className="patientData"><b>Injuries</b></div>
                     <MainInput
@@ -121,7 +121,7 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.injuries}
                         placeholder="Injuries">
-                        {errors.injuries && <span className="validation">Please enter your injuries</span>}
+                        {/* {errors.injuries && <span className="validation">Please enter your injuries</span>} */}
                     </MainInput>
 
                     <div align='left' className="patientData"><b>Surgeries</b></div>
@@ -131,7 +131,7 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.surgeries}
                         placeholder="surgeries">
-                        {errors.surgeries && <span className="validation">Please enter your surgeries</span>}
+                        {/* {errors.surgeries && <span className="validation">Please enter your surgeries</span>} */}
                     </MainInput>
                 </div>
             </div>

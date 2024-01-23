@@ -7,22 +7,23 @@ import { Button, Modal } from "react-bootstrap";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import ClinicApi from "../../../../services/ClinicApi";
 import { Icon } from "@material-ui/core";
+import AuthApi from "../../../../services/AuthApi";
+import { SearchClinic } from "./searchClinic";
 
 function AddDoctorClinicInfo(props) {
     const { doctorId } = props
     const [showSession, setShowSession] = useState(false);
     const [activeModal, setActiveModal] = useState()
     const [clinicList, setClinicList] = useState([]);
-    console.log('====',clinicList)
-    // const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState();
     const [showDelete, setShowDelete] = useState(false);
     const [Item, setItem] = useState([]);
     const [show, setShow] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
 
-    const { getAllClinicsData, clinicDelete } = ClinicApi()
-
+    const { clinicDelete } = ClinicApi()
+    const { getDrInfo } = AuthApi()
 
     useEffect(() => {
         getAllClinics(currentPage);
@@ -30,16 +31,17 @@ function AddDoctorClinicInfo(props) {
 
     const getAllClinics = (currentPage) => {
         const pageSize = 5;
-        getAllClinicsData({ doctorId }, currentPage, pageSize)
+        getDrInfo({ doctorId }, currentPage, pageSize)
             .then((jsonRes) => {
-                const clinicData = jsonRes.clinicData
-                const data = clinicData.filter((clinic) => {
-                    if (clinic.isDeleted === false) {
-                        return clinic
-                    }
-                })
-                setClinicList(data)
-                setTotalPages(jsonRes.totalPages)
+                console.log('=====jsonRes', jsonRes)
+                const clinicData =  jsonRes[0]['clinicList']
+                setClinicList(clinicData)
+                // const data = clinicData.filter((clinic) => {
+                //     if (clinic.isDeleted === false) {
+                //         return clinic
+                //     }
+                // })
+                // setTotalPages(jsonRes.totalPages)
             });
     }
     const handleDeleteShow = (item) => {
@@ -57,6 +59,10 @@ function AddDoctorClinicInfo(props) {
             })
 
     }
+
+    const handleSearchClose = () => setShowSearch(false)
+    const handleSearchShow = () => setShowSearch(true)
+
     const handlePrevPage = () => {
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
@@ -85,16 +91,26 @@ function AddDoctorClinicInfo(props) {
     };
     //for add clinic info
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const onClinicFormSubmit = () => {
         handleClose();
+          handleSearchClose()
     };
 
     return (
         <>
             <div className="">
-                <div className="modalbtn">
+            <div className="modalbtn">
+                <Modal show={showSearch} onHide={handleSearchClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Search Clinic</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <SearchClinic doctorId={doctorId} onSubmit={onClinicFormSubmit} />
+                    </Modal.Body>
+                </Modal>
+            </div>
+                {/* <div className="modalbtn">
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Add Clinic</Modal.Title>
@@ -103,7 +119,7 @@ function AddDoctorClinicInfo(props) {
                             <AddClinic doctorId={doctorId} handleClose={onClinicFormSubmit} />
                         </Modal.Body>
                     </Modal>
-                </div>
+                </div> */}
                 {clinicList ?
                     <>
                         {clinicList.map((item, index) => (
@@ -154,7 +170,7 @@ function AddDoctorClinicInfo(props) {
                         ))}
                     </> : null}
                 <div cllassName="" align='right'>
-                    <MainButtonInput onClick={handleShow}>ADD CLINIC</MainButtonInput>
+                    <MainButtonInput onClick={handleSearchShow}>ADD CLINIC</MainButtonInput>
                 </div>
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
@@ -182,7 +198,7 @@ function AddDoctorClinicInfo(props) {
                     </li>
 
                 </ul>
-                <Modal show={showDelete} onHide={handleDeleteClose}>
+                {/* <Modal show={showDelete} onHide={handleDeleteClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are You Sure?</Modal.Title>
                     </Modal.Header>
@@ -197,7 +213,7 @@ function AddDoctorClinicInfo(props) {
                             No
                         </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
             </div>
         </>
     )

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
@@ -11,22 +10,20 @@ import uuid from "uuid";
 import EducationApi from "../../../../services/EducationApi";
 import { useForm } from "react-hook-form";
 const AddClinic = (props) => {
-    const { doctorId } = useParams();
+    const { doctorId } = props
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
+    console.log('---coilDoctorClinicData', coilDoctorClinicData)
     const [selectedService, setSelectedService] = useState([]);
     const [selectedSpecialization, setSelectedSpecialization] = useState([]);
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
-    console.log('clinicInfo-----', clinicInfo)
     const { fetchDrSpecialization } = EducationApi()
     const [servicess, setServicess] = useState([])
-    const { insertClinicData, getServicess } = ClinicApi()
+    const { addAnotherClinic, getServicess } = ClinicApi()
 
     useEffect(() => {
         fetchSpecializations()
         fetchServicess()
-        register("clinicName", { required: true });
-        register("address", { required: true });
     }, [])
 
     const fetchSpecializations = () => {
@@ -50,7 +47,6 @@ const AddClinic = (props) => {
                 [name]: value
             }
         })
-        setValue(name, value )
     }
     const handleService = (e, selectedValue) => {
         e.preventDefault()
@@ -83,35 +79,32 @@ const AddClinic = (props) => {
         // blob.close();
         return await getDownloadURL(fileRef);
     }
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    async function sendClinicInfo() {
+    async function sendClinicInfo(e) {
+        e.preventDefault()
         const resultUrl = await uploadImageAsync(clinicInfo.clinicLogo)
         const newClinicData = {
-            doctorId: doctorId,
             clinicLogo: resultUrl,
-            specialization: selectedSpecialization,
             clinicName: clinicInfo.clinicName,
             address: clinicInfo.address,
             clinicNumber: clinicInfo.clinicNumber,
             services: selectedService
         }
-        insertClinicData({ newClinicData })
+        addAnotherClinic(newClinicData, doctorId)
             .then((res) => {
-                setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))
-                props.handleClose()
+                setCoilDoctorClinicData(coilDoctorClinicData.concat(res))
             });
+            props.onSubmit()
     }
 
     return (
         <div className="col-lg-12">
-            <form onSubmit={handleSubmit(sendClinicInfo)}>
+            <form onSubmit={sendClinicInfo}>
                 <div className="text-left">
                     <label><b>Clinic Logo</b></label>
                     <MainInput
                         type="file"
                         accept=".png, .jpg, .jpeg"
                         onChange={(e) => {
-                            console.log(e)
                             setClinicInfo({ ...clinicInfo, ['clinicLogo']: URL.createObjectURL(e.target.files[0]) })
                         }}
                         name="clinicLogo">
@@ -152,7 +145,7 @@ const AddClinic = (props) => {
                         placeholder="Enter clinic number">
                     </MainInput>
                 </div>
-                <div className='align-left '>
+                {/* <div className='align-left '>
                     <div align='left' className="patientData mb-2">
                         <b>Clinic Specialization *</b>
                     </div>
@@ -171,7 +164,7 @@ const AddClinic = (props) => {
                             <TextField {...params}
                                 label="Specializaation" />}
                     />
-                </div>
+                </div> */}
                 <div className='align-left '>
                     <div align='left' className="patientData mt-2 mb-2">
                         <b>Clinic Services *</b>

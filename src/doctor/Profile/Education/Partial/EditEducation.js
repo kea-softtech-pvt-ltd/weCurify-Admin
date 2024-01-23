@@ -18,7 +18,11 @@ function EditEducation(props) {
     const [drdegrees, setDrdegrees] = useState([])
     const [eduData, setEduData] = useRecoilState(setDoctorEducation)
     const [updateEducation, setUpdateEducation] = useState([])
-    const { fetchEditEducationData, fetchDrDegree, fetchDrSpecialization } = EducationApi()
+    const { fetchEditEducationData,
+        fetchDrDegree,
+        fetchDrSpecialization,
+        updateEducationData } = EducationApi()
+
     const removeImage = (EduId, index) => {
         let tempEduImages = drDocument.filter((item, key) => {
             return key !== index
@@ -43,11 +47,11 @@ function EditEducation(props) {
             })
     }
 
-    const fetchDegrees =  () => {
-         fetchDrDegree()
-         .then((result)=>{
-             setDrdegrees(result);
-         })
+    const fetchDegrees = () => {
+        fetchDrDegree()
+            .then((result) => {
+                setDrdegrees(result);
+            })
     }
 
     const fetchUpdateEducation = () => {
@@ -78,13 +82,19 @@ function EditEducation(props) {
     //for document onChange methods
     async function EditData(e) {
         e.preventDefault();
-        const formData = new FormData(document.querySelector("#EditData"));
-        formData.append('doctorId', doctorId);
-        const res = await axios.post(`${API}/updateEducation/${EduId}`, formData)
+        const bodyData = {
+            doctorId: doctorId,
+            degree: updateEducation.degree,
+            collage: updateEducation.collage,
+            comYear: updateEducation.comYear,
+            specialization: updateEducation.specialization,
+            // document:document
+        }
+        updateEducationData({ EduId, bodyData })
             .then(res => {
                 const newEduData = eduData.map(function (d, index) {
                     if (EduId === d._id) {
-                        return res.data
+                        return res
                     } else {
                         return d
                     }

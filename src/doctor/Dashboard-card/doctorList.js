@@ -9,6 +9,7 @@ import moment from "moment/moment";
 import { Icon } from "@mui/material";
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
+    console.log('====doctor', doctorData)
     const [filterData, setFilterData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState();
@@ -54,6 +55,15 @@ export default function DoctorList() {
             setCurrentPage(currentPage + 1);
         }
     };
+
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+        return pages
+    }
+
     return (
         <Wrapper>
             <MainNav>
@@ -135,13 +145,16 @@ export default function DoctorList() {
                                 Previous
                             </Link>
                         </li>
+                        {totalPagesCalculator(totalPages).map(pageNo => {
+                            <li className='page-item '>
+                                <Link className="page-link"
+                                    to="#"  
+                                    onClick={() => setCurrentPage(pageNo)}>
+                                    {pageNo}
+                                </Link>
+                            </li>
+                        })}
 
-                        {/* <li className='page-item '>
-                            <Link className="page-link"
-                                to="#" onClick={() => changeCPage()}>
-                                {currentPage}
-                            </Link>
-                        </li> */}
 
                         <li className="page-item">
                             <Link className="page-link"

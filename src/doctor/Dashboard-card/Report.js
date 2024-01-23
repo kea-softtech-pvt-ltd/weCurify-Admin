@@ -7,6 +7,7 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function Report(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
+    console.log('=====patientList', patientList)
     const { getPatientListDetails } = AppointmentApi();
     const [patientData, setPatientData] = useState([]);
     const [total, setTotal] = useState([]);
@@ -18,21 +19,20 @@ export default function Report(props) {
      function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                console.log('========',result)
-                const data = result.filter((patient) => {
+                const data = result.test.filter((patient) => {
                     if (patient.status === "Completed") {
                         return patient;
                     }
                 })
                 setPatientList(data)
-                const res = result.filter(function (item, index) {
-                    return index === result.findIndex((obj) => {
+                const res = result.test.filter(function (item, index) {
+                    return index === result.test.findIndex((obj) => {
                         if (item.patientId === obj.patientId)
                             return item
                     })
                 })
                 setPatientData(res)
-                const item = result.filter((res) => {
+                const item = result.test.filter((res) => {
                     if (res.payment === "done")
                         return res
                 })

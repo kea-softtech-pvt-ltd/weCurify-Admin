@@ -61,6 +61,7 @@ function AddDoctorProfessionalExperience(props) {
             })
 
             toast.success("Saved Successfully!")
+            props.addRecords()
     }
 
     function manipulateExperience(data) {
