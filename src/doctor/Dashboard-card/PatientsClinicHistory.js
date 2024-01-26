@@ -10,6 +10,7 @@ const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 export default function PatientsClinicHistory(props) {
     const { doctorId } = props
     const [patientHistoryData, setPatientHistoryData] = useState([])
+    console.log('==patientHistoryData==',patientHistoryData)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { downloadPrescription, getPatientListDetails } = AppointmentApi()
@@ -20,8 +21,8 @@ export default function PatientsClinicHistory(props) {
         getPatientHistory();
     }, [])
 
+    const pageSize = 6;
     function getPatientHistory() {
-        const pageSize = 6;
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
                 console.log('=result=', result)
@@ -32,7 +33,7 @@ export default function PatientsClinicHistory(props) {
     }
 
 
-    const downloadPdf = async (details) => {
+    const downloadPdf =  (details) => {
         const reportId = details.medicalReportId
         downloadPrescription(reportId)
             .then((result) => {
@@ -54,6 +55,14 @@ export default function PatientsClinicHistory(props) {
     // function changeCPage() {
     //     setCurrentPage(currentPage * 15)
     // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -127,6 +136,16 @@ export default function PatientsClinicHistory(props) {
                         {currentPage}
                     </Link>
                 </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <Link className="page-link"

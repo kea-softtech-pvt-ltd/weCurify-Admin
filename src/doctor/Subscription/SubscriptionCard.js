@@ -8,15 +8,15 @@ import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
 export default function SubscriptionCard() {
-    const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()
+    const { updateSubscriptionData, getSubscriptionByIdData, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
-    const [subscriptionId, setSubscriptionId] = useState([])
-    const { doctorId } = useParams();
+    const [doctorId, setDoctorId] = useState([])
+    const { subscriptionId } = useParams();
     const history = useHistory()
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
-    // const [expiryDate, setExpiryDate] = useState([])
+    const [id, setId] = useState(null)
 
     useEffect(() => {
         getSubscriptionPlan()
@@ -24,11 +24,11 @@ export default function SubscriptionCard() {
     }, [])
 
     const fetchSubscription = () => {
-        getSubscriptionData({ doctorId })
+        getSubscriptionByIdData({ subscriptionId })
             .then((result) => {
                 setGetSubData(result[0].selected_plan)
-                // setExpiryDate(result[0].selected_plan)
-                setSubscriptionId(result[0]._id)
+                setDoctorId(result[0].doctorId)
+                console.log('--data--', result)
             })
 
     }
@@ -40,20 +40,22 @@ export default function SubscriptionCard() {
     const handleClose = () => setShow(false)
 
     const confirmInputHandler = (plan) => {
-        const _id = subscriptionId;
+        const id = subscriptionId
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
             "expiryDate": new Date(),
             "plan": plan.name,
-            "duration": plan.frequency
+            "duration": plan.frequency,
+            "status": "Running"
         }
-        updateSubscriptionData({ _id }, bodyData)
-            .then(() => {
-                // history.push(`/doctorprofile/${doctorId}`)
-                setGetSubData(plan)
-                history.push(`/subscriptionconfirmation/${doctorId}`)
+        updateSubscriptionData(id, bodyData)
+            .then((res) => {
+                console.log('=======res', res)
+                setId(res[0]._id)
+                setGetSubData(res[0].selected_plan)
             })
+        history.push(`/subscriptionconfirmation/${id}`)
         handleClose()
     }
     const getSubscriptionPlan = () => {

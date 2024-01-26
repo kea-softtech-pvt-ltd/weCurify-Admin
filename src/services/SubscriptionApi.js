@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { API } from '../config'
 export default function SubscriptionApi() {
+
     const subscription = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/subscription`, bodyData)
+            console.log('===result==post==',result)
             return result.data
         }
         catch (err) {
@@ -19,10 +21,22 @@ export default function SubscriptionApi() {
             return err
         }
 
-    }
-    const updateSubscriptionData = async ({ _id }, bodyData) => {
+    };
+    const getSubscriptionByIdData = async ({ subscriptionId }) => {
         try {
-            const result = await axios.post(`${API}/updatesubscriptiondata/${_id}`, bodyData)
+            const result = await axios.get(`${API}/getsubscriptionByid/${subscriptionId}`)
+            console.log('-----get--result', result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+
+    }
+    const updateSubscriptionData = async ( subscriptionId , bodyData) => {
+        console.log("subscriptionId====>>>>>>", subscriptionId)
+        try {
+            const result = await axios.post(`${API}/updatesubscriptiondata/${subscriptionId}`, bodyData)
             return result.data
         }
         catch (err) {
@@ -107,6 +121,7 @@ export default function SubscriptionApi() {
         addSubscriptionPlan,
         deleteSubscriptionPlan,
         updateSubscriptionPlan,
-        AddFeature
+        AddFeature,
+        getSubscriptionByIdData
     }
 }

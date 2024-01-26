@@ -60,7 +60,6 @@ export default function Symptoms(props) {
                 })
             })
         toast.success("Saved Successfully!")
-
     }
 
 

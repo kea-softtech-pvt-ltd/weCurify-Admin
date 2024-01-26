@@ -8,26 +8,27 @@ import { useEffect, useState } from "react";
 import SubscriptionApi from "../../services/SubscriptionApi";
 
 export default function SubscriptionConfirmation() {
-    const { doctorId } = useParams()
+    const { subscriptionId } = useParams()
     const { getDrInfo } = AuthApi()
     const [doctorData, setDoctorData] = useState([])
     const [getSubData, setGetSubData] = useState([])
-    const { getSubscriptionData } = SubscriptionApi()
+    const { getSubscriptionByIdData } = SubscriptionApi()
     useEffect(() => {
-        doctorInfo()
+        // doctorInfo()
         fetchSubscription()
     }, [])
 
-    const doctorInfo = () => {
-        getDrInfo({ doctorId })
-            .then((res) => {
-                setDoctorData(res[0])
-            })
-    }
+    // const doctorInfo = () => {
+    //     getDrInfo({ doctorId })
+    //         .then((res) => {
+    //             setDoctorData(res[0])
+    //         })
+    // }
 
     const fetchSubscription = () => {
-        getSubscriptionData({ doctorId })
+        getSubscriptionByIdData({ subscriptionId })
             .then((res) => {
+                console.log('=====res', res)
                 setGetSubData(res[0].selected_plan)
             })
 

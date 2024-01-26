@@ -95,7 +95,7 @@ function SetTiming(props) {
                     let setTime = {}
                     setTime[sessionTime.day] = [res.data]
                     setCoilSessionTimining({ ...coilSessionTimining, ...setTime })
-                    props.onSubmit();
+                    props.handleSubmit();
                 });
 
         } else {
@@ -105,7 +105,7 @@ function SetTiming(props) {
             setFeesError('Enter Fees')
         }
         else {
-            props.onSubmit()
+            props.handleSubmit()
         }
     }
 

@@ -26,7 +26,6 @@ import AddNewDoctor from "./doctor/Dashboard-card/addNewDoctor";
 import PatientAppointment from "./doctor/Dashboard-card/PatientAppointment";
 import SlotConfirmation from "./patient/SlotConfirmation";
 import SubscriptionNewDr from "./doctor/Subscription/SubscriptionNewDr";
-import MedicineList from "./doctor/Dashboard-card/MedicineList";
 import SubscriptionConfirmation from "./doctor/Subscription/SubscriptionConfirmation";
 function MainContainer() {
   return (
@@ -94,7 +93,7 @@ function MainContainer() {
       <Route path="/loginhelper">
         <LoginHelper />
       </Route>
-      <Route path="/subscriptioncard/:doctorId">
+      <Route path="/subscriptioncard/:subscriptionId">
         <SubscriptionCard />
       </Route>
       <Route path="/doctorlist">
@@ -130,7 +129,7 @@ function MainContainer() {
       <Route path="/subscriptionnewdr/:doctorId">
         <SubscriptionNewDr />
       </Route>
-      <Route path="/subscriptionconfirmation/:doctorId">
+      <Route path="/subscriptionconfirmation/:subscriptionId">
         <SubscriptionConfirmation />
       </Route>
       {/* <Route path="/medicinelist/:doctorId">

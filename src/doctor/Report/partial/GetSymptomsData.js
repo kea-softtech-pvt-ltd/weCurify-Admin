@@ -4,9 +4,10 @@ export default function GetSymptomsData(props) {
     const { reportId } = props
     const { getMedicineReport } = ReportApi();
     const [symptomDataInfo, setSymptomDataInfo] = useState([])
+    
     useEffect(() => {
         symptomsData()
-    }, [])
+    }, [symptomDataInfo])
 
     const symptomsData =  () => {
          getMedicineReport({ reportId })

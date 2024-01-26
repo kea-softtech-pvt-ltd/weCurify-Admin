@@ -46,14 +46,13 @@ export default function PatientList(props) {
             })
     }
 
+    const pageSize = 6;
     function getPatientDetails(currentPage) {
-        const pageSize = 6;
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result, i) => {
-                const totalPages = result.totalOngoingPages;
-                setTotalPages(totalPages)
+                setTotalPages(result.totalOngoingPages)
                 setPatientList(result.ongoing)
-                result['test'].filter((data) => {
+                result.test.filter((data) => {
                     const patientAppointmentId = data._id;
                     if (moment(data.selectedDate).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD ") && data.status !== "Completed" && data.status !== "Cancelled") {
                         const bodyData = {
@@ -78,8 +77,16 @@ export default function PatientList(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    function changeCPage() {
-        setCurrentPage(currentPage * totalPages)
+    // function changeCPage() {
+    //     setCurrentPage(currentPage * totalPages)
+    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
     }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
@@ -182,7 +189,7 @@ export default function PatientList(props) {
                     })}
                 </div >
                 : null}
-            {patientList.length>0 ?
+            {patientList?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
@@ -193,12 +200,16 @@ export default function PatientList(props) {
                         </Link>
                     </li>
 
-                    <li className='page-item '>
-                        <Link className="page-link"
-                            to="#" onClick={() => changeCPage()}>
-                            {currentPage}
-                        </Link>
-                    </li>
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <Link className="page-link"

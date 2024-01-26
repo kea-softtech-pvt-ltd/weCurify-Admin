@@ -7,12 +7,13 @@ import AuthApi from "../../services/AuthApi";
 import { useState } from "react";
 import moment from "moment/moment";
 import { Icon } from "@mui/material";
+import UpgradeSubscription from "./partial/upgradeSubscription";
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
-    console.log('====doctor', doctorData)
     const [filterData, setFilterData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages, setTotalPages] = useState();
+    const [totalPages, setTotalPages] = useState(0);
+    const [subscription, setSubscription] = useState('');
     const { getdoctors } = AuthApi()
     const history = useHistory()
 
@@ -23,8 +24,8 @@ export default function DoctorList() {
 
 
 
+    const pageSize = 6;
     const getDoctorList = () => {
-        const pageSize = 6;
         getdoctors(currentPage, pageSize)
             .then((result) => {
                 setFilterData(result.doctorList)
@@ -39,16 +40,22 @@ export default function DoctorList() {
     const handleShowProfile = (details) => {
         history.push(`/doctorProfile/${details._id}`)
     }
-    const handleSubscription = (details) => {
-        history.push(`/subscriptioncard/${details._id}`)
-    }
+
     const handlePrevPage = () => {
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
         }
     };
-    function changeCPage() {
-        setCurrentPage(currentPage * totalPages)
+    // function changeCPage() {
+    //     setCurrentPage(currentPage * totalPages)
+    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
     }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
@@ -56,13 +63,7 @@ export default function DoctorList() {
         }
     };
 
-    const totalPagesCalculator = () => {
-        const pages = [];
-        for (let x = 1; x <= totalPages; x++) {
-            pages.push(x)
-        }
-        return pages
-    }
+
 
     return (
         <Wrapper>
@@ -112,16 +113,24 @@ export default function DoctorList() {
                                             <i className='icon-email color patientListIcon' />
                                             <span className='patinetInfo'> {details.personalEmail}</span>
                                         </span>
-                                        <span className='row'>
-                                            <span className=' '>
-                                                <i className="pe-7s-date col-md-1 color patientListIcon" />
-                                                <Link className='' onClick={() => handleSubscription(details)} >
-                                                    <span className="col-md-2"> {"(" + details.subscription[0].selected_plan + ")"}</span>
-                                                    {moment(new Date(details.subscription[0].expiryDate)).format('YYYY-MM-DD')}
-                                                    <span className="greenColor col-md-2" > Upgrade </span>
-                                                </Link>
+
+                                        <UpgradeSubscription subscription={details}/>
+                                        {/* {details["subscription"].map((item, i) =>
+                                            <span key={i} className='row' >
+                                                <span className=' '>
+                                                    <i className="pe-7s-date col-md-1 color patientListIcon" />
+                                                    {item.Status === "Running" ? <> {
+                                                        <Link className='' onClick={() => handleSubscription(item)} >
+                                                            <span className="col-md-2"> {"(" + item.selected_plan + ")"}</span>
+                                                            {moment(new Date(item.expiryDate)).format('YYYY-MM-DD')}
+                                                            <span className="greenColor col-md-2" > Upgrade </span>
+                                                        </Link>
+                                                    }
+                                                    </>
+                                                        : null}
+                                                </span>
                                             </span>
-                                        </span>
+                                        )} */}
 
                                         <div className='cardSpan appointmentBtn'>
                                             <Link to={`/loginpatient/${details._id}`} >
@@ -136,38 +145,40 @@ export default function DoctorList() {
                             )
                         })}
                     </div>
-                    <ul className="pagination pagination-sm">
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handlePrevPage}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </Link>
-                        </li>
-                        {totalPagesCalculator(totalPages).map(pageNo => {
-                            <li className='page-item '>
+                    {doctorData.length > 0 ?
+                        <ul className="pagination pagination-sm">
+                            <li className="page-item">
                                 <Link className="page-link"
-                                    to="#"  
-                                    onClick={() => setCurrentPage(pageNo)}>
-                                    {pageNo}
+                                    to="#" onClick={handlePrevPage}
+                                    disabled={currentPage === 1}>
+                                    Previous
                                 </Link>
                             </li>
-                        })}
+                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                    <Link className="page-link"
+                                        key={pageNo}
+                                        to="#"
+                                        onClick={() => setCurrentPage(pageNo)}>
+                                        {pageNo}
+                                    </Link>
+                                </li>
+                            )}
 
 
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handleNextPage}
-                                disabled={currentPage === totalPages}>
-                                Next
-                            </Link>
-                        </li>
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handleNextPage}
+                                    disabled={currentPage === totalPages}>
+                                    Next
+                                </Link>
+                            </li>
 
-                    </ul>
+                        </ul>
+                        : null}
                 </div >
             </div>
-        </Wrapper>
+        </Wrapper >
     )
 
 }

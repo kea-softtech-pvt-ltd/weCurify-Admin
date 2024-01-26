@@ -139,7 +139,7 @@ function DoctorPersonalInformation(props) {
                         <input
                             className="radio_button"
                             type="radio"
-                            value={updateData.gender}
+                            value="female"
                             name="gender"
                             onChange={handleInputRadio}
                             // checked={radioData === 'female'}
@@ -148,18 +148,18 @@ function DoctorPersonalInformation(props) {
                         <input
                             className="radio_button"
                             type="radio"
-                            value={updateData.gender}
+                            value="male"
                             name="gender"
-                            // checked={radioData === 'male'}
+                            checked={radioData === 'male'}
                             onChange={handleInputRadio}
                         />
                         <span>Male</span>
                         <input
                             className="radio_button"
                             type="radio"
-                            value={updateData.gender}
+                            value='other'
                             name="gender"
-                            // checked={radioData === 'other'}
+                            checked={radioData === 'other'}
                             onChange={handleInputRadio}
                         />
                         <span>Other</span>

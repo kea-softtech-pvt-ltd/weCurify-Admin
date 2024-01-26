@@ -17,8 +17,8 @@ export default function PatientCancelledApt(props) {
 
 
     useEffect(() => {
-        getPatientDetails();
-    }, [])
+        getPatientDetails(currentPage);
+    }, [currentPage])
 
 
     function getPatientDetails() {
@@ -27,8 +27,8 @@ export default function PatientCancelledApt(props) {
                 patientData(result)
             })
     }
-    const patientData = (list) => {
-        const pageSize = 6;
+    const pageSize = 6;
+    const patientData = (currentPage) => {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
                 const totalPages = result.totalCancelledPages;
@@ -42,9 +42,14 @@ export default function PatientCancelledApt(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -54,73 +59,81 @@ export default function PatientCancelledApt(props) {
     return (
 
         <div className="">
-            <div className='row'>
-                {patientList.map((details, i) => {
-                    return (
-                        <>
-                            <div className="col-md-4 ">
-                                <div className="cardDiv">
-                                    <span className='cardSpan '>
-                                        <i className='icon-user color patientListIcon' />
-                                        <span className='patientName'>{details['patientDetails'][0].name}</span>
-                                    </span>
-                                    <span className='cardSpan'>
-                                        <i className='icon-mobile-1 color patientListIcon' />
-                                        <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
-                                    </span>
-                                    {/* <span className='cardSpan '>
+            {patientList ?
+                <>
+                    <div className='row'>
+                        {patientList.map((details, i) => {
+                            return (
+                                <>
+                                    <div className="col-md-4 ">
+                                        <div className="cardDiv">
+                                            <span className='cardSpan '>
+                                                <i className='icon-user color patientListIcon' />
+                                                <span className='patientName'>{details['patientDetails'][0].name}</span>
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-mobile-1 color patientListIcon' />
+                                                <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
+                                            </span>
+                                            {/* <span className='cardSpan '>
                                         <i className='icon-hospital-1 color patientListIcon' />
                                         <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
                                     </span> */}
-                                    <span className='cardSpan time'>
-                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                            <span className='ml-2'>
-                                                {details.slotTime}
+                                            <span className='cardSpan time'>
+                                                <i className='pe-7s-date m-1 color patientListIcon' />
+                                                <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                    <span className='ml-2'>
+                                                        {details.slotTime}
+                                                    </span>
+                                                    <span className='timeS'>
+                                                        <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                        {details.timeSlot} Min.
+                                                    </span>
+                                                </span>
                                             </span>
-                                            <span className='timeS'>
-                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                {details.timeSlot} Min.
-                                            </span>
-                                        </span>
-                                    </span>
 
-                                </div>
-                            </div>
+                                        </div>
+                                    </div>
 
-                        </>
-                    )
+                                </>
+                            )
 
-                })}
-            </div>
-            {patientList.length > 0 ?
-                < ul className="pagination pagination-sm">
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={handlePrevPage}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </Link>
-                    </li>
-
-                    {/* <li className='page-item '>
+                        })}
+                    </div>
+                </>
+                : null}
+            {/* {patientList.length > 0 ? */}
+            < ul className="pagination pagination-sm">
+                <li className="page-item">
                     <Link className="page-link"
-                        to="#" onClick={() => changeCPage()}>
-                        {currentPage}
+                        to="#" onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
                     </Link>
-                </li> */}
+                </li>
 
-                    <li className="page-item">
+                {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                    <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
                         <Link className="page-link"
-                            to="#" onClick={handleNextPage}
-                            disabled={currentPage === totalPages}>
-                            Next
+                            key={pageNo}
+                            to="#"
+                            onClick={() => setCurrentPage(pageNo)}>
+                            {pageNo}
                         </Link>
                     </li>
-                </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>
-            }
+                )}
+
+                <li className="page-item">
+                    <Link className="page-link"
+                        to="#" onClick={handleNextPage}
+                        disabled={currentPage === totalPages}>
+                        Next
+                    </Link>
+                </li>
+            </ul>
+            {/* // : <div className="clinicHistory" ><b>Data is not Available</b></div> */}
+            {/* } */}
         </div >
 
     )

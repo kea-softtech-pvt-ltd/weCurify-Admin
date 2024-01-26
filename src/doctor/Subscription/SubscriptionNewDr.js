@@ -27,7 +27,8 @@ export default function Subscription() {
             "date": new Date(),
             "expiryDate": new Date(),
             "plan": plan.name,
-            "duration": plan.frequency
+            "duration": plan.frequency,
+            "status": "Running"
         }
         subscription(bodyData)
             .then(() => {
@@ -38,7 +39,6 @@ export default function Subscription() {
     const getSubscriptionPlan = () => {
         getSubscriptionPlans()
             .then((res) => {
-                console.log("=====>res", res)
                 subscriptionPlan(res)
             })
     }

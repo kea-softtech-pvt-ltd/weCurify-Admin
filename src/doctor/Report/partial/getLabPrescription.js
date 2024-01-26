@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import ReportApi from '../../../services/ReportApi';
 
 export default function GetLabPrescription(props) {
     const { reportId } = props;
     const { getLabTestPrescriptionData } = ReportApi();
     const [getLabData, setGetLabData] = useState([]);
+    
     useEffect(() => {
         getLabPrescriptionData()
     }, [getLabData])
