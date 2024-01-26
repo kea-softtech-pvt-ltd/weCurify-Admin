@@ -10,26 +10,22 @@ export default function UpgradeSubscription(props) {
     const history = useHistory()
 
     useEffect(() => {
-        getDoctorList()
+        getSubscriptionList()
     }, [])
-    const getDoctorList = () => {
+
+    const getSubscriptionList = () => {
         const returndata = sub.filter((item,i) => {
             if (item.Status === "Running") {
                 return sub
-            }else{
-                return null
             }
         })
-        console.log('====', returndata)
-
+        console.log("returndata==========", returndata)
         setsubscription(returndata[0])
     }
 
-   
-
     const handleSubscription = (details) => {
         console.log("details==========", details)
-        history.push(`/subscriptioncard/${details._id}`)
+        history.push(`/subscriptioncard/${details.doctorId}`)
     }
 
     return (

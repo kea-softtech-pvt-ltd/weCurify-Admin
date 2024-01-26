@@ -93,7 +93,7 @@ function MainContainer() {
       <Route path="/loginhelper">
         <LoginHelper />
       </Route>
-      <Route path="/subscriptioncard/:subscriptionId">
+      <Route path="/subscriptioncard/:doctorId">
         <SubscriptionCard />
       </Route>
       <Route path="/doctorlist">

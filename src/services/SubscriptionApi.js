@@ -5,7 +5,6 @@ export default function SubscriptionApi() {
     const subscription = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/subscription`, bodyData)
-            console.log('===result==post==',result)
             return result.data
         }
         catch (err) {

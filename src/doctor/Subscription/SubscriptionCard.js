@@ -8,10 +8,10 @@ import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
 export default function SubscriptionCard() {
-    const { updateSubscriptionData, getSubscriptionByIdData, getSubscriptionPlans } = SubscriptionApi()
+    const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
-    const [doctorId, setDoctorId] = useState([])
-    const { subscriptionId } = useParams();
+    const [subId, setSubId] = useState([])
+    const { doctorId } = useParams();
     const history = useHistory()
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
@@ -24,23 +24,39 @@ export default function SubscriptionCard() {
     }, [])
 
     const fetchSubscription = () => {
-        getSubscriptionByIdData({ subscriptionId })
-            .then((result) => {
-                setGetSubData(result[0].selected_plan)
-                setDoctorId(result[0].doctorId)
-                console.log('--data--', result)
+        getSubscriptionData({ doctorId })
+            .then((res) => {
+                const Data = res.filter((d) => {
+                    if (d.Status === "Running") {
+                        return res
+                    }
+                })
+                setGetPlan(Data[0].selected_plan)
+                setSubId(Data[0]._id)
             })
-
     }
+
+    const getSubscriptionPlan = () => {
+        getSubscriptionPlans()
+            .then((res) => {
+                const data = res.filter((sub) => {
+                    if (sub.status === true) {
+                        return (sub)
+                    }
+                })
+                
+                setGetSubscription(data)
+            })
+    }
+
     const handleShow = (item) => {
-        setGetPlan(item)
+        setGetSubData(item)
         setShow(true)
-
     }
+
     const handleClose = () => setShow(false)
 
     const confirmInputHandler = (plan) => {
-        const id = subscriptionId
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
@@ -49,28 +65,12 @@ export default function SubscriptionCard() {
             "duration": plan.frequency,
             "status": "Running"
         }
-        updateSubscriptionData(id, bodyData)
+        updateSubscriptionData(subId, bodyData)
             .then((res) => {
-                console.log('=======res', res)
                 setId(res[0]._id)
-                setGetSubData(res[0].selected_plan)
             })
-        history.push(`/subscriptionconfirmation/${id}`)
+        history.push(`/subscriptionconfirmation/${subId}`)
         handleClose()
-    }
-    const getSubscriptionPlan = () => {
-        getSubscriptionPlans()
-            .then((res) => {
-                subscriptionPlan(res)
-            })
-    }
-    const subscriptionPlan = (res) => {
-        const data = res.filter((sub) => {
-            if (sub.status === true) {
-                return (sub)
-            }
-        })
-        setGetSubscription(data)
     }
 
     return (
@@ -112,7 +112,7 @@ export default function SubscriptionCard() {
                                             })}
 
                                         </ul>
-                                        {getSubData === item.name ?
+                                        {getPlan === item.name ?
                                             <button
                                                 onClick={handleClose}
                                                 className="btn disabled-card add_bottom_15 shadow-none disabled"
@@ -138,7 +138,7 @@ export default function SubscriptionCard() {
                             <div className="alert alert-danger">You Want To Get This Subscription. </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="default" className='appColor' onClick={() => confirmInputHandler(getPlan)}>
+                            <Button variant="default" className='appColor' onClick={() => confirmInputHandler(getSubData)}>
                                 Yes
                             </Button>
                             <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
