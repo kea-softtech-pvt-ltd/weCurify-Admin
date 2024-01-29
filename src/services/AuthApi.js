@@ -45,7 +45,6 @@ export default function AuthApi() {
     const getdoctors = async (currentPage, pageSize) => {
         try {
             const result = await axios.post(`${API}/search?page=${currentPage}&pageSize=${pageSize}`)
-            console.log('=result=',result)
             return result.data
         }
         catch (err) {

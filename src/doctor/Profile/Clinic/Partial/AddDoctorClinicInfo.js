@@ -33,15 +33,8 @@ function AddDoctorClinicInfo(props) {
         const pageSize = 5;
         getDrInfo({ doctorId }, currentPage, pageSize)
             .then((jsonRes) => {
-                console.log('=====jsonRes', jsonRes)
                 const clinicData =  jsonRes[0]['clinicList']
                 setClinicList(clinicData)
-                // const data = clinicData.filter((clinic) => {
-                //     if (clinic.isDeleted === false) {
-                //         return clinic
-                //     }
-                // })
-                // setTotalPages(jsonRes.totalPages)
             });
     }
     const handleDeleteShow = (item) => {

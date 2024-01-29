@@ -17,7 +17,7 @@ function LoginPatientOtp(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const loginOtp = loginotp
-        patientLoginOtp({ getOTP: loginOtp, _id: patientId })
+        patientLoginOtp({ otp: loginOtp, _id: patientId })
             .then((response) => {
                 setPatientData(patientId)
                 const isLoggedIn = loginData.isLoggedIn

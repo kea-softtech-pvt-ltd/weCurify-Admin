@@ -11,7 +11,6 @@ import ClinicApi from "../../../../services/ClinicApi";
 const SearchClinic = (props) => {
     const { doctorId } = props
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
-    console.log('=coilDoctorClinicData=', coilDoctorClinicData)
     const [clinicInfo, setClinicInfo] = useState([]);
     const [clinicSave, setClinicSave] = useState([])
     console.log('=clinicSave=', clinicSave)
@@ -55,13 +54,11 @@ const SearchClinic = (props) => {
         const newClinicData = {
             clinicId: clinicSave._id
         }
-        addClinic( doctorId,newClinicData)
-        console.log('=newClinicData2222',newClinicData)
-        .then((res) => {
-        console.log('=res3333333',res)
-            setCoilDoctorClinicData(coilDoctorClinicData[0].concat(res))
-        });
-        props.onSubmit()
+        addClinic(doctorId,newClinicData)
+            .then((res) => {
+                setCoilDoctorClinicData(coilDoctorClinicData.concat(res))
+            });
+            props.onSubmit()
     }
     
 

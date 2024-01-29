@@ -28,16 +28,12 @@ export default function SubscriptionConfirmation() {
     }
 
     const fetchSubscription = () => {
-        getSubscriptionData({ doctorId })
-        .then((res) => {
-            const data = res.filter((item) => {
-                if (item.Status === "Running") {
-                    return item
-                }
+        getSubscriptionByIdData({ subscriptionId })
+            .then((res) => {
+                console.log('=====res', res)
+                setGetSubData(res[0].selected_plan)
             })
-            console.log('--res--', data)
-            setGetSubData(data[0].selected_plan)
-        })
+
     }
 
     return (

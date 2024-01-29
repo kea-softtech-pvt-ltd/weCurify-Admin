@@ -5,7 +5,6 @@ import avatarImage from '../../../img/profile.png'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
-import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -16,8 +15,6 @@ import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
-    const [radioData, setRadioData] = useState('');
-    console.log('=====radioData', radioData)
     const {
         addDoctorInformation,
         submitDoctorInformation
@@ -41,7 +38,9 @@ function DoctorPersonalInformation(props) {
     };
 
     const handleInputRadio = (e) => {
-        setRadioData(e.target.value)
+        const { name, value } = e.target;
+        setUpdateData({ ...updateData, [name]: value });
+        setValue(name, value)
     }
     useEffect(() => {
         register("name", { required: true });
@@ -54,7 +53,6 @@ function DoctorPersonalInformation(props) {
     const addDrInfo = () => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
-                console.log('=jsonRes', jsonRes)
                 setUpdateData(jsonRes)
             });
 
@@ -66,7 +64,6 @@ function DoctorPersonalInformation(props) {
                 resolve(xhr.response);
             };
             xhr.onerror = function (e) {
-                console.log(e);
                 reject(new TypeError("Network request failed"));
             };
             xhr.responseType = "blob";
@@ -83,12 +80,11 @@ function DoctorPersonalInformation(props) {
         const bodyData = {
             photo: resultUrl,
             name: updateData.name,
-            gender: radioData,
+            gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
             
         }
-        console.log('===bodyData', bodyData)
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {
             })
@@ -142,7 +138,7 @@ function DoctorPersonalInformation(props) {
                             value="female"
                             name="gender"
                             onChange={handleInputRadio}
-                            // checked={radioData === 'female'}
+                            checked={updateData.gender === 'female' ? true : false}
                         />
                         <span>Female</span>
                         <input
@@ -150,7 +146,7 @@ function DoctorPersonalInformation(props) {
                             type="radio"
                             value="male"
                             name="gender"
-                            checked={radioData === 'male'}
+                            checked={updateData.gender === 'male' ? true : false}
                             onChange={handleInputRadio}
                         />
                         <span>Male</span>
@@ -159,7 +155,7 @@ function DoctorPersonalInformation(props) {
                             type="radio"
                             value='other'
                             name="gender"
-                            checked={radioData === 'other'}
+                            checked={updateData.gender === 'other' ? true : false}
                             onChange={handleInputRadio}
                         />
                         <span>Other</span>

@@ -8,13 +8,11 @@ import { Autocomplete, TextField } from "@mui/material";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import uuid from "uuid";
 import EducationApi from "../../../../services/EducationApi";
-import { useForm } from "react-hook-form";
+
 const AddClinic = (props) => {
     const { doctorId } = props
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
-    console.log('---coilDoctorClinicData', coilDoctorClinicData)
     const [selectedService, setSelectedService] = useState([]);
-    const [selectedSpecialization, setSelectedSpecialization] = useState([]);
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
     const { fetchDrSpecialization } = EducationApi()
@@ -32,6 +30,7 @@ const AddClinic = (props) => {
                 setDrSpecialization(result);
             })
     }
+
     const fetchServicess = () => {
         getServicess()
             .then((res) => {
@@ -51,11 +50,6 @@ const AddClinic = (props) => {
     const handleService = (e, selectedValue) => {
         e.preventDefault()
         setSelectedService(selectedValue)
-    }
-
-    const handleSpecialization = (e, selectedValue) => {
-        e.preventDefault()
-        setSelectedSpecialization(selectedValue)
     }
 
     async function uploadImageAsync(uri) {

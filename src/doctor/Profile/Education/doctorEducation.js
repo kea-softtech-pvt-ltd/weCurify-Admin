@@ -22,7 +22,7 @@ function DoctorEducation(props) {
             <FetchEducation doctorId={doctorId} />
             <div className="row float-right">
                 <div className="my-2 ">
-                    <Link onClick={() => handleAdd()}>
+                    <Link to="#" onClick={() => handleAdd()}>
                         <MainButtonInput>Add</MainButtonInput>
                     </Link>
                 </div>

@@ -22,7 +22,6 @@ export default function Calender() {
   const [patientIdDetails, setPatientIdDetails] = useState([])
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
   const [patientList, setPatientList] = useState([])
-  console.log("===patientList=>>>", patientList)
   useEffect(() => {
     handleOnSelectSlot();
   }, [])
