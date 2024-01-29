@@ -114,7 +114,7 @@ export default function DoctorList() {
                                             <span className='patinetInfo'> {details.personalEmail}</span>
                                         </span>
 
-                                        <UpgradeSubscription subscription={details}/>
+                                        <UpgradeSubscription subscription={details} doctorId={details._id}/>
                                         {/* {details["subscription"].map((item, i) =>
                                             <span key={i} className='row' >
                                                 <span className=' '>
