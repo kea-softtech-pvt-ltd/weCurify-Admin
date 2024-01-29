@@ -8,29 +8,30 @@ import { useEffect, useState } from "react";
 import SubscriptionApi from "../../services/SubscriptionApi";
 
 export default function SubscriptionConfirmation() {
-    const { subscriptionId } = useParams()
+    const { doctorId } = useParams()
     const { getDrInfo } = AuthApi()
-    const [doctorData, setDoctorData] = useState([])
-    const [getSubData, setGetSubData] = useState([])
-    const { getSubscriptionByIdData } = SubscriptionApi()
+    const [ doctorData, setDoctorData] = useState([])
+    const [ getSubData, setGetSubData] = useState([])
+    console.log(getSubData,"getSubData")
+    const { getSubscriptionData } = SubscriptionApi()
     useEffect(() => {
-        // doctorInfo()
         fetchSubscription()
     }, [])
 
-    // const doctorInfo = () => {
-    //     getDrInfo({ doctorId })
-    //         .then((res) => {
-    //             setDoctorData(res[0])
-    //         })
-    // }
-
     const fetchSubscription = () => {
-        getSubscriptionByIdData({ subscriptionId })
-            .then((res) => {
-                setGetSubData(res[0].selected_plan)
+        getDrInfo({ doctorId })
+        .then((res) => {
+            setDoctorData(res[0])
+        })
+        getSubscriptionData({ doctorId })
+            .then((sub) => {
+                const returndata = sub.filter((item, i) => {
+                    if (item.Status === "Running") {
+                        return sub
+                    }
+                })
+                setGetSubData(returndata[0])
             })
-
     }
 
     return (
@@ -56,7 +57,7 @@ export default function SubscriptionConfirmation() {
                             <div className='fontS'>
                                 Dr. {doctorData.name}
                                 {/* <div> Your Subscription is Upgraded Successfully!</div> */}
-                                <div >Now your Subscription  is ( {getSubData} )</div>
+                                <div >Now your Subscription  is ( {getSubData.selected_plan} )</div>
                             </div>
                             <Link to={`/doctorList`}>
                                 <button align='right' className='btn appColor helperBtn'>Done</button>

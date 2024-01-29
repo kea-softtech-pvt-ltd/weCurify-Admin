@@ -69,7 +69,7 @@ export default function SubscriptionCard() {
             .then((res) => {
                 setId(res[0]._id)
             })
-        history.push(`/subscriptionconfirmation/${subId}`)
+        history.push(`/subscriptionconfirmation/${doctorId}`)
         handleClose()
     }
 
