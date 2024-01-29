@@ -32,8 +32,7 @@ export default function SubscriptionApi() {
         }
 
     }
-    const updateSubscriptionData = async ( subscriptionId , bodyData) => {
-        console.log("subscriptionId====>>>>>>", subscriptionId)
+    const updateSubscriptionData = async ( {subscriptionId} , bodyData) => {
         try {
             const result = await axios.post(`${API}/updatesubscriptiondata/${subscriptionId}`, bodyData)
             return result.data

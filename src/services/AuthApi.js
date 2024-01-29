@@ -25,6 +25,7 @@ export default function AuthApi() {
     const getDrInfo = async ({ doctorId }) => {
         try {
             const result = await axios.get(`${API}/doctor/${doctorId}`);
+            console.log('=result==',result)
             return result.data;
         }
         catch (err) {

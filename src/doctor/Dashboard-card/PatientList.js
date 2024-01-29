@@ -104,7 +104,7 @@ export default function PatientList(props) {
                         return (
                             <>
                                 {!details.dependentId ?
-                                    <div className="col-md-4 ">
+                                    <div className="col-md-4 " key={i}>
                                         <div className="cardDiv">
                                             <span className='cardSpan'>
                                                 <i className='icon-user color patientListIcon' />
@@ -220,7 +220,7 @@ export default function PatientList(props) {
                     </li>
 
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+                : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
             <Modal show={showDelete} onHide={handleDeleteClose} >
                 <Modal.Header closeButton>
                     <Modal.Title>Are You Sure?</Modal.Title>

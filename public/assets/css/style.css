@@ -5539,6 +5539,10 @@ ul.bullets li:before {
 	background-color: #3f4079;
 	border-color: #3f4079;
 }
+.page-item.active {
+	background-color: #3f4079;
+	border-color: #3f4079;
+}
 .page-item.disabled .page-link {
 	color: #999;
 	border-color: #e1e8ed;

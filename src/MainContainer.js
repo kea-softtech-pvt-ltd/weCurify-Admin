@@ -129,7 +129,7 @@ function MainContainer() {
       <Route path="/subscriptionnewdr/:doctorId">
         <SubscriptionNewDr />
       </Route>
-      <Route path="/subscriptionconfirmation/:subscriptionId">
+      <Route path="/subscriptionconfirmation/:doctorId">
         <SubscriptionConfirmation />
       </Route>
       {/* <Route path="/medicinelist/:doctorId">

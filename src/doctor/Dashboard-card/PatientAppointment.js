@@ -36,15 +36,13 @@ export default function PatientAppointment() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/allpatient`}>
+                        <Link to={`/doctorlist`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Patient Information</li>
                     <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
-
                 </ul>
-
             </MainNav>
             <div className="row">
                 <UserLinks

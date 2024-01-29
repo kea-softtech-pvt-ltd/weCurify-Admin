@@ -8,30 +8,36 @@ import { useEffect, useState } from "react";
 import SubscriptionApi from "../../services/SubscriptionApi";
 
 export default function SubscriptionConfirmation() {
-    const { subscriptionId } = useParams()
+    const { doctorId } = useParams()
+    console.log('==doctorId',doctorId)
     const { getDrInfo } = AuthApi()
     const [doctorData, setDoctorData] = useState([])
     const [getSubData, setGetSubData] = useState([])
-    const { getSubscriptionByIdData } = SubscriptionApi()
+    const { getSubscriptionData } = SubscriptionApi()
     useEffect(() => {
-        // doctorInfo()
+        doctorInfo()
         fetchSubscription()
     }, [])
 
-    // const doctorInfo = () => {
-    //     getDrInfo({ doctorId })
-    //         .then((res) => {
-    //             setDoctorData(res[0])
-    //         })
-    // }
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                console.log('=====res',res)
+                setDoctorData(res[0])
+            })
+    }
 
     const fetchSubscription = () => {
-        getSubscriptionByIdData({ subscriptionId })
-            .then((res) => {
-                console.log('=====res', res)
-                setGetSubData(res[0].selected_plan)
+        getSubscriptionData({ doctorId })
+        .then((res) => {
+            const data = res.filter((item) => {
+                if (item.Status === "Running") {
+                    return item
+                }
             })
-
+            console.log('--res--', data)
+            setGetSubData(data[0].selected_plan)
+        })
     }
 
     return (

@@ -110,16 +110,7 @@ function AddDoctorClinicInfo(props) {
                     </Modal.Body>
                 </Modal>
             </div>
-                {/* <div className="modalbtn">
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Add Clinic</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <AddClinic doctorId={doctorId} handleClose={onClinicFormSubmit} />
-                        </Modal.Body>
-                    </Modal>
-                </div> */}
+                
                 {clinicList ?
                     <>
                         {clinicList.map((item, index) => (

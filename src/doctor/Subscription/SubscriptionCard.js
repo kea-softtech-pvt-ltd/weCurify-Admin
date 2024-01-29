@@ -7,13 +7,16 @@ import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
+import { useRecoilState } from "recoil";
+import { setDoctorId } from "../../recoil/atom/setDoctorId";
 export default function SubscriptionCard() {
     const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
-    const [subId, setSubId] = useState([])
+    const [subscriptionId, setScriptionId] = useState([])
     const { doctorId } = useParams();
     const history = useHistory()
     const [show, setShow] = useState(false);
+    const [doctorsId, setDoctorsId] = useRecoilState(setDoctorId);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
     const [id, setId] = useState(null)
@@ -32,7 +35,8 @@ export default function SubscriptionCard() {
                     }
                 })
                 setGetPlan(Data[0].selected_plan)
-                setSubId(Data[0]._id)
+                setDoctorsId(Data[0].doctorId)
+                setScriptionId(Data[0]._id)
             })
     }
 
@@ -44,7 +48,6 @@ export default function SubscriptionCard() {
                         return (sub)
                     }
                 })
-                
                 setGetSubscription(data)
             })
     }
@@ -65,11 +68,11 @@ export default function SubscriptionCard() {
             "duration": plan.frequency,
             "status": "Running"
         }
-        updateSubscriptionData(subId, bodyData)
+        updateSubscriptionData({subscriptionId}, bodyData)
             .then((res) => {
                 setId(res[0]._id)
             })
-        history.push(`/subscriptionconfirmation/${subId}`)
+        history.push(`/subscriptionconfirmation/${doctorId}`)
         handleClose()
     }
 

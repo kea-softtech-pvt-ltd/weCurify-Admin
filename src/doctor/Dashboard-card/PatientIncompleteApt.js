@@ -16,13 +16,11 @@ export default function PatientIncompleteApt(props) {
     }, [currentPage]);
 
 
-    function getPatientHistory() {
-        const pageSize = 6;
+    const pageSize = 6;
+    function getPatientHistory(currentPage) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('----', result)
-                const totalPages = result.totalIncompletePage;
-                setTotalPages(totalPages)
+                setTotalPages(result.totalIncompletePages)
                 setPatientHistoryData(result.incomplete)
             })
     }
@@ -32,9 +30,14 @@ export default function PatientIncompleteApt(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -42,48 +45,49 @@ export default function PatientIncompleteApt(props) {
     };
     return (
         <>
-            <div className='row'>
-                {patientHistoryData.map((details, i) => {
-                    return (
-                        <>
-                            <div className="col-md-4 " key={i}>
-                                <div className="cardDiv">
-                                    <span className='cardSpan '>
-                                        <i className='icon-user color patientListIcon' />
-                                        <span className='patientName'>{details['patientDetails'][0].name}</span>
-                                    </span>
-                                    <span className='cardSpan'>
-                                        <i className='icon-mobile-1 color patientListIcon' />
-                                        <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
-                                    </span>
-                                    {/* <span className='cardSpan '>
+            {patientHistoryData ?
+                <div className='row'>
+                    {patientHistoryData.map((details, i) => {
+                        return (
+                            <>
+                                <div className="col-md-4 " key={i}>
+                                    <div className="cardDiv">
+                                        <span className='cardSpan '>
+                                            <i className='icon-user color patientListIcon' />
+                                            <span className='patientName'>{details['patientDetails'][0].name}</span>
+                                        </span>
+                                        <span className='cardSpan'>
+                                            <i className='icon-mobile-1 color patientListIcon' />
+                                            <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
+                                        </span>
+                                        {/* <span className='cardSpan '>
                                         <i className='icon-hospital-1 color patientListIcon' />
                                         <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
                                     </span> */}
-                                    <span className='cardSpan time'>
-                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                            <span className='ml-2'>
-                                                {details.slotTime}
-                                            </span>
-                                            <span className='timeSlot'>
-                                                <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                {details.timeSlot} Min.
+                                        <span className='cardSpan time'>
+                                            <i className='pe-7s-date m-1 color patientListIcon' />
+                                            <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                <span className='ml-2'>
+                                                    {details.slotTime}
+                                                </span>
+                                                <span className='timeSlot'>
+                                                    <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                    {details.timeSlot} Min.
+                                                </span>
                                             </span>
                                         </span>
-                                    </span>
 
+                                    </div>
                                 </div>
-                            </div>
 
-                        </>
-                    )
+                            </>
+                        )
 
-                })}
-
-            </div>
+                    })}
+                </div>
+                : null}
             {patientHistoryData.length > 0 ?
-                <ul className="pagination pagination-sm">
+                < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handlePrevPage}
@@ -93,12 +97,16 @@ export default function PatientIncompleteApt(props) {
                         </Link>
                     </li>
 
-                    {/* <li className='page-item '>
-                <Link className="page-link"
-                    to="#" onClick={() => changeCPage()}>
-                    {currentPage}
-                </Link>
-            </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <Link className="page-link"
@@ -108,8 +116,8 @@ export default function PatientIncompleteApt(props) {
                         </Link>
                     </li>
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>
-            }
+                : <div className="clinicHistory" ><b>Data is not Available</b></div> }
+
         </>
     )
 }

@@ -6,10 +6,10 @@ import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import AppointmentApi from '../../services/AppointmentApi';
 
 
-
 export default function PatientCancelledApt(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
+    console.log('patientList------', patientList)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getPatientListDetails } = AppointmentApi()
@@ -20,22 +20,17 @@ export default function PatientCancelledApt(props) {
         getPatientDetails(currentPage);
     }, [currentPage])
 
+    const pageSize = 6;
 
     function getPatientDetails() {
-        getPatientListDetails({ doctorId })
-            .then((result) => {
-                patientData(result)
-            })
-    }
-    const pageSize = 6;
-    const patientData = (currentPage) => {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                const totalPages = result.totalCancelledPages;
-                setTotalPages(totalPages)
+                setTotalPages(result.totalCancelledPages)
                 setPatientList(result.cancelled)
             })
+
     }
+
 
     const handlePrevPage = () => {
         if (currentPage !== 1) {
@@ -65,7 +60,7 @@ export default function PatientCancelledApt(props) {
                         {patientList.map((details, i) => {
                             return (
                                 <>
-                                    <div className="col-md-4 ">
+                                    <div className="col-md-4 " key={i}>
                                         <div className="cardDiv">
                                             <span className='cardSpan '>
                                                 <i className='icon-user color patientListIcon' />
@@ -101,8 +96,8 @@ export default function PatientCancelledApt(props) {
                         })}
                     </div>
                 </>
-                : null}
-            {/* {patientList.length > 0 ? */}
+                : null }
+            {patientList.length > 0 ?
             < ul className="pagination pagination-sm">
                 <li className="page-item">
                     <Link className="page-link"
@@ -132,8 +127,8 @@ export default function PatientCancelledApt(props) {
                     </Link>
                 </li>
             </ul>
-            {/* // : <div className="clinicHistory" ><b>Data is not Available</b></div> */}
-            {/* } */}
+             : <div className="clinicHistory" ><b>Data is not Available</b></div> 
+            }
         </div >
 
     )

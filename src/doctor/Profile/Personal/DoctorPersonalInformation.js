@@ -86,7 +86,7 @@ function DoctorPersonalInformation(props) {
             gender: radioData,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
-            isSubscribed: true
+            
         }
         console.log('===bodyData', bodyData)
         submitDoctorInformation({ doctorId, bodyData })
