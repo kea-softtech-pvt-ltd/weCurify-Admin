@@ -24,7 +24,6 @@ export default function SubscriptionApi() {
     const getSubscriptionByIdData = async ({ subscriptionId }) => {
         try {
             const result = await axios.get(`${API}/getsubscriptionByid/${subscriptionId}`)
-            console.log('-----get--result', result)
             return result.data
         }
         catch (err) {
@@ -33,7 +32,6 @@ export default function SubscriptionApi() {
 
     }
     const updateSubscriptionData = async ( subscriptionId , bodyData) => {
-        console.log("subscriptionId====>>>>>>", subscriptionId)
         try {
             const result = await axios.post(`${API}/updatesubscriptiondata/${subscriptionId}`, bodyData)
             return result.data

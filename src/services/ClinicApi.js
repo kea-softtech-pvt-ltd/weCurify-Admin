@@ -70,7 +70,6 @@ export default function ClinicApi() {
     const addClinic = async (newClinicData,doctorId) => {
         try {
             const result = await axios.post(`${API}/addclinicid/${doctorId}`, newClinicData)
-            console.log('result----//////-', result)
             return result.data
         }
         catch (err) {
@@ -78,7 +77,6 @@ export default function ClinicApi() {
         }
     }
     const addAnotherClinic = async (newClinicData, doctorId) => {
-        console.log('==///==', newClinicData,doctorId)
         try {
             const result = await axios.post(`${API}/clinics/${doctorId}`, newClinicData)
             return result.data

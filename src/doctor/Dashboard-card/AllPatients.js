@@ -30,7 +30,6 @@ export default function AllPatients() {
         for (let x = 1; x <= totalPages; x++) {
             pages.push(x)
         }
-        console.log('pages-----', pages)
         return pages
     }
 

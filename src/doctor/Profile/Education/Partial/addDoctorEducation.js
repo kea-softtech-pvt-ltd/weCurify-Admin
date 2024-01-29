@@ -59,12 +59,10 @@ function AddDoctorEducation(props) {
             collage: updateEduData.collage,
             comYear: updateEduData.comYear,
             specialization: updateEduData.specialization,
-            // document:document
         }
         addEducation(bodyData)
             .then((res) => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
-                
             });
             toast.success("Saved Successfully!")
             props.addRecords()

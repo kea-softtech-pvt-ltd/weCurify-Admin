@@ -28,7 +28,6 @@ export default function SubscriptionConfirmation() {
     const fetchSubscription = () => {
         getSubscriptionByIdData({ subscriptionId })
             .then((res) => {
-                console.log('=====res', res)
                 setGetSubData(res[0].selected_plan)
             })
 

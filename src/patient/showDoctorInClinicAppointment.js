@@ -8,12 +8,9 @@ import moment from "moment";
 function ShowDoctorInClinicAppointment(props) {
     const { setSessions, clinicId, doctorId } = props;
     const [showSlot, setShowSlot] = useState([]);
-    console.log('===showSlot====', showSlot)
     const [dayMonth, setDayMonth] = useState([]);
     const [error, setError] = useState([]);
     const [session, setSession] = useState([])
-    console.log('==session', session)
-
     const [date, setDate] = useState([])
     const [selectedDate, setSelectedDate] = useState([])
 
@@ -106,7 +103,6 @@ return (
                     </Carousel>
                 </div>
                 <div className="col-sm-9">
-                    {console.log('-------1111')}
                     {showSlot.length > 0 ?
                         <ShowInClinicAppointSlots
                             doctorId={doctorId}

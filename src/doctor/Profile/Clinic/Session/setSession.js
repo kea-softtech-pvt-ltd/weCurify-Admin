@@ -89,7 +89,6 @@ function SetSession(props) {
                 return i
             }
         })
-        console.log('=======id',deleteData[0]._id)
         const slotId = deleteData[0]._id
         deleteSlot(slotId)
             .then(() => {

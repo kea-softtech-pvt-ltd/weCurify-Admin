@@ -20,8 +20,6 @@ export default function PatientIncompleteApt(props) {
         const pageSize = 6;
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('----', result)
-                const totalPages = result.totalIncompletePage;
                 setTotalPages(totalPages)
                 setPatientHistoryData(result.incomplete)
             })

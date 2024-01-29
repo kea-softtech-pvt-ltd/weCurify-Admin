@@ -76,9 +76,9 @@ export default function PatientApi() {
             return err
         }
     }
-    const patientLoginOtp = async ({ loginOtp, patientId }) => {
+    const patientLoginOtp = async ({ otp, _id }) => {
         try {
-            const result = await axios.post(`${API}/patientLoginOtp`, { loginOtp, patientId })
+            const result = await axios.post(`${API}/patientLoginOtp`, { otp, _id })
             return result.data
         }
         catch (err) {

@@ -10,7 +10,6 @@ const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 export default function PatientsClinicHistory(props) {
     const { doctorId } = props
     const [patientHistoryData, setPatientHistoryData] = useState([])
-    console.log('==patientHistoryData==',patientHistoryData)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { downloadPrescription, getPatientListDetails } = AppointmentApi()
@@ -25,7 +24,6 @@ export default function PatientsClinicHistory(props) {
     function getPatientHistory() {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('=result=', result)
                 const totalPages = result.totalCompletedPages;
                 setTotalPages(totalPages)
                 setPatientHistoryData(result.completed)

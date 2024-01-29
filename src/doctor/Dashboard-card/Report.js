@@ -1,13 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { setHelperData } from "../../recoil/atom/setHelperData";
-import { useRecoilState } from "recoil";
 import AppointmentApi from '../../services/AppointmentApi';
 
 export default function Report(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
-    console.log('=====patientList', patientList)
     const { getPatientListDetails } = AppointmentApi();
     const [patientData, setPatientData] = useState([]);
     const [total, setTotal] = useState([]);
