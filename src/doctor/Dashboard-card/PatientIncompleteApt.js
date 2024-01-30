@@ -7,7 +7,7 @@ import AppointmentApi from "../../services/AppointmentApi";
 
 export default function PatientIncompleteApt(props) {
     const { doctorId } = props
-    const [patientHistoryData, setPatientHistoryData] = useState([])
+    const [patientHistoryData, setPatientHistoryData] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getPatientListDetails } = AppointmentApi()
@@ -86,8 +86,8 @@ export default function PatientIncompleteApt(props) {
 
                     })}
                 </div>
-                : null}
-            {patientHistoryData.length > 0 ?
+            : null}
+            {patientHistoryData ?
                 < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"

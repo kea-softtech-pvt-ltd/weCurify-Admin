@@ -77,9 +77,7 @@ export default function PatientList(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * totalPages)
-    // }
+
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
@@ -188,7 +186,7 @@ export default function PatientList(props) {
 
                     })}
                 </div >
-                : null}
+            : null}
             {patientList?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">

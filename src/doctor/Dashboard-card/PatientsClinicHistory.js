@@ -10,7 +10,7 @@ const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 
 export default function PatientsClinicHistory(props) {
     const { doctorId } = props
-    const [patientHistoryData, setPatientHistoryData] = useState([])
+    const [patientHistoryData, setPatientHistoryData] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { downloadPrescription, getPatientListDetails } = AppointmentApi()
@@ -113,7 +113,7 @@ export default function PatientsClinicHistory(props) {
                     })}
                 </div>
                 : null}
-            {patientHistoryData.length > 0 ?
+            {patientHistoryData?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"

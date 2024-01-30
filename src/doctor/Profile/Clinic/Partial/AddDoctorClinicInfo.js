@@ -17,16 +17,13 @@ function AddDoctorClinicInfo(props) {
     const [clinicList, setClinicList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState();
-    // const [showDelete, setShowDelete] = useState(false);
     const [show, setShow] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
-
-    // const { clinicDelete } = ClinicApi()
     const { getDrInfo } = AuthApi()
 
     useEffect(() => {
         getAllClinics(currentPage);
-    }, [currentPage])
+    }, [currentPage, clinicList])
 
     const pageSize = 5;
     const getAllClinics = (currentPage) => {

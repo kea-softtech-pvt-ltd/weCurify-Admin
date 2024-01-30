@@ -69,12 +69,11 @@ export default function PatientAppointment() {
                     <TabPanel value={value} index={2}>
                         <PatientCancelledApt doctorId={doctorId} />
                     </TabPanel>
+                    
                     <TabPanel value={value} index={3}>
                         <PatientIncompleteApt doctorId={doctorId} />
                     </TabPanel>
-
                 </div>
-
             </div>
         </Wrapper>
     );
