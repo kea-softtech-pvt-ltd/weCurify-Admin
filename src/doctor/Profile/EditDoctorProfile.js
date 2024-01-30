@@ -12,7 +12,6 @@ import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
-import { Button } from 'react-bootstrap';
 import AuthApi from '../../services/AuthApi';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -44,7 +43,7 @@ export default function EditDoctorProfile() {
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorsName(res[0].name)
+                setDoctorsName(res.result[0].name)
             })
     }
 

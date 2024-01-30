@@ -5,7 +5,6 @@ import UserLinks from "./partial/uselinks";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AuthApi from "../../services/AuthApi";
 import { useState } from "react";
-import moment from "moment/moment";
 import { Icon } from "@mui/material";
 import UpgradeSubscription from "./partial/upgradeSubscription";
 export default function DoctorList() {
@@ -13,16 +12,12 @@ export default function DoctorList() {
     const [filterData, setFilterData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
-    const [subscription, setSubscription] = useState('');
     const { getdoctors } = AuthApi()
     const history = useHistory()
-
 
     useEffect(() => {
         getDoctorList(currentPage)
     }, [currentPage])
-
-
 
     const pageSize = 6;
     const getDoctorList = () => {
@@ -46,9 +41,6 @@ export default function DoctorList() {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * totalPages)
-    // }
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
@@ -62,8 +54,6 @@ export default function DoctorList() {
             setCurrentPage(currentPage + 1);
         }
     };
-
-
 
     return (
         <Wrapper>
@@ -83,10 +73,8 @@ export default function DoctorList() {
                     </div>
                 </ul>
             </MainNav>
-
             <div className='row'>
                 <UserLinks />
-
                 <div className="common_box">
                     <div className='row'>
                         {doctorData.map((details, i) => {
@@ -113,25 +101,7 @@ export default function DoctorList() {
                                             <i className='icon-email color patientListIcon' />
                                             <span className='patinetInfo'> {details.personalEmail}</span>
                                         </span>
-
-                                        <UpgradeSubscription subscription={details} doctorId={details._id}/>
-                                        {/* {details["subscription"].map((item, i) =>
-                                            <span key={i} className='row' >
-                                                <span className=' '>
-                                                    <i className="pe-7s-date col-md-1 color patientListIcon" />
-                                                    {item.Status === "Running" ? <> {
-                                                        <Link className='' onClick={() => handleSubscription(item)} >
-                                                            <span className="col-md-2"> {"(" + item.selected_plan + ")"}</span>
-                                                            {moment(new Date(item.expiryDate)).format('YYYY-MM-DD')}
-                                                            <span className="greenColor col-md-2" > Upgrade </span>
-                                                        </Link>
-                                                    }
-                                                    </>
-                                                        : null}
-                                                </span>
-                                            </span>
-                                        )} */}
-
+                                        <UpgradeSubscription doctorId={details._id} />
                                         <div className='cardSpan appointmentBtn'>
                                             <Link to={`/loginpatient/${details._id}`} >
                                                 <button className='btn appColor helperBtn'>Book Appoinment</button>
