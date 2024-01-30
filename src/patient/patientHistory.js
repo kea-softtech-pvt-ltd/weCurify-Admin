@@ -21,6 +21,7 @@ export default function PatientHistory() {
     const [patientName, setPatientName] = useState([]);
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
 
+
     useEffect(() => {
         patientData()
     }, [])
@@ -31,6 +32,7 @@ export default function PatientHistory() {
     const patientData = () => {
         fetchPatient({ patientId })
             .then((res) => {
+                console.log('====resssssss',res)
                 setPatientName(res[0].name)
             })
 

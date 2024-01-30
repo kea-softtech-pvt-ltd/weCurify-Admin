@@ -31,7 +31,7 @@ export default function SlotConfirmation() {
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorData(res[0])
+                setDoctorData(res.result[0])
             })
     }
 

@@ -15,7 +15,6 @@ export default function Completed(props) {
     const { downloadPrescription } = AppointmentApi()
     const { getpaymentData } = PatientApi()
 
-
     useEffect(() => {
         getPatientHistory(currentPage);
     }, [currentPage])
@@ -70,9 +69,7 @@ export default function Completed(props) {
                             <>
                                 <div key={i} className="col-md-4 ">
                                     <div className="cardDiv">
-                                        <span className='doctorCard'>
-                                            <GetDoctorData doctorId={details.doctorId} />
-                                        </span>
+                                        <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
                                         <span className='cardSpan time'>
                                             <i className='pe-7s-date m-1 color patientListIcon' />
                                             <span className='slotTime'>
@@ -84,7 +81,6 @@ export default function Completed(props) {
                                                 </span>
                                             </span>
                                         </span>
-
                                         <div className='cardSpan appointmentBtn historyBtn'>
                                             <Link to={`/patient-history/${details.medicalReportId}`}>
                                                 <Button className="appColor helperBtn" > View</Button>
@@ -101,7 +97,7 @@ export default function Completed(props) {
                     })}
                 </div>
                 : null}
-            {patientHistoryData?
+            {patientHistoryData ?
                 < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"

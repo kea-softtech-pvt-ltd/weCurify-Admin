@@ -75,9 +75,7 @@ export default function Ongoing(props) {
                         <>
                             <div key={i} className="col-md-4">
                                 <div className="cardDiv">
-                                    <span className='doctorCard'>
-                                        <GetDoctorData doctorId={details.doctorId} />
-                                    </span>
+                                        <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className=''>

@@ -49,34 +49,33 @@ export default function Incomplete(props) {
 
     return (
         <>
-            <div className='row'>
-                {patientHistoryData.map((details, i) => {
-                    return (
-                        <>
-                            <div key={i} className="col-md-4 ">
-                                <div className="cardDiv">
-                                    <span className='doctorCard'>
-                                        <GetDoctorData doctorId={details.doctorId} />
-                                    </span>
-
-                                    <span className='cardSpan time'>
-                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className='slotTime'>
-                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                            {details.slotTime}
-                                            <span className='timeS'>
-                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                {details.timeSlot} Min.
+            {patientHistoryData ?
+                <div className='row'>
+                    {patientHistoryData.map((details, i) => {
+                        return (
+                            <>
+                                <div key={i} className="col-md-4 ">
+                                    <div className="cardDiv">
+                                        <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
+                                        <span className='cardSpan time'>
+                                            <i className='pe-7s-date m-1 color patientListIcon' />
+                                            <span className='slotTime'>
+                                                {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                {details.slotTime}
+                                                <span className='timeS'>
+                                                    <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                    {details.timeSlot} Min.
+                                                </span>
                                             </span>
                                         </span>
-                                    </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </>
-                    )
-                })}
+                            </>
+                        )
+                    })}
 
-            </div>
+                </div>
+                : null}
             {patientHistoryData.length > 0 ?
                 < ul className="pagination pagination-sm">
                     <li className="page-item">

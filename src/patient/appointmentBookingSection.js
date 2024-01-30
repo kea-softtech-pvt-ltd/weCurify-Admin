@@ -20,8 +20,8 @@ function AppointmentBookingSection() {
     function doctorData() {
         getDrInfo({ doctorId })
             .then((res) => {
-                setClinicData(res[0].clinicList)
-                setDoctorName(res[0])
+                setClinicData(res.result[0].clinicList)
+                setDoctorName(res.result[0])
             })
     }
     return (

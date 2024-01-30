@@ -10,7 +10,7 @@ import GetDoctorData from './getDoctorData';
 
 export default function Cancelled(props) {
     const { patientId } = props;
-    const [patientList, setPatientList] = useState(null);
+    const [patientList, setPatientList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getpaymentData } = PatientApi()
@@ -18,7 +18,7 @@ export default function Cancelled(props) {
 
     useEffect(() => {
         getPatientHistory(currentPage);
-    }, [])
+    }, [currentPage])
 
     const pageSize = 6;
     function getPatientHistory(currentPage) {
@@ -35,14 +35,15 @@ export default function Cancelled(props) {
             setCurrentPage(currentPage - 1);
         }
     };
+
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
             pages.push(x)
         }
-
         return pages
     }
+
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -58,9 +59,7 @@ export default function Cancelled(props) {
                             <>
                                 <div key={i} className="col-md-4 ">
                                     <div className="cardDiv">
-                                        <span className='doctorCard'>
-                                            <GetDoctorData doctorId={details.doctorId} />
-                                        </span>
+                                        <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
                                         <span className='cardSpan time'>
                                             <i className='pe-7s-date m-1 color patientListIcon' />
                                             <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
@@ -79,7 +78,8 @@ export default function Cancelled(props) {
                     })}
                 </div>
                 : null}
-            {patientList?
+            
+            {patientList ?
                 < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"

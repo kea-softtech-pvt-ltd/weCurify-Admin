@@ -87,7 +87,8 @@ export default function ClinicApi() {
     }
     const getSingleClinic = async ( clinicId) => {
         try {
-            const result = await axios.post(`${API}/getclinic/${clinicId}`)
+            const result = await axios.get(`${API}/getclinic/${clinicId}`)
+            console.log('==========result',result)
             return result.data
         }
         catch (err) {
