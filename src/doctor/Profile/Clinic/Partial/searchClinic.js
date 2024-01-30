@@ -13,6 +13,7 @@ const SearchClinic = (props) => {
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
     const [clinicInfo, setClinicInfo] = useState([]);
     const [clinicSave, setClinicSave] = useState([])
+    console.log('=clinicSave=', clinicSave)
     const [servicess, setServicess] = useState([])
     const { getClinic, getServicess, addClinic } = ClinicApi()
     const [show, setShow] = useState(false);
@@ -47,22 +48,23 @@ const SearchClinic = (props) => {
         setClinicSave(selectedValue)
     }
 
-    async function sendClinicInfo(e) {
+     function sendClinicInfo(e) {
+        console.log('11111111')
         e.preventDefault();
         const newClinicData = {
             clinicId: clinicSave._id
         }
-        addClinic(newClinicData, doctorId)
+        addClinic(doctorId,newClinicData)
             .then((res) => {
                 setCoilDoctorClinicData(coilDoctorClinicData.concat(res))
             });
             props.onSubmit()
     }
-
+    
 
     return (
         <div className="col-lg-12">
-            <form onSubmit={sendClinicInfo}>
+            {/* <form onSubmit={sendClinicInfo}> */}
                 <div className="form-group">
                     <label><b>Search Clinic</b></label>
                     <div className="row">
@@ -85,13 +87,13 @@ const SearchClinic = (props) => {
                             />
                         </div>
                         <div className="col-lg-3" align='right'>
-                            <MainButtonInput className='col-md-4 marginLeft ' value="Add" >
+                            <MainButtonInput onClick={sendClinicInfo} className='col-md-4 marginLeft ' value="Add" >
                                 ADD
                             </MainButtonInput>
                         </div>
                     </div>
                 </div>
-            </form >
+            {/* </form > */}
             <div className=" margin_top_30 " align='right'>
                 <MainButtonInput onClick={handleShow} >ADD ANOTHER CLINIC </MainButtonInput>
             </div>

@@ -17,41 +17,41 @@ function AddDoctorClinicInfo(props) {
     const [clinicList, setClinicList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState();
-    const [showDelete, setShowDelete] = useState(false);
-    const [Item, setItem] = useState([]);
+    // const [showDelete, setShowDelete] = useState(false);
     const [show, setShow] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
 
-    const { clinicDelete } = ClinicApi()
+    // const { clinicDelete } = ClinicApi()
     const { getDrInfo } = AuthApi()
 
     useEffect(() => {
         getAllClinics(currentPage);
     }, [currentPage])
 
+    const pageSize = 5;
     const getAllClinics = (currentPage) => {
-        const pageSize = 5;
         getDrInfo({ doctorId }, currentPage, pageSize)
             .then((jsonRes) => {
-                const clinicData =  jsonRes[0]['clinicList']
+                const clinicData =  jsonRes['clinicList']
+                setTotalPages(jsonRes.clinicListPages)
                 setClinicList(clinicData)
             });
     }
-    const handleDeleteShow = (item) => {
-        setItem(item)
-        setShowDelete(true)
-    }
-    const handleDeleteClose = () => setShowDelete(false);
+    // const handleDeleteShow = (item) => {
+    //     setItem(item)
+    //     setShowDelete(true)
+    // }
+    // const handleDeleteClose = () => setShowDelete(false);
 
-    function deleteClinicData(Item) {
-        const clinicId = Item._id;
-        clinicDelete(clinicId)
-            .then(() => {
-                getAllClinics(currentPage)
-                handleDeleteClose()
-            })
+    // function deleteClinicData(Item) {
+    //     const clinicId = Item._id;
+    //     clinicDelete(clinicId)
+    //         .then(() => {
+    //             getAllClinics(currentPage)
+    //             handleDeleteClose()
+    //         })
 
-    }
+    // }
 
     const handleSearchClose = () => setShowSearch(false)
     const handleSearchShow = () => setShowSearch(true)
@@ -61,8 +61,13 @@ function AddDoctorClinicInfo(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    function changeCPage() {
-        setCurrentPage(currentPage * totalPages)
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
     }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
@@ -103,16 +108,7 @@ function AddDoctorClinicInfo(props) {
                     </Modal.Body>
                 </Modal>
             </div>
-                {/* <div className="modalbtn">
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Add Clinic</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <AddClinic doctorId={doctorId} handleClose={onClinicFormSubmit} />
-                        </Modal.Body>
-                    </Modal>
-                </div> */}
+                
                 {clinicList ?
                     <>
                         {clinicList.map((item, index) => (
@@ -139,11 +135,11 @@ function AddDoctorClinicInfo(props) {
                                             {<AccessTimeRoundedIcon
                                                 style={{ fontSize: 30 }} />}
                                         </Link>
-                                        <div className="col-md-1" >
+                                        {/* <div className="col-md-1" >
                                             <Link className="patientlistlink" to="#" onClick={() => handleDeleteShow(item)}>
                                                 <Icon className="icon-trash-2" style={{ fontSize: 25 }} ></Icon>
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
 
@@ -166,31 +162,34 @@ function AddDoctorClinicInfo(props) {
                     <MainButtonInput onClick={handleSearchShow}>ADD CLINIC</MainButtonInput>
                 </div>
                 <ul className="pagination pagination-sm">
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={handlePrevPage}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </Link>
-                    </li>
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handlePrevPage}
+                                    disabled={currentPage === 1}>
+                                    Previous
+                                </Link>
+                            </li>
+                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                    <Link className="page-link"
+                                        key={pageNo}
+                                        to="#"
+                                        onClick={() => setCurrentPage(pageNo)}>
+                                        {pageNo}
+                                    </Link>
+                                </li>
+                            )}
 
-                    <li className='page-item '>
-                        <Link className="page-link"
-                            to="#" onClick={() => changeCPage()}>
-                            {currentPage}
-                        </Link>
-                    </li>
 
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={handleNextPage}
-                            disabled={currentPage === totalPages}>
-                            Next
-                        </Link>
-                    </li>
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handleNextPage}
+                                    disabled={currentPage === totalPages}>
+                                    Next
+                                </Link>
+                            </li>
 
-                </ul>
+                        </ul>
                 {/* <Modal show={showDelete} onHide={handleDeleteClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are You Sure?</Modal.Title>

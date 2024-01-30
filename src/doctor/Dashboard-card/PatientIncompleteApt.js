@@ -17,11 +17,11 @@ export default function PatientIncompleteApt(props) {
     }, [currentPage]);
 
 
-    function getPatientHistory() {
-        const pageSize = 6;
+    const pageSize = 6;
+    function getPatientHistory(currentPage) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                setTotalPages(totalPages)
+                setTotalPages(result.totalIncompletePages)
                 setPatientHistoryData(result.incomplete)
             })
     }
@@ -31,9 +31,14 @@ export default function PatientIncompleteApt(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -70,7 +75,6 @@ export default function PatientIncompleteApt(props) {
                                                 {details.timeSlot} Min.
                                             </span>
                                         </span>
-                                    </span>
 
                                 </div>
                             </div>
@@ -79,10 +83,10 @@ export default function PatientIncompleteApt(props) {
                     )
 
                 })}
-
             </div>
+                : null}
             {patientHistoryData.length > 0 ?
-                <ul className="pagination pagination-sm">
+                < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handlePrevPage}
@@ -92,12 +96,16 @@ export default function PatientIncompleteApt(props) {
                         </Link>
                     </li>
 
-                    {/* <li className='page-item '>
-                <Link className="page-link"
-                    to="#" onClick={() => changeCPage()}>
-                    {currentPage}
-                </Link>
-            </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <Link className="page-link"
@@ -107,8 +115,8 @@ export default function PatientIncompleteApt(props) {
                         </Link>
                     </li>
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>
-            }
+                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+
         </>
     )
 }

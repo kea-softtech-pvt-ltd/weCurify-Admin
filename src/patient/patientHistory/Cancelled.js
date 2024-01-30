@@ -17,11 +17,11 @@ export default function Cancelled(props) {
 
 
     useEffect(() => {
-        getPatientHistory();
+        getPatientHistory(currentPage);
     }, [])
 
-    function getPatientHistory() {
-        const pageSize = 6;
+    const pageSize = 6;
+    function getPatientHistory(currentPage) {
         getpaymentData({ patientId }, currentPage, pageSize)
             .then((result) => {
                 const totalPages = result.totalCancelledPages;
@@ -35,9 +35,14 @@ export default function Cancelled(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -76,33 +81,35 @@ export default function Cancelled(props) {
                 : null}
             {patientList?
                 < ul className="pagination pagination-sm">
-            <li className="page-item">
-                <Link className="page-link"
-                    to="#" onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </Link>
-            </li>
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </Link>
+                    </li>
 
-            {/* <li className='page-item '>
-                <Link className="page-link"
-                    to="#" onClick={() => changeCPage()}>
-                    {currentPage}
-                </Link>
-            </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
-            <li className="page-item">
-                <Link className="page-link"
-                    to="#" onClick={handleNextPage}
-                    disabled={currentPage === totalPages}>
-                    Next
-                </Link>
-            </li>
-
-        </ul >
-            : <div className="clinicHistory" ><b>Data is not Available</b></div>
-}
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handleNextPage}
+                            disabled={currentPage === totalPages}>
+                            Next
+                        </Link>
+                    </li>
+                </ul>
+                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
         </>
     )
 }

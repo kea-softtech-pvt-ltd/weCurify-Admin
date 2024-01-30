@@ -9,6 +9,7 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function PatientCancelledApt(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
+    console.log('patientList------', patientList)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getPatientListDetails } = AppointmentApi()
@@ -17,21 +18,17 @@ export default function PatientCancelledApt(props) {
         getPatientDetails(currentPage);
     }, [currentPage])
 
-    function getPatientDetails() {
-        getPatientListDetails({ doctorId })
-            .then((result) => {
-                patientData(result)
-            })
-    }
     const pageSize = 6;
-    const patientData = (currentPage) => {
+
+    function getPatientDetails() {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                const totalPages = result.totalCancelledPages;
-                setTotalPages(totalPages)
+                setTotalPages(result.totalCancelledPages)
                 setPatientList(result.cancelled)
             })
+
     }
+
 
     const handlePrevPage = () => {
         if (currentPage !== 1) {
@@ -123,8 +120,6 @@ export default function PatientCancelledApt(props) {
                     </Link>
                 </li>
             </ul>
-            {/* // : <div className="clinicHistory" ><b>Data is not Available</b></div> */}
-            {/* } */}
         </div >
 
     )

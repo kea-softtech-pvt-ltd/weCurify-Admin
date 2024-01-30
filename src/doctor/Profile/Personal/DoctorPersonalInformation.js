@@ -83,7 +83,7 @@ function DoctorPersonalInformation(props) {
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
-            isSubscribed: true
+            
         }
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {

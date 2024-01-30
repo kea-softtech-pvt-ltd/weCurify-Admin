@@ -29,8 +29,8 @@ export default function Ongoing(props) {
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-    function getPatientDetails() {
-        const pageSize = 6;
+    const pageSize = 6;
+    function getPatientDetails(currentPage) {
         getpaymentData({ patientId }, currentPage, pageSize)
             .then((result) => {
                 const totalPages = result.totalOngoingPages;
@@ -44,9 +44,14 @@ export default function Ongoing(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -103,7 +108,7 @@ export default function Ongoing(props) {
                 })}
             </div>
             {patientList.length > 0 ?
-                <ul className="pagination pagination-sm">
+                < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handlePrevPage}
@@ -113,12 +118,16 @@ export default function Ongoing(props) {
                         </Link>
                     </li>
 
-                    {/* <li className='page-item '>
-                <Link className="page-link"
-                    to="#" onClick={() => changeCPage()}>
-                    {currentPage}
-                </Link>
-            </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="page-item">
                         <Link className="page-link"
@@ -127,7 +136,6 @@ export default function Ongoing(props) {
                             Next
                         </Link>
                     </li>
-
                 </ul>
                 : <div className="clinicHistory" ><b>Data is not Available</b></div>}
 

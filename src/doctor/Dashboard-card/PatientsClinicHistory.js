@@ -18,13 +18,14 @@ export default function PatientsClinicHistory(props) {
     const storage = getStorage();
 
     useEffect(() => {
-        getPatientHistory();
-    }, [])
+        getPatientHistory(currentPage);
+    }, [currentPage])
 
     const pageSize = 6;
-    function getPatientHistory() {
+    function getPatientHistory(currentPage) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
+                console.log('=result=', result)
                 const totalPages = result.totalCompletedPages;
                 setTotalPages(totalPages)
                 setPatientHistoryData(result.completed)
@@ -51,7 +52,9 @@ export default function PatientsClinicHistory(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-
+    // function changeCPage() {
+    //     setCurrentPage(currentPage * totalPages)
+    // }
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
@@ -66,6 +69,7 @@ export default function PatientsClinicHistory(props) {
     };
     return (
         <div className="">
+            {patientHistoryData ? 
             <div className='row'>
                 {patientHistoryData.map((details, i) => {
                     return (
@@ -114,6 +118,7 @@ export default function PatientsClinicHistory(props) {
 
                 })}
             </div>
+            :null}
             {patientHistoryData.length > 0 ?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
@@ -145,7 +150,7 @@ export default function PatientsClinicHistory(props) {
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handleNextPage}
-                            disabled={currentPage === totalPages}>
+                            >
                             Next
                         </Link>
                     </li>

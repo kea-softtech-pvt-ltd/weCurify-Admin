@@ -65,7 +65,7 @@ function AddDoctorEducation(props) {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
             });
             toast.success("Saved Successfully!")
-            props.addRecords()
+            props.recordAdded()
     }
 
     //for all input onchange method
