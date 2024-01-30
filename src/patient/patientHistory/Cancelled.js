@@ -78,9 +78,9 @@ export default function Cancelled(props) {
 
                     })}
                 </div>
-                : null}
-            {patientList?
-                < ul className="pagination pagination-sm">
+            : null}
+            {patientList ?
+                <ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handlePrevPage}
@@ -109,7 +109,7 @@ export default function Cancelled(props) {
                         </Link>
                     </li>
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+            : <div className="clinicHistory"><b>Data is not Available</b></div>}
         </>
     )
 }

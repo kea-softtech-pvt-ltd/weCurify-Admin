@@ -3,13 +3,9 @@ import { useEffect, useState } from "react";
 import AuthApi from "../../services/AuthApi";
 
 export default function GetDoctorData(props) {
-    const { doctorId } = props
-
-    const [doctorData, setDoctorData] = useState([]);
-
+    const { doctorId } = props;
+    const [ doctorData, setDoctorData] = useState([]);
     const { getDrInfo } = AuthApi()
-
-
     useEffect(() => {
         getDoctorDetails();
     }, [])
@@ -17,10 +13,9 @@ export default function GetDoctorData(props) {
     function getDoctorDetails() {
         getDrInfo({ doctorId })
         .then((result) => {
-            setDoctorData(result[0])
+            setDoctorData(result.result[0])
         })
     }
-
 
     return (
         <>

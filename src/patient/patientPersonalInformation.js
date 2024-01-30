@@ -1,29 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { MainRadioGroup } from "../mainComponent/mainRadioGroup";
 import { MainInput } from '../mainComponent/mainInput';
-import avatarImage from "../img/profile.png";
 import { MainButtonInput } from '../mainComponent/mainButtonInput';
 import PatientApi from "../services/PatientApi";
 
 function PatientPersonalInformation(props) {
-    const { patientId, onChange } = props;
+    const { patientId } = props;
     const [updateData, setUpdateData] = useState([])
     const { insertPatientData, fetchPatient } = PatientApi()
+
     useEffect(() => {
         getPatientPersonalInfo();
-        register("name", { required: true });
-        register("gender", { required: true });
-        register("email", { required: true });
-        register("age", { required: true });
-        register("address", { required: true });
-        register("bloodgroup", { required: true });
-        register("maritalstatus", { required: true });
-        register("height", { required: true });
-        register("weight", { required: true });
-        register("birthdate", { required: true });
-        register("emcontact", { required: true });
-        register("address", { required: true });
     }, [])
 
     function getPatientPersonalInfo() {
@@ -33,7 +20,6 @@ function PatientPersonalInformation(props) {
             });
     }
 
-
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
@@ -42,107 +28,42 @@ function PatientPersonalInformation(props) {
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const onSubmit = data => {
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        formData.append('mobile', updateData.mobile);
-        formData.append('bloodgroup', data.bloodgroup);
-        formData.append('maritalstatus', data.maritalstatus);
-        formData.append('height', data.height);
-        formData.append('weight', data.weight);
-        formData.append('gender', data.gender);
-        formData.append('age', data.age);
-        formData.append('birthdate', data.birthdate);
-        formData.append('emcontact', data.emcontact);
-        formData.append('address', data.address);
-        insertPatientData(patientId, formData)
+        const patientData = {
+            name: updateData.name,
+            email: updateData.email,
+            mobile: updateData.mobile,
+            bloodgroup: updateData.bloodgroup,
+            maritalstatus: updateData.maritalstatus,
+            height: updateData.height,
+            weight: updateData.weight,
+            gender: updateData.gender,
+            age: updateData.age,
+            birthdate: updateData.birthdate,
+            emcontact: updateData.emcontact,
+            address: updateData.address
+        }
+        insertPatientData(patientId, patientData)
             .then((response) => {
                 props.personal();
             })
     }
 
     return (
-        <form encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6 ">
-                    <div align='left' className="patientData"><b >Full Name</b></div>
-                    <MainInput
-                        type="text"
-                        value={updateData.name}
-                        onChange={handleInputChange}
-                        placeholder="Name" name="name" >
-                        {errors.name && <span className="validation">User Name is Required</span>}
-                    </MainInput>
-                    <div align='left' className="patientData"><b>Email</b></div>
-                    <MainInput
-                        type="text"
-                        value={updateData.email}
-                        onChange={handleInputChange}
-                        placeholder="EmailId"
-                        name="email" >
-                        {errors.email && <span className="validation">Please enter your Email</span>}
-                    </MainInput>
                     <div className="row">
-                        <div className="col-6">
-                            <div align='left' className="patientData"><b>Height</b></div>
+                        <div className="col-8">
+                            <div align='left' className="patientData"><b >Full Name</b></div>
                             <MainInput
                                 type="text"
-                                name="height"
+                                value={updateData.name}
                                 onChange={handleInputChange}
-                                value={updateData.height}
-                                placeholder="cm">
-                                {errors.height && <span className="validation">Please enter your height</span>}
+                                placeholder="Name"
+                                name="name" >
                             </MainInput>
                         </div>
-
-                        <div className="col-6">
-                            <div align='left' className="patientData"><b>Weight</b></div>
-                            <MainInput
-                                type="text"
-                                name="weight"
-                                onChange={handleInputChange}
-                                value={updateData.weight}
-                                placeholder="kg">
-                                {errors.weight && <span className="validation">Please enter your Weight</span>}
-                            </MainInput>
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div align='left' className="patientData"><b>Gender</b></div>
-                        <input
-                            className="radio_button"
-                            type="radio"
-                            value={updateData.gender}
-                            name="gender"
-                            onChange={handleInputChange}
-                            checked={updateData.gender === 'female'}
-                        />
-                        <span>Female</span>
-                        <input
-                            className="radio_button"
-                            type="radio"
-                            value={updateData.gender}
-                            name="gender"
-                            checked={updateData.gender === 'male'}
-                            onChange={handleInputChange}
-                        />
-                        <span>Male</span>
-                        <input
-                            className="radio_button"
-                            type="radio"
-                            value={updateData.gender}
-                            name="gender"
-                            checked={updateData.gender === 'other'}
-                            onChange={handleInputChange}
-                        />
-                        <span>Other</span>
-                        {errors.gender && <span className="validation">Please Select your gender</span>}
-                    </div>
-                </div>
-
-                <div className="col-md-6 ">
-                    <div className="row">
-                        <div className="col-6">
+                        <div className="col-4">
                             <div className="patientData" align='left'><b>Age</b></div>
                             <MainInput
                                 type="text"
@@ -150,8 +71,63 @@ function PatientPersonalInformation(props) {
                                 onChange={handleInputChange}
                                 placeholder="Age"
                                 name="age" >
-                                {errors.age && <span className="validation">Please enter your Age</span>}
                             </MainInput>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-8">
+                            <div align='left' className="patientData"><b>Email</b></div>
+                            <MainInput
+                                type="text"
+                                value={updateData.email}
+                                onChange={handleInputChange}
+                                placeholder="EmailId"
+                                name="email" >
+                            </MainInput>
+                        </div>
+                        <div className="col-4">
+                            <div className="patientData" align='left'><b>Marital status</b></div>
+                            <MainInput
+                                type="text"
+                                value={updateData.maritalstatus}
+                                onChange={handleInputChange}
+                                placeholder="Single"
+                                name="maritalstatus" >
+                            </MainInput>
+                        </div>
+
+                    </div>
+                    <div className="row">
+                        <div className="col-6">
+                            <div align='left' className="patientData"><b>Gender</b></div>
+                            <input
+                                className="radio_button"
+                                type="radio"
+                                value="female"
+                                name="gender"
+                                onChange={handleInputChange}
+                                checked={updateData.gender === 'female' ? true : false}
+                            />
+                            <span>Female</span>
+                            <input
+                                className="radio_button"
+                                type="radio"
+                                value='male'
+                                name="gender"
+                                checked={updateData.gender === 'male' ? true : false}
+                                onChange={handleInputChange}
+                            />
+                            <span>Male</span>
+                            <input
+                                className="radio_button"
+                                type="radio"
+                                value='other'
+                                name="gender"
+                                checked={updateData.gender === 'other' ? true : false}
+                                onChange={handleInputChange}
+                            />
+                            <span>Other</span>
                         </div>
                         <div className="col-6">
                             <div className="patientData" align='left'><b>Date Of Birth</b></div>
@@ -160,23 +136,24 @@ function PatientPersonalInformation(props) {
                                 name="birthdate"
                                 onChange={handleInputChange}
                                 value={updateData.birthdate}>
-                                {errors.birthdate && <span className="validation">Please enter your BirthDate</span>}
                             </MainInput>
                         </div>
                     </div>
+                </div>
 
+                <div className="col-md-6 ">
                     <div className="row">
                         <div className="col-6">
                             <div className="patientData">
-                                <div align='left'><b>Blood Group</b></div>
+                                <div align='left'><b>Mobile No</b></div>
                             </div>
                             <MainInput
                                 type="text"
                                 onChange={handleInputChange}
-                                name="bloodgroup"
-                                value={updateData.bloodgroup}
-                                placeholder="Ex. O+ A B...">
-                                {errors.bloodgroup && <span className="validation">Please enter your blood group</span>}
+                                name="mobile"
+                                maxLength={10}
+                                value={updateData.mobile}
+                                placeholder="9090909090">
                             </MainInput>
                         </div>
                         <div className="col-6">
@@ -189,7 +166,41 @@ function PatientPersonalInformation(props) {
                                 maxLength={10}
                                 className="form-control"
                                 placeholder="Emergency Contact">
-                                {errors.emcontact && <span className="validation">Please enter your contact</span>}
+                            </MainInput>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="patientData">
+                                <div align='left'><b>Blood Group</b></div>
+                            </div>
+                            <MainInput
+                                type="text"
+                                onChange={handleInputChange}
+                                name="bloodgroup"
+                                value={updateData.bloodgroup}
+                                placeholder="Ex. O+ A B...">
+                            </MainInput>
+                        </div>
+                        <div className="col-4">
+                            <div align='left' className="patientData"><b>Height</b></div>
+                            <MainInput
+                                type="text"
+                                name="height"
+                                onChange={handleInputChange}
+                                value={updateData.height}
+                                placeholder="cm">
+                            </MainInput>
+                        </div>
+
+                        <div className="col-4">
+                            <div align='left' className="patientData"><b>Weight</b></div>
+                            <MainInput
+                                type="text"
+                                name="weight"
+                                onChange={handleInputChange}
+                                value={updateData.weight}
+                                placeholder="kg">
                             </MainInput>
                         </div>
                     </div>

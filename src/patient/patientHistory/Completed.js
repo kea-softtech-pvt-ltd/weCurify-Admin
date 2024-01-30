@@ -10,6 +10,7 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function Completed(props) {
     const { patientId } = props
     const [patientHistoryData, setPatientHistoryData] = useState([])
+    console.log("patientHistoryData-------", patientHistoryData)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { downloadPrescription } = AppointmentApi()
@@ -100,8 +101,8 @@ export default function Completed(props) {
 
                     })}
                 </div>
-                : null}
-            {patientHistoryData?
+            : null}
+            {patientHistoryData ?
                 < ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"

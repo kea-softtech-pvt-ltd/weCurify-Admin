@@ -25,13 +25,11 @@ export default function PatientsClinicHistory(props) {
     function getPatientHistory(currentPage) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('=result=', result)
                 const totalPages = result.totalCompletedPages;
                 setTotalPages(totalPages)
                 setPatientHistoryData(result.completed)
             })
     }
-
 
     const downloadPdf = (details) => {
         const reportId = details.medicalReportId
@@ -43,18 +41,14 @@ export default function PatientsClinicHistory(props) {
                 alink.download = 'Prescription.pdf';
                 alink.click();
             })
-
     }
-
 
     const handlePrevPage = () => {
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * totalPages)
-    // }
+
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
@@ -68,57 +62,57 @@ export default function PatientsClinicHistory(props) {
         }
     };
     return (
-        <div className="">
-            {patientHistoryData ? 
-            <div className='row'>
-                {patientHistoryData.map((details, i) => {
-                    return (
-                        <>
-                            <div className="col-md-4 " key={i}>
-                                <div className="cardDiv">
-                                    <span className='cardSpan'>
-                                        <i className='icon-user color patientListIcon' />
-                                        <span className=' patientName'>
-                                            {details['patientDetails'][0].name}
-                                        </span>
-                                    </span>
-                                    <span className='cardSpan'>
-                                        <i className='icon-mobile-1 color patientListIcon' />
-                                        {details['patientDetails'][0].mobile}
-                                    </span>
-                                    <span className='cardSpan '>
-                                        <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
-                                        <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
-                                    </span>
-                                    <span className='cardSpan time'>
-                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className='slotTime'>
-                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                            <span className=' ml-2'>
-                                                {details.slotTime}
-                                            </span>
-                                            <span className=' timeS'>
-                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                {details.timeSlot} Min.
+        <div>
+            {patientHistoryData ?
+                <div className='row'>
+                    {patientHistoryData.map((details, i) => {
+                        return (
+                            <>
+                                <div className="col-md-4 " key={i}>
+                                    <div className="cardDiv">
+                                        <span className='cardSpan'>
+                                            <i className='icon-user color patientListIcon' />
+                                            <span className=' patientName'>
+                                                {details['patientDetails'][0].name}
                                             </span>
                                         </span>
-                                    </span>
+                                        <span className='cardSpan'>
+                                            <i className='icon-mobile-1 color patientListIcon' />
+                                            {details['patientDetails'][0].mobile}
+                                        </span>
+                                        <span className='cardSpan '>
+                                            <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                            <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
+                                        </span>
+                                        <span className='cardSpan time'>
+                                            <i className='pe-7s-date m-1 color patientListIcon' />
+                                            <span className='slotTime'>
+                                                {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                <span className=' ml-2'>
+                                                    {details.slotTime}
+                                                </span>
+                                                <span className=' timeS'>
+                                                    <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                    {details.timeSlot} Min.
+                                                </span>
+                                            </span>
+                                        </span>
 
-                                    <div className='cardSpan appointmentBtn historyBtn'>
-                                        <Link to={`/patient-history/${details.medicalReportId}`}>
-                                            <Button className="appColor helperBtn" > View</Button>
-                                        </Link>
-                                        <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
-                                        <Sharing reportId={details.medicalReportId} />
+                                        <div className='cardSpan appointmentBtn historyBtn'>
+                                            <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                <Button className="appColor helperBtn" > View</Button>
+                                            </Link>
+                                            <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
+                                            <Sharing reportId={details.medicalReportId} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </>
-                    )
+                            </>
+                        )
 
-                })}
-            </div>
-            :null}
+                    })}
+                </div>
+                : null}
             {patientHistoryData.length > 0 ?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
@@ -130,12 +124,6 @@ export default function PatientsClinicHistory(props) {
                         </Link>
                     </li>
 
-                    {/* <li className='page-item '>
-                    <Link className="page-link"
-                        to="#" onClick={() => changeCPage()}>
-                        {currentPage}
-                    </Link>
-                </li> */}
                     {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
                         <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
                             <Link className="page-link"
@@ -150,7 +138,7 @@ export default function PatientsClinicHistory(props) {
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handleNextPage}
-                            >
+                        >
                             Next
                         </Link>
                     </li>
