@@ -9,7 +9,6 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function PatientCancelledApt(props) {
     const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
-    console.log('patientList------', patientList)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getPatientListDetails } = AppointmentApi()
