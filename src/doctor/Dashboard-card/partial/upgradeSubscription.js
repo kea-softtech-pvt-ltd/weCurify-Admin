@@ -12,7 +12,7 @@ export default function UpgradeSubscription(props) {
 
     useEffect(() => {
         getSubscriptionList()
-    }, [])
+    }, [subscription])
 
     const getSubscriptionList = () => {
         getSubscriptionData({ doctorId })

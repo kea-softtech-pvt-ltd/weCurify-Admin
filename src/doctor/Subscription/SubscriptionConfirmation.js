@@ -12,11 +12,11 @@ export default function SubscriptionConfirmation() {
     const { getDrInfo } = AuthApi()
     const [ doctorData, setDoctorData] = useState([])
     const [ getSubData, setGetSubData] = useState([])
-    console.log(getSubData,"getSubData")
     const { getSubscriptionData } = SubscriptionApi()
+    
     useEffect(() => {
         fetchSubscription()
-    }, [])
+    }, [getSubData])
 
     const fetchSubscription = () => {
         getDrInfo({ doctorId })

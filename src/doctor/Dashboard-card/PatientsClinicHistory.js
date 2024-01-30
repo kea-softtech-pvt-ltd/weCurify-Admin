@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import AppointmentApi from '../../services/AppointmentApi';
+import { FaClinicMedical } from 'react-icons/fa';
 import Sharing from './partial/Sharing';
 const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 
@@ -31,7 +32,7 @@ export default function PatientsClinicHistory(props) {
     }
 
 
-    const downloadPdf =  (details) => {
+    const downloadPdf = (details) => {
         const reportId = details.medicalReportId
         downloadPrescription(reportId)
             .then((result) => {
@@ -50,15 +51,12 @@ export default function PatientsClinicHistory(props) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+
     const totalPagesCalculator = () => {
         const pages = [];
         for (let x = 1; x <= totalPages; x++) {
             pages.push(x)
         }
-
         return pages
     }
     const handleNextPage = () => {
@@ -72,7 +70,6 @@ export default function PatientsClinicHistory(props) {
                 {patientHistoryData.map((details, i) => {
                     return (
                         <>
-
                             <div className="col-md-4 " key={i}>
                                 <div className="cardDiv">
                                     <span className='cardSpan'>
@@ -85,10 +82,10 @@ export default function PatientsClinicHistory(props) {
                                         <i className='icon-mobile-1 color patientListIcon' />
                                         {details['patientDetails'][0].mobile}
                                     </span>
-                                    {/* <span className='cardSpan '>
-                                        <i className='icon-hospital-1 color patientListIcon' />
-                                        {details['clinicList'][0].clinicName}
-                                    </span> */}
+                                    <span className='cardSpan '>
+                                        <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                        <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
+                                    </span>
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className='slotTime'>

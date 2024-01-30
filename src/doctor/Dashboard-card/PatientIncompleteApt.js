@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AccessTimeRounded from "@material-ui/icons/AccessTimeRounded"
 import moment from "moment";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { FaClinicMedical } from 'react-icons/fa';
 import AppointmentApi from "../../services/AppointmentApi";
 
 export default function PatientIncompleteApt(props) {
@@ -54,10 +55,10 @@ export default function PatientIncompleteApt(props) {
                                         <i className='icon-mobile-1 color patientListIcon' />
                                         <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
                                     </span>
-                                    {/* <span className='cardSpan '>
-                                        <i className='icon-hospital-1 color patientListIcon' />
-                                        <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
-                                    </span> */}
+                                    <span className='cardSpan '>
+                                        <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                        <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
+                                    </span>
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
