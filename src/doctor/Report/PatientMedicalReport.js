@@ -43,14 +43,14 @@ export default function PatientMedicalReport() {
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [DoctorName, setDoctorsName] = useState([])
+    const [value, setValue] = useState(0);
     const { state } = useLocation()
     const { fees } = state.data
 
     useEffect(() => {
         doctorInfo()
     }, [])
-    //for tab
-    const [value, setValue] = useState(0);
+
     const handleChange = (e, newValue) => {
         e.preventDefault();
         setValue(newValue);
@@ -59,13 +59,11 @@ export default function PatientMedicalReport() {
     function changeTab(tabIndex) {
         setValue(tabIndex);
     }
- 
-
 
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorsName(res[0].name)
+                setDoctorsName(res.result[0].name)
             })
     }
 
@@ -84,7 +82,6 @@ export default function PatientMedicalReport() {
                         Consultation
                     </li>
                     <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
-
                 </ul>
             </MainNav>
             <div className='row'>

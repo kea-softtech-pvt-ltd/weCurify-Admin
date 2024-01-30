@@ -12,8 +12,8 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function PatientList(props) {
     const { doctorId } = props
     let history = useHistory();
-    const [patientList, setPatientList] = useState([]);
-    const [showDelete, setShowDelete] = useState(false);
+    const [patientList, setPatientList] = useState(null);
+    const [showCancel, setCancelDelete] = useState(false);
     const [id, setId] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
@@ -24,12 +24,12 @@ export default function PatientList(props) {
         getPatientDetails(currentPage);
     }, [currentPage])
 
-    const handleDeleteShow = (details) => {
+    const handleCancelShow = (details) => {
         setId(details._id)
-        setShowDelete(true)
+        setCancelDelete(true)
     }
 
-    const handleDeleteClose = () => setShowDelete(false)
+    const handleCancelClose = () => setCancelDelete(false)
 
     function saveData(item) {
         const bodyData = {
@@ -69,7 +69,7 @@ export default function PatientList(props) {
         cancelPatientAppointment(id)
             .then(() => {
                 getPatientDetails(currentPage)
-                handleDeleteClose()
+                handleCancelClose()
             })
     }
     const handlePrevPage = () => {
@@ -94,7 +94,7 @@ export default function PatientList(props) {
         }
     };
     const handleShowProfile = (patientId) => {
-        history.push(`/patientdata/${patientId}`)
+        history.push(`/patientProfile/${patientId}`)
     }
     return (
         <>
@@ -138,7 +138,7 @@ export default function PatientList(props) {
                                                 <Link to="#" onClick={() => saveData(details)}>
                                                     <button className="btn appColor helperBtn ">Start Consultation</button>
                                                 </Link>
-                                                <Link onClick={() => handleDeleteShow(details)} >
+                                                <Link onClick={() => handleCancelShow(details)} >
                                                     <button className='btn btn-default helperBtn'>Cancel</button>
                                                 </Link>
 
@@ -175,7 +175,7 @@ export default function PatientList(props) {
                                                 <Link to="#" onClick={() => saveData(details)}>
                                                     <button className="btn appColor helperBtn">Start Consultation</button>
                                                 </Link>
-                                                <Link onClick={() => handleDeleteShow(details)} >
+                                                <Link onClick={() => handleCancelShow(details)} >
                                                     <button className='btn btn-default helperBtn ' >Cancel</button>
                                                 </Link>
 
@@ -221,7 +221,7 @@ export default function PatientList(props) {
 
                 </ul>
                 : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
-            <Modal show={showDelete} onHide={handleDeleteClose} >
+            <Modal show={showCancel} onHide={handleCancelClose} >
                 <Modal.Header closeButton>
                     <Modal.Title>Are You Sure?</Modal.Title>
                 </Modal.Header>
@@ -232,7 +232,7 @@ export default function PatientList(props) {
                     <Button variant="default" className='appColor' onClick={() => cancelAppointment(id)}>
                         Yes
                     </Button>
-                    <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                    <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleCancelClose}>
                         No
                     </Button>
                 </Modal.Footer>

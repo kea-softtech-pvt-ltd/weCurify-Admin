@@ -9,6 +9,7 @@ import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
 import { useRecoilState } from "recoil";
 import { setDoctorId } from "../../recoil/atom/setDoctorId";
+import AuthApi from "../../services/AuthApi";
 export default function SubscriptionCard() {
     const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()
     const [getSubData, setGetSubData] = useState([])
@@ -19,11 +20,14 @@ export default function SubscriptionCard() {
     const [doctorsId, setDoctorsId] = useRecoilState(setDoctorId);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
+    const [DoctorName, setDoctorsName] = useState([])
     const [id, setId] = useState(null)
+    const { getDrInfo } = AuthApi()
 
     useEffect(() => {
         getSubscriptionPlan()
         fetchSubscription()
+        doctorInfo()
     }, [])
 
     const fetchSubscription = () => {
@@ -37,6 +41,12 @@ export default function SubscriptionCard() {
                 setGetPlan(Data[0].selected_plan)
                 setDoctorsId(Data[0].doctorId)
                 setScriptionId(Data[0]._id)
+            })
+    }
+    const doctorInfo = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setDoctorsName(res.result[0].name)
             })
     }
 
@@ -68,7 +78,7 @@ export default function SubscriptionCard() {
             "duration": plan.frequency,
             "status": "Running"
         }
-        updateSubscriptionData({subscriptionId}, bodyData)
+        updateSubscriptionData({ subscriptionId }, bodyData)
             .then((res) => {
                 setId(res[0]._id)
             })
@@ -81,14 +91,17 @@ export default function SubscriptionCard() {
             <Wrapper>
                 <MainNav>
                     <ul className="clearfix">
-                        <div className="row">
-                            <li>
-                                <Link to={`/doctorlist`}>
-                                    <i className="arrow_back backArrow" title="back button"></i>
-                                </Link>
-                            </li>
-                            <li className='float-none' style={{ fontSize: 'inherit' }}>Subscription</li>
-                        </div>
+                        <li>
+                            <Link to={`/doctorlist`}>
+                                <i className="arrow_back backArrow" title="back button"></i>
+                            </Link>
+                        </li>
+                        <li className='float-none' style={{ fontSize: 'inherit' }}>
+                            Subscription
+                        </li>
+                        <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>
+                            Dr. {DoctorName}
+                        </li>
                     </ul>
                 </MainNav>
                 <div className='row'>

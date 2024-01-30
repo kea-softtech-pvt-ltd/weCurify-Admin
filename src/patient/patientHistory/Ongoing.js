@@ -11,7 +11,7 @@ import AppointmentApi from '../../services/AppointmentApi';
 export default function Ongoing(props) {
     const { patientId } = props
     const [patientList, setPatientList] = useState([]);
-    const [showDelete, setShowDelete] = useState(false);
+    const [showCancel, setCancelDelete] = useState(false);
     const [id, setId] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
@@ -23,11 +23,11 @@ export default function Ongoing(props) {
         getPatientDetails(currentPage);
     }, [currentPage])
 
-    const handleDeleteShow = (details) => {
+    const handleCancelShow = (details) => {
         setId(details._id)
-        setShowDelete(true)
+        setCancelDelete(true)
     }
-    const handleDeleteClose = () => setShowDelete(false)
+    const handleCancelClose = () => setCancelDelete(false)
 
     const pageSize = 6;
     function getPatientDetails(currentPage) {
@@ -62,7 +62,7 @@ export default function Ongoing(props) {
         cancelPatientAppointment(id)
             .then(() => {
                 getPatientDetails()
-                handleDeleteClose()
+                handleCancelClose()
             })
 
     }
@@ -92,7 +92,7 @@ export default function Ongoing(props) {
                                         <Link to={`/doctorprofile/${details.doctorId}`}>
                                             <button className="btn appColor helperBtn ">View Profile</button>
                                         </Link>
-                                        <Link onClick={() => handleDeleteShow(details)} >
+                                        <Link onClick={() => handleCancelShow(details)} >
                                             <button className='btn btn-default btnMargin ' >Cancel</button>
                                         </Link>
 
@@ -137,7 +137,7 @@ export default function Ongoing(props) {
                 </ul>
                 : <div className="clinicHistory" ><b>Data is not Available</b></div>}
 
-            <Modal show={showDelete} onHide={handleDeleteClose}>
+            <Modal show={showCancel} onHide={handleCancelClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Are You Sure?</Modal.Title>
                 </Modal.Header>
@@ -148,7 +148,7 @@ export default function Ongoing(props) {
                     <Button variant="default" className='appColor' onClick={() => cancelAppointment(id)}>
                         Yes
                     </Button>
-                    <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                    <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleCancelClose}>
                         No
                     </Button>
 

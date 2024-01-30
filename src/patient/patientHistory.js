@@ -29,7 +29,6 @@ export default function PatientHistory() {
     const patientData = () => {
         fetchPatient({ patientId })
             .then((res) => {
-                console.log('====resssssss',res)
                 setPatientName(res[0].name)
             })
     }

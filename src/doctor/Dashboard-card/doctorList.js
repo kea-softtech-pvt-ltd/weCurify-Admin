@@ -145,7 +145,7 @@ export default function DoctorList() {
                             </li>
 
                         </ul>
-                        : null}
+                        :  <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>
         </Wrapper >

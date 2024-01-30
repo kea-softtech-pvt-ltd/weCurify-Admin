@@ -120,7 +120,6 @@ function DoctorPersonalInformation(props) {
                                     type="file"
                                     accept=".png, .jpg, .jpeg"
                                     onChange={(e) => {
-                                        console.log(e)
                                         setUpdateData({ ...updateData, ['photo']: URL.createObjectURL(e.target.files[0]) })
                                     }}
                                     name="photo">

@@ -75,8 +75,8 @@ export default function Cancelled(props) {
 
                     })}
                 </div>
-            : null}
-            {patientList ?
+                : null}
+            {patientList.length > 0 ?
                 <ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
@@ -106,7 +106,7 @@ export default function Cancelled(props) {
                         </Link>
                     </li>
                 </ul>
-            : <div className="clinicHistory"><b>Data is not Available</b></div>}
+                : <div className="clinicHistory"><b>Data is not Available</b></div>}
         </>
     )
 }

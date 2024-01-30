@@ -8,6 +8,7 @@ import PatientApi from "../../services/PatientApi";
 
 export default function AllPatients() {
     const [patientData, setPatientData] = useState([])
+    const [filterData, setFilterData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getAllPatient } = PatientApi()
@@ -21,9 +22,14 @@ export default function AllPatients() {
     const getPatientList = () => {
         getAllPatient(currentPage, pageSize)
             .then((res) => {
+                setFilterData(res.patientList)
                 setPatientData(res.patientList)
                 setTotalPages(res.totalPages)
             })
+    }
+    const searchPatient = (value) => {
+        const res = filterData.filter(name => name.name.toLowerCase().includes(value.toLowerCase()))
+        setPatientData(res)
     }
 
     const totalPagesCalculator = () => {
@@ -55,7 +61,14 @@ export default function AllPatients() {
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
-                    <li className='float-none' style={{ fontSize: 'inherit' }}>Patient-List</li>
+                    <div className="row">
+                        <li className='float-none' style={{ fontSize: 'inherit' }}>Patient-List</li>
+                        <div id="custom-search-input">
+                            <input type="text" onChange={(e) => searchPatient(e.target.value)} className="search-query" placeholder="Search Doctor" />
+                            <input type="submit" className="btn_search" value="Search" />
+                        </div>
+
+                    </div>
                 </ul>
             </MainNav>
             <div className='row'>
@@ -95,37 +108,38 @@ export default function AllPatients() {
                             )
                         })}
                     </div>
-
-                    <ul className="pagination pagination-sm">
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handlePrevPage}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </Link>
-                        </li>
-
-                        {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                            <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                    {patientData.length > 0 ?
+                        <ul className="pagination pagination-sm">
+                            <li className="page-item">
                                 <Link className="page-link"
-                                    key={pageNo}
-                                    to="#"
-                                    onClick={() => setCurrentPage(pageNo)}>
-                                    {pageNo}
+                                    to="#" onClick={handlePrevPage}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
                                 </Link>
                             </li>
-                        )}
 
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handleNextPage}
-                                disabled={patientData === null}>
-                                Next
-                            </Link>
-                        </li>
+                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                    <Link className="page-link"
+                                        key={pageNo}
+                                        to="#"
+                                        onClick={() => setCurrentPage(pageNo)}>
+                                        {pageNo}
+                                    </Link>
+                                </li>
+                            )}
 
-                    </ul>
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handleNextPage}
+                                    disabled={patientData === null}>
+                                    Next
+                                </Link>
+                            </li>
+
+                        </ul>
+                        :  <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>
         </Wrapper>

@@ -13,7 +13,6 @@ const SearchClinic = (props) => {
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
     const [clinicInfo, setClinicInfo] = useState([]);
     const [clinicSave, setClinicSave] = useState([])
-    console.log('=clinicSave=', clinicSave)
     const [servicess, setServicess] = useState([])
     const { getClinic, getServicess, addClinic } = ClinicApi()
     const [show, setShow] = useState(false);
@@ -49,7 +48,6 @@ const SearchClinic = (props) => {
     }
 
      function sendClinicInfo(e) {
-        console.log('11111111')
         e.preventDefault();
         const newClinicData = {
             clinicId: clinicSave._id
