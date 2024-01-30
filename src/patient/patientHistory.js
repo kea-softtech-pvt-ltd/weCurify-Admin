@@ -9,8 +9,6 @@ import Ongoing from "./patientHistory/Ongoing";
 import Completed from "./patientHistory/Completed";
 import Cancelled from "./patientHistory/Cancelled";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
-import { useRecoilState } from "recoil";
-import { setDoctorId } from "../recoil/atom/setDoctorId";
 import PatientApi from "../services/PatientApi";
 import Incomplete from "./patientHistory/Incomplete";
 
@@ -19,7 +17,6 @@ export default function PatientHistory() {
     const { fetchPatient } = PatientApi()
     const [value, setValue] = useState(0);
     const [patientName, setPatientName] = useState([]);
-    const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
 
 
     useEffect(() => {
@@ -35,7 +32,6 @@ export default function PatientHistory() {
                 console.log('====resssssss',res)
                 setPatientName(res[0].name)
             })
-
     }
 
     return (
@@ -55,7 +51,6 @@ export default function PatientHistory() {
             </MainNav>
             <div className="row">
                 <UserLinks />
-
                 <div className="common_box">
                     <MainTabs
                         value={value}
@@ -67,22 +62,21 @@ export default function PatientHistory() {
                     </MainTabs>
 
                     <TabPanel value={value} index={0}>
-                        <Ongoing doctorId={DoctorId} patientId={patientId} />
+                        <Ongoing patientId={patientId} />
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>
-                        <Completed doctorId={DoctorId} patientId={patientId} />
+                        <Completed patientId={patientId} />
                     </TabPanel>
 
                     <TabPanel value={value} index={2}>
-                        <Cancelled doctorId={DoctorId} patientId={patientId} />
+                        <Cancelled patientId={patientId} />
                     </TabPanel>
 
                     <TabPanel value={value} index={3}>
-                        <Incomplete doctorId={DoctorId} patientId={patientId} />
+                        <Incomplete patientId={patientId} />
                     </TabPanel>
                 </div>
-
             </div>
         </Wrapper>
     );

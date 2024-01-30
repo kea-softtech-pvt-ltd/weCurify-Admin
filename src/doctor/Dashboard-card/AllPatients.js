@@ -5,6 +5,7 @@ import UserLinks from "./partial/uselinks";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
+
 export default function AllPatients() {
     const [patientData, setPatientData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -38,11 +39,7 @@ export default function AllPatients() {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     if (currentPage) {
-    //         setCurrentPage(currentPage + 1)
-    //     }
-    // }
+
     const handleNextPage = () => {
         if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
@@ -59,22 +56,16 @@ export default function AllPatients() {
             <MainNav>
                 <ul className="clearfix">
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Patient-List</li>
-                    {/* <li>
-                        <Link to={`/loginpatient`} >
-                            <Icon className="addiconbutton" style={{ fontSize: 50 }}>add</Icon>
-                        </Link>
-                    </li> */}
                 </ul>
             </MainNav>
             <div className='row'>
                 <UserLinks />
                 <div className="common_box">
-
                     <div className='row'>
                         {patientData.map((details, i) => {
                             return (
                                 <>
-                                    <div className="col-md-4 " key={i}>
+                                    <div key={i} className="col-md-4 " >
                                         <div className="cardDiv">
                                             <span className='cardSpan '>
                                                 <i className='icon-user color patientListIcon' />
@@ -84,10 +75,6 @@ export default function AllPatients() {
                                                 <i className='icon-mobile-1 color patientListIcon' />
                                                 <span className='patinetInfo'>{details.mobile}</span>
                                             </span>
-                                            {/* <span className='cardSpan '>
-                                                <i className='icon-hospital-1 color patientListIcon' />
-                                                <span className='patinetInfo'>{details.address}</span>
-                                            </span> */}
                                             <span className='cardSpan '>
                                                 <i className='icon-email color patientListIcon' />
                                                 <span className='patinetInfo'>{details.email}</span>
@@ -104,10 +91,8 @@ export default function AllPatients() {
                                             </div>
                                         </div>
                                     </div>
-
                                 </>
                             )
-
                         })}
                     </div>
 

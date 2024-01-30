@@ -18,7 +18,6 @@ function FetchPatientMedicalInfo(props) {
         setActiveModal(null)
     }
 
-
     const handleShow = (e, index) => {
         e.preventDefault()
         setActiveModal(index)
@@ -41,13 +40,14 @@ function FetchPatientMedicalInfo(props) {
                 setFetchPatientData(result)
             })
     }
+
     return (
         <>
             {
                 fetchPatientdata.length > 0 ?
                     <>
                         {fetchPatientdata.map((item, index) => (
-                            <div className="grayBox">
+                            <div key={index} className="grayBox">
                                 <Link
                                     onClick={e => handleShow(e, index)} className="editbutton">
                                     <i className="icon_pencil-edit mr-3 mt-3" title="Edit profile"></i>

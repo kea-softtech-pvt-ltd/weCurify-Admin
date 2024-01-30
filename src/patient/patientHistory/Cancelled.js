@@ -6,8 +6,6 @@ import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import PatientApi from '../../services/PatientApi';
 import GetDoctorData from './getDoctorData';
 
-
-
 export default function Cancelled(props) {
     const { patientId } = props;
     const [patientList, setPatientList] = useState([]);
@@ -77,10 +75,9 @@ export default function Cancelled(props) {
 
                     })}
                 </div>
-                : null}
-            
+            : null}
             {patientList ?
-                < ul className="pagination pagination-sm">
+                <ul className="pagination pagination-sm">
                     <li className="page-item">
                         <Link className="page-link"
                             to="#" onClick={handlePrevPage}
@@ -109,7 +106,7 @@ export default function Cancelled(props) {
                         </Link>
                     </li>
                 </ul>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+            : <div className="clinicHistory"><b>Data is not Available</b></div>}
         </>
     )
 }

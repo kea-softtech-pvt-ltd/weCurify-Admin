@@ -11,40 +11,7 @@ function AddPatientMedicalInfo(props) {
     const { patientId } = props;
     const [coilPatientMedical, setCoilPatientMedical] = useRecoilState(setPatientMedical)
     const [updateData, setUpdateData] = useState([])
-    const [allergy, setAllergy] = useState([])
     const { addPatientMedical } = PatientApi()
-    useEffect(() => {
-        //getAllergies()
-        //register("allergies", { required: true });'
-        register("cmedication", { required: true });
-        register("pmedication", { required: true });
-        register("diseases", { required: true });
-        register("injuries", { required: true });
-        register("surgeries", { required: true });
-    }, [])
-
-    // const getAllergies =()=>{
-    //     fetch(`${API}/getAllergies`).then(res =>{
-    //         if(res){
-    //             return res.json()
-    //         }
-    //     }).then(jsonRes => {
-    //         setAllergy(jsonRes)
-    //     });
-    // }
-
-    //autoselected
-    const [selected, setSelected] = useState([]);
-    const isAllSelected = allergy.length > 0 && selected.length == allergy.length;
-
-    const handleOnChange = e => {
-        const { name, value } = e.target;
-        if (value[value.length - 1] === "all") {
-            value = (selected.length === allergy.length ? [] : allergy);
-        }
-        setSelected(value);
-        setUpdateData({ ...updateData, [name]: value });
-    }
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -81,7 +48,6 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.allergies}
                         placeholder="Allergies">
-                        {/* {errors.allergies && <span className="validation">Please enter your current allergies</span>} */}
                     </MainInput>
                     <div align='left' className="patientData"><b>Current Medications</b></div>
                     <MainInput
@@ -90,9 +56,7 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.cmedication}
                         placeholder="Current Medications">
-                        {/* {errors.cmedication && <span className="validation">Please enter your current medication</span>} */}
                     </MainInput>
-
                     <div align='left' className="patientData"><b>Past Medications</b></div>
                     <MainInput
                         type="text"
@@ -100,7 +64,6 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.pmedication}
                         placeholder="Past Medications">
-                        {/* {errors.pmedication && <span className="validation">Please enter your post medication</span>} */}
                     </MainInput>
                 </div>
 
@@ -112,7 +75,6 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.diseases}
                         placeholder="Chronic diseases">
-                        {/* {errors.diseases && <span className="validation">Please enter your diseases</span>} */}
                     </MainInput>
                     <div align='left' className="patientData"><b>Injuries</b></div>
                     <MainInput
@@ -121,7 +83,6 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.injuries}
                         placeholder="Injuries">
-                        {/* {errors.injuries && <span className="validation">Please enter your injuries</span>} */}
                     </MainInput>
 
                     <div align='left' className="patientData"><b>Surgeries</b></div>
@@ -131,7 +92,6 @@ function AddPatientMedicalInfo(props) {
                         onChange={handleInputChange}
                         value={updateData.surgeries}
                         placeholder="surgeries">
-                        {/* {errors.surgeries && <span className="validation">Please enter your surgeries</span>} */}
                     </MainInput>
                 </div>
             </div>
