@@ -91,7 +91,6 @@ export default function PatientMedicalReport() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="white-box">
-                    {/* <PatientPersonalInfo reportId={reportId} /> */}
                     <Paper square>
                         <Tabs value={value} onChange={handleChange}
                             indicatorColor="primary"

@@ -66,7 +66,6 @@ export default function Payment(props) {
         }
         UpdateStatusBookingdata({ appointmentId }, bodyData)
             .then((res) => {
-                // setPatientFees(res.fees)
                 history.push(`/patientappointment/${doctorId}`)
             })
         createPDF({ reportId })

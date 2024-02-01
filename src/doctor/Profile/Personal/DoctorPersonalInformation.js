@@ -86,10 +86,7 @@ function DoctorPersonalInformation(props) {
             
         }
         submitDoctorInformation({ doctorId, bodyData })
-            .then(() => {
-            })
         toast.success("Saved Successfully!")
-
     }
 
     return (

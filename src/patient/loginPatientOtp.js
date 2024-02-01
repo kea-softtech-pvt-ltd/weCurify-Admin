@@ -10,13 +10,12 @@ function LoginPatientOtp(props) {
     const history = useHistory()
     const { patientId, loginData } = props;
     const [patientData, setPatientData] = useRecoilState(setNewPatientId);
-    const [loginotp, setLoginOtp] = useState('');
+    const [loginOtp, setLoginOtp] = useState('');
     const getOTP = loginData.otp
     const [errormessage, setErrormessage] = useState(false);
     const { patientLoginOtp } = PatientApi()
     const handleSubmit = (e) => {
         e.preventDefault();
-        const loginOtp = loginotp
         patientLoginOtp({ otp: loginOtp, _id: patientId })
             .then((response) => {
                 setPatientData(patientId)

@@ -17,11 +17,9 @@ export default function SubscriptionCard() {
     const { doctorId } = useParams();
     const history = useHistory()
     const [show, setShow] = useState(false);
-    const [doctorsId, setDoctorsId] = useRecoilState(setDoctorId);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
     const [DoctorName, setDoctorsName] = useState([])
-    const [id, setId] = useState(null)
     const { getDrInfo } = AuthApi()
 
     useEffect(() => {
@@ -35,11 +33,10 @@ export default function SubscriptionCard() {
             .then((res) => {
                 const Data = res.filter((d) => {
                     if (d.Status === "Running") {
-                        return res
+                        return d
                     }
                 })
                 setGetPlan(Data[0].selected_plan)
-                setDoctorsId(Data[0].doctorId)
                 setScriptionId(Data[0]._id)
             })
     }
@@ -78,9 +75,8 @@ export default function SubscriptionCard() {
             "duration": plan.frequency,
             "status": "Running"
         }
-        updateSubscriptionData({ subscriptionId }, bodyData)
+        updateSubscriptionData( subscriptionId , bodyData)
             .then((res) => {
-                setId(res[0]._id)
             })
         history.push(`/subscriptionconfirmation/${doctorId}`)
         handleClose()

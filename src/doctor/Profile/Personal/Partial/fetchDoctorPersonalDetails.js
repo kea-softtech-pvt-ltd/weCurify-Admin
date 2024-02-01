@@ -5,7 +5,7 @@ import AuthApi from "../../../../services/AuthApi";
 function FetchDoctorPersonalDetails(props) {
     const { doctorId } = props;
     const { getDrInfo } = AuthApi()
-    const [fetchPersonalData, setFetchPersonalData] = useState([])
+    const [ fetchPersonalData, setFetchPersonalData] = useState([])
 
     useEffect(() => {
         getDoctorPersonalDetails();
@@ -22,13 +22,11 @@ function FetchDoctorPersonalDetails(props) {
         <div className="profile"  >
             <div className="row" key={fetchPersonalData.id}>
                 <div className="col-lg-5 col-md-4">
-
                     <img
                         src={fetchPersonalData.photo}
                         alt="doctorProfile"
                         className='doctorPic borderRadius'
                     />
-
                 </div>
                 <div className="col-lg-7 col-md-8" align="left">
                     <h1>Dr. {fetchPersonalData.name}</h1>
@@ -47,7 +45,6 @@ function FetchDoctorPersonalDetails(props) {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

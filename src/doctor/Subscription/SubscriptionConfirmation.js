@@ -21,7 +21,7 @@ export default function SubscriptionConfirmation() {
     const fetchSubscription = () => {
         getDrInfo({ doctorId })
         .then((res) => {
-            setDoctorData(res[0])
+            setDoctorData(res.result[0])
         })
         getSubscriptionData({ doctorId })
             .then((sub) => {

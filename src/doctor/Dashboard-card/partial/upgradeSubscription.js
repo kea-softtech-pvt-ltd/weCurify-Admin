@@ -19,7 +19,7 @@ export default function UpgradeSubscription(props) {
             .then((sub) => {
                 const returndata = sub.filter((item, i) => {
                     if (item.Status === "Running") {
-                        return sub
+                        return item
                     }
                 })
                 setsubscription(returndata[0])

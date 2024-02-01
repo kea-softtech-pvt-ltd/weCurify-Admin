@@ -19,6 +19,7 @@ const ShowInClinicAppointSlots = (props) => {
     useEffect(() => {
         availableSlots()
     }, [])
+    
     const handleShow = (item) => {
         setShow(true)
         setbookSlot(item)
@@ -83,7 +84,6 @@ const ShowInClinicAppointSlots = (props) => {
                                         ?
                                         <div>
                                             <div
-                                                onClick={() => handleShow(item)}
                                                 className="disabled-div"
                                                 type="radio"
                                                 // aria-disabled="true"

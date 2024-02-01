@@ -16,21 +16,22 @@ export default function Report(props) {
      function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                const data = result.test.filter((patient) => {
+                const resultData = result.test
+                const data = resultData.filter((patient) => {
                     if (patient.status === "Completed") {
                         return patient;
                     }
                 })
                 setPatientList(data)
-                const res = result.test.filter(function (item, index) {
-                    return index === result.test.findIndex((obj) => {
+                const res = resultData.filter(function (item, index) {
+                    return index === resultData.findIndex((obj) => {
                         if (item.patientId === obj.patientId)
                             return item
                     })
                 })
                 setPatientData(res)
-                const item = result.test.filter((res) => {
-                    if (res.payment === "done")
+                const item = resultData.filter((res) => {
+                    if (res.payment === "Done")
                         return res
                 })
                 const total = item.reduce((initialValue, curValue) => {
