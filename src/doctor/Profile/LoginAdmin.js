@@ -3,9 +3,12 @@ import { useState } from "react";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
 import AuthApi from "../../services/AuthApi";
+import { useRecoilState } from "recoil";
+import { setloggedIn} from '../../recoil/atom/setloggedIn';
 
-export default function LoginDoctor() {
+export default function LoginAdmin() {
     const [loginData, setLoginData] = useState("");
+    const [loggedIn, setLoggedIn] = useRecoilState(setloggedIn)
     const history = useHistory()
     const handleChange = (e) => {
         e.preventDefault();
@@ -15,7 +18,6 @@ export default function LoginDoctor() {
     const [isError, setIsError] = useState(false);
     const { loginAdmin } = AuthApi();
 
-
     const loginAdminData = (e) => {
         e.preventDefault();
         const bodyData = {
@@ -24,6 +26,7 @@ export default function LoginDoctor() {
         }
         loginAdmin(bodyData)
             .then((res) => {
+                setLoggedIn("loggedIn")
                 if (res === null) {
                     setIsError("Please Enter Valid Username And Password")
                 }

@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import Home from "./common/Home";
-import LoginDoctor from "./doctor/Profile/LoginDoctor";
+import LoginAdmin from "./doctor/Profile/LoginAdmin";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
 import PatientMedicalReport from "./doctor/Report/PatientMedicalReport";
@@ -27,113 +27,113 @@ import PatientAppointment from "./doctor/Dashboard-card/PatientAppointment";
 import SlotConfirmation from "./patient/SlotConfirmation";
 import SubscriptionNewDr from "./doctor/Subscription/SubscriptionNewDr";
 import SubscriptionConfirmation from "./doctor/Subscription/SubscriptionConfirmation";
+import { setloggedIn } from "./recoil/atom/setloggedIn";
+import { useRecoilState } from "recoil";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
+
 function MainContainer() {
+  const [loggedIn, setLoggedIn] = useRecoilState(setloggedIn);
+
   return (
     <Switch>
-
-      <Route path="/home">
-        <Home />
-      </Route>
-      <Route path="/demo">
-        <SearchLocationInput />
+      <Route exact path="/">
+        <LoginAdmin />
       </Route>
       <Route path="/doctorlist">
-        <DoctorList />
+        {loggedIn ? <DoctorList /> : <Redirect to="/" />}
       </Route>
-
       <Route path="/doctorbookingwithpatientlogin/:doctorId">
-        <DoctorBookingWithPatientLogin />
+        {loggedIn ? <DoctorBookingWithPatientLogin /> : <Redirect to="/" />}
       </Route>
       <Route path="/patientprofile/:patientId">
-        < PatientProfile />
+        {loggedIn ? < PatientProfile /> : <Redirect to="/" />}
       </Route>
-
       <Route path="/doctorprofile/:doctorId">
-        <DoctorProfile />
-      </Route>
-      <Route exact path="/">
-        <LoginDoctor />
+        {loggedIn ? <DoctorProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/editdoctorprofile/:doctorId">
-        <EditDoctorProfile />
+        {loggedIn ? <EditDoctorProfile /> : <Redirect to="/" />}
       </Route>
       <Route exact path="/patientappointment/:doctorId">
-        <PatientAppointment />
+        {loggedIn ? <PatientAppointment /> : <Redirect to="/" />}
       </Route>
       <Route path="/consultation/:reportId">
-        <PatientMedicalReport />
+        {loggedIn ? <PatientMedicalReport /> : <Redirect to="/" />}
       </Route>
       <Route path="/patient-history/:reportId">
-        <ViewMedicalReport />
+        {loggedIn ? <ViewMedicalReport /> : <Redirect to="/" />}
       </Route>
       <Route path="/subscription">
-        <Subscription />
+        {loggedIn ? <Subscription /> : <Redirect to="/" />}
       </Route>
-      {/* <Route path="/Patientsclinichistory/:doctorId">
-        < PatientsClinicHistory />
-      </Route> */}
       <Route path="/createpatientprofile/:patientId">
-        < CreatePatientProfile />
+        {loggedIn ? <CreatePatientProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/getloginpatientprofile/:patientId">
-        < GetLoginPatientProfile />
+        {loggedIn ? <GetLoginPatientProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/user">
-        < User />
+        {loggedIn ? <User /> : <Redirect to="/" />}
       </Route>
       <Route path="/logout">
         < Logout />
       </Route>
       <Route path="/helper/:doctorId">
-        <Helper />
+        {loggedIn ? <Helper /> : <Redirect to="/" />}
       </Route>
       <Route path="/edithelper/:helperId">
-        <EditHelper />
+        {loggedIn ? <EditHelper /> : <Redirect to="/" />}
       </Route>
       <Route path="/loginhelper">
-        <LoginHelper />
+        {loggedIn ? <LoginHelper /> : <Redirect to="/" />}
       </Route>
       <Route path="/subscriptioncard/:doctorId">
-        <SubscriptionCard />
+        {loggedIn ? <SubscriptionCard /> : <Redirect to="/" />}
       </Route>
       <Route path="/doctorlist">
-        <DoctorList />
+        {loggedIn ? <DoctorList /> : <Redirect to="/" />}
       </Route>
       <Route path="/allpatient">
-        <AllPatients />
+        {loggedIn ? <AllPatients /> : <Redirect to="/" />}
       </Route>
       <Route path="/appointmentbookingsection/:doctorId">
-        <AppointmentBookingSection />
+        {loggedIn ? <AppointmentBookingSection /> : <Redirect to="/" />}
       </Route>
       <Route path="/patientprofile/:patientId">
-        <PatientProfile />
+        {loggedIn ? <PatientProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/loginpatient/:doctorId">
-        <LoginPatient />
+        {loggedIn ? <LoginPatient /> : <Redirect to="/" />}
       </Route>
       <Route path="/getloginpatientprofile/:patientId">
-        < GetLoginPatientProfile />
+        {loggedIn ? <GetLoginPatientProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/createpatientprofile/:patientId">
-        < CreatePatientProfile />
+        {loggedIn ? <CreatePatientProfile /> : <Redirect to="/" />}
       </Route>
       <Route path="/patienthistory/:patientId">
-        < PatientHistory />
+        {loggedIn ? <PatientHistory /> : <Redirect to="/" />}
       </Route>
       <Route path="/addnewdoctor">
-        <AddNewDoctor />
+        {loggedIn ? <AddNewDoctor /> : <Redirect to="/" />}
       </Route>
       <Route path="/bookingconfirmation/:patientAppointmentId">
-        <SlotConfirmation />
+        {loggedIn ? <SlotConfirmation /> : <Redirect to="/" />}
       </Route>
       <Route path="/subscriptionnewdr/:doctorId">
-        <SubscriptionNewDr />
+        {loggedIn ? <SubscriptionNewDr /> : <Redirect to="/" />}
       </Route>
       <Route path="/subscriptionconfirmation/:doctorId">
-        <SubscriptionConfirmation />
+        {loggedIn ? <SubscriptionConfirmation /> : <Redirect to="/" />}
       </Route>
       {/* <Route path="/medicinelist/:doctorId">
         <MedicineList />
+      </Route> */}
+       {/* <Route path="/home">
+        <Home />
+      </Route> */}
+      {/* <Route path="/demo">
+        <SearchLocationInput />
       </Route> */}
     </Switch>
   )
