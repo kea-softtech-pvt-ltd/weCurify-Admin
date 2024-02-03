@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import Paper from '@material-ui/core/Paper';
-
 import {
     TableContainer,
     Table,
@@ -9,7 +7,6 @@ import {
     TableRow,
     TableCell,
     TableBody,
-
 } from '@material-ui/core';
 import ReportApi from '../../../services/ReportApi';
 
@@ -28,7 +25,6 @@ const GetMedicinePriscription = (props) => {
                 setShowMedicineData(result);
 
             })
-
     }
 
     return (
@@ -73,9 +69,6 @@ const GetMedicinePriscription = (props) => {
                 </>
                 : null}
         </>
-
     )
-
-
 }
 export default GetMedicinePriscription;

@@ -7,6 +7,7 @@ import AuthApi from "../../services/AuthApi";
 import { useState } from "react";
 import { Icon } from "@mui/material";
 import UpgradeSubscription from "./partial/upgradeSubscription";
+
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
     const [filterData, setFilterData] = useState([])
@@ -125,7 +126,7 @@ export default function DoctorList() {
                                 </Link>
                             </li>
                             {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                <li className={`page-item ${pageNo === currentPage ? 'active' : ''}`} >
                                     <Link className="page-link"
                                         key={pageNo}
                                         to="#"
@@ -145,7 +146,7 @@ export default function DoctorList() {
                             </li>
 
                         </ul>
-                        :  <div className="clinicHistory" ><b>Data is Not Available</b></div>}
+                        : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>
         </Wrapper >

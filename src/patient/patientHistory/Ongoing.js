@@ -117,7 +117,7 @@ export default function Ongoing(props) {
                     </li>
 
                     {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                        <li className={`page-item ${pageNo === currentPage ? 'active' : ''}`} >
                             <Link className="page-link"
                                 key={pageNo}
                                 to="#"

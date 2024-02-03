@@ -6,6 +6,9 @@ import { MainButtonInput } from "../mainComponent/mainButtonInput";
 import { setPatientMedical } from "../recoil/atom/setPatientMedical";
 import { useRecoilState } from 'recoil';
 import PatientApi from '../services/PatientApi';
+import Toaster from '../doctor/Toaster';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
 
 function AddPatientMedicalInfo(props) {
     const { patientId } = props;
@@ -35,6 +38,7 @@ function AddPatientMedicalInfo(props) {
                 setCoilPatientMedical(coilPatientMedical.concat(response))
                 props.addMedicalRecord()
             })
+            toast.success("Saved Successfully!")
     }
 
     return (
@@ -97,6 +101,9 @@ function AddPatientMedicalInfo(props) {
             </div>
             <div className="text-center add_top_30">
                 <MainButtonInput>Save</MainButtonInput>
+            </div>
+            <div className="row float-right toaster">
+                <Toaster />
             </div>
         </form>
     )
