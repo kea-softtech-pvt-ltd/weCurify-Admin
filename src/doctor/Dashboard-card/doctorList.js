@@ -7,6 +7,7 @@ import AuthApi from "../../services/AuthApi";
 import { useState } from "react";
 import { Icon } from "@mui/material";
 import UpgradeSubscription from "./partial/upgradeSubscription";
+import ReactPaginate from "react-paginate";
 
 export default function DoctorList() {
     const [doctorData, setDoctorData] = useState([])
@@ -34,34 +35,37 @@ export default function DoctorList() {
         setDoctorData(res)
     }
     const handleShowProfile = (details) => {
-        history.push(`/doctorProfile/${details._id}`)
+        if(details.isSubscribed ===  false){
+            history.push(`/subscriptionnewdr/${details._id}`);
+        }else{
+            history.push(`/doctorProfile/${details._id}`)
+        }
     }
 
-    const handlePrevPage = () => {
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
+    const BookAppointments = (details) => {
+        if(details.isSubscribed ===  false){
+            history.push(`/subscriptionnewdr/${details._id}`);
+        }else{
+            history.push(`/loginpatient/${details._id}`)
         }
-    };
-    const totalPagesCalculator = () => {
-        const pages = [];
-        for (let x = 1; x <= totalPages; x++) {
-            pages.push(x)
-        }
-
-        return pages
     }
-    const handleNextPage = () => {
-        if (currentPage !== totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
 
+    const ViewAppointments = (details) => {
+        if(details.isSubscribed ===  false){
+            history.push(`/subscriptionnewdr/${details._id}`);
+        }else{
+            history.push(`/patientappointment/${details._id}`)
+        }
+    }
+    const handlePageClick = () => {
+        setCurrentPage(currentPage + 1)
+    }
     return (
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
                     <div className="row">
-                        <li className='float-none' style={{ fontSize: 'inherit' }}>Doctor-List</li>
+                        <li className='float-none margin-top' style={{ fontSize: 'inherit' }}>Doctor-List</li>
                         <div id="custom-search-input">
                             <input type="text" onChange={(e) => searchDoctor(e.target.value)} className="search-query" placeholder="Search Doctor" />
                             <input type="submit" className="btn_search" value="Search" />
@@ -104,10 +108,10 @@ export default function DoctorList() {
                                         </span>
                                         <UpgradeSubscription doctorId={details._id} />
                                         <div className='cardSpan appointmentBtn'>
-                                            <Link to={`/loginpatient/${details._id}`} >
+                                            <Link onClick={()=>BookAppointments(details)}>
                                                 <button className='btn appColor helperBtn'>Book Appoinment</button>
                                             </Link>
-                                            <Link to={`/patientappointment/${details._id}`}>
+                                            <Link onClick={()=>ViewAppointments(details)}>
                                                 <button className='btn appColor helperBtn'>View Appoinments</button>
                                             </Link>
                                         </div>
@@ -117,35 +121,26 @@ export default function DoctorList() {
                         })}
                     </div>
                     {doctorData.length > 0 ?
-                        <ul className="pagination pagination-sm">
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handlePrevPage}
-                                    disabled={currentPage === 1}>
-                                    Previous
-                                </Link>
-                            </li>
-                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                                <li className={`page-item ${pageNo === currentPage ? 'active' : ''}`} >
-                                    <Link className="page-link"
-                                        key={pageNo}
-                                        to="#"
-                                        onClick={() => setCurrentPage(pageNo)}>
-                                        {pageNo}
-                                    </Link>
-                                </li>
-                            )}
-
-
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handleNextPage}
-                                    disabled={currentPage === totalPages}>
-                                    Next
-                                </Link>
-                            </li>
-
-                        </ul>
+                        <div>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Next >"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={totalPages}
+                                previousLabel="< Previous"
+                                renderOnZeroPageCount={null}
+                                marginPagesDisplayed={2}
+                                containerClassName="pagination "
+                                pageClassName="page-item"
+                                pageLinkClassName="page-link"
+                                previousClassName="page-item"
+                                previousLinkClassName="page-link"
+                                nextClassName="page-item"
+                                nextLinkClassName="page-link"
+                                activeClassName="active"
+                            />
+                        </div>
                         : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>

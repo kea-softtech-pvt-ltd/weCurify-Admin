@@ -5,6 +5,7 @@ import { FaClinicMedical } from 'react-icons/fa';
 import moment from 'moment';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import AppointmentApi from '../../services/AppointmentApi';
+import ReactPaginate from 'react-paginate';
 
 export default function PatientCancelledApt(props) {
     const { doctorId } = props
@@ -28,25 +29,9 @@ export default function PatientCancelledApt(props) {
 
     }
 
-
-    const handlePrevPage = () => {
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-    const totalPagesCalculator = () => {
-        const pages = [];
-        for (let x = 1; x <= totalPages; x++) {
-            pages.push(x)
-        }
-
-        return pages
+    const handlePageClick = () => {
+        setCurrentPage(currentPage + 1)
     }
-    const handleNextPage = () => {
-        if (currentPage !== totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
 
     return (
 
@@ -93,35 +78,26 @@ export default function PatientCancelledApt(props) {
                 </div>
                 : null}
             {patientList ?
-                < ul className="pagination pagination-sm">
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={handlePrevPage}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </Link>
-                    </li>
-
-                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                        <li className={`page-item ${pageNo === currentPage ? 'active' : ''}`} >
-                            <Link className="page-link"
-                                key={pageNo}
-                                to="#"
-                                onClick={() => setCurrentPage(pageNo)}>
-                                {pageNo}
-                            </Link>
-                        </li>
-                    )}
-
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={handleNextPage}
-                            disabled={currentPage === totalPages}>
-                            Next
-                        </Link>
-                    </li>
-                </ul>
+                <div>
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel="Next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={totalPages}
+                        previousLabel="< Previous"
+                        renderOnZeroPageCount={null}
+                        marginPagesDisplayed={2}
+                        containerClassName="pagination "
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        activeClassName="active"
+                    />
+                </div>
                 : <div className="clinicHistory" ><b>Data is not Available</b></div>}
         </div >
 

@@ -1,11 +1,11 @@
 import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+// import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 const MainMuiPickers = (props) =>{
     return(
         <div className="form-group">
             <label><b>{props.children}</b></label>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
                 className="form-control"
                 openTo="year"
@@ -14,7 +14,7 @@ const MainMuiPickers = (props) =>{
                 value={props.value}
                 onChange={props.onChange}
             />
-            </MuiPickersUtilsProvider>
+            </MuiPickersUtilsProvider> */}
         </div>
     )
 }

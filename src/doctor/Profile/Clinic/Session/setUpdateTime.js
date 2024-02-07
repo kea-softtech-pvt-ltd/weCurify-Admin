@@ -2,11 +2,11 @@ import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
-import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { TimePicker, MuiPickersUtilsProvider } from '@mui/x-date-pickers';
 import { useRecoilState } from 'recoil';
 import { updateSession } from "../../../../recoil/atom/setUpdateSession";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
-import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
+import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
 import SessionApi from "../../../../services/SessionApi";
@@ -139,7 +139,7 @@ function SetUpdateTime(props) {
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="form-group">
-                            <div className="k-widget k-timepicker">
+                            {/* <div className="k-widget k-timepicker">
                                 <label><b>From Time</b></label>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <TimePicker
@@ -151,14 +151,14 @@ function SetUpdateTime(props) {
                                         onChange={handleFromTimeSelection}
                                     />
                                 </MuiPickersUtilsProvider>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
                     <div className="col-lg-6">
                         <div className="form-group">
                             <label><b>To Time</b></label>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
                                     value={toTime}
@@ -167,7 +167,7 @@ function SetUpdateTime(props) {
                                     minutesStep={5}
                                     onChange={handleToTimeSelection}
                                 />
-                            </MuiPickersUtilsProvider>
+                            </MuiPickersUtilsProvider> */}
                             {error && (<span className="validation"> {error} </span>)}
                         </div>
                     </div>

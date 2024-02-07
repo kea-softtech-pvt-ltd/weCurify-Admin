@@ -9,6 +9,7 @@ import ClinicApi from "../../../../services/ClinicApi";
 import { Icon } from "@material-ui/core";
 import AuthApi from "../../../../services/AuthApi";
 import { SearchClinic } from "./searchClinic";
+import ReactPaginate from "react-paginate";
 
 function AddDoctorClinicInfo(props) {
     const { doctorId } = props
@@ -29,7 +30,7 @@ function AddDoctorClinicInfo(props) {
     const getAllClinics = (currentPage) => {
         getDrInfo({ doctorId }, currentPage, pageSize)
             .then((jsonRes) => {
-                const clinicData =  jsonRes['clinicList']
+                const clinicData = jsonRes['clinicList']
                 setTotalPages(jsonRes.clinicListPages)
                 setClinicList(clinicData)
             });
@@ -53,24 +54,9 @@ function AddDoctorClinicInfo(props) {
     const handleSearchClose = () => setShowSearch(false)
     const handleSearchShow = () => setShowSearch(true)
 
-    const handlePrevPage = () => {
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-    const totalPagesCalculator = () => {
-        const pages = [];
-        for (let x = 1; x <= totalPages; x++) {
-            pages.push(x)
-        }
-
-        return pages
+    const handlePageClick = () => {
+        setCurrentPage(currentPage + 1)
     }
-    const handleNextPage = () => {
-        if (currentPage !== totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
 
     const sessionClose = () => {
         setShowSession(null)
@@ -89,23 +75,23 @@ function AddDoctorClinicInfo(props) {
 
     const onClinicFormSubmit = () => {
         handleClose();
-          handleSearchClose()
+        handleSearchClose()
     };
 
     return (
         <>
             <div className="">
-            <div className="modalbtn">
-                <Modal show={showSearch} onHide={handleSearchClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Search Clinic</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <SearchClinic doctorId={doctorId} onSubmit={onClinicFormSubmit} />
-                    </Modal.Body>
-                </Modal>
-            </div>
-                
+                <div className="modalbtn">
+                    <Modal show={showSearch} onHide={handleSearchClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Search Clinic</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <SearchClinic doctorId={doctorId} onSubmit={onClinicFormSubmit} />
+                        </Modal.Body>
+                    </Modal>
+                </div>
+
                 {clinicList ?
                     <>
                         {clinicList.map((item, index) => (
@@ -158,35 +144,26 @@ function AddDoctorClinicInfo(props) {
                 <div cllassName="" align='right'>
                     <MainButtonInput onClick={handleSearchShow}>ADD CLINIC</MainButtonInput>
                 </div>
-                <ul className="pagination pagination-sm">
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handlePrevPage}
-                                    disabled={currentPage === 1}>
-                                    Previous
-                                </Link>
-                            </li>
-                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                                <li className={`page-item ${pageNo === currentPage ? 'active' : ''}`} >
-                                    <Link className="page-link"
-                                        key={pageNo}
-                                        to="#"
-                                        onClick={() => setCurrentPage(pageNo)}>
-                                        {pageNo}
-                                    </Link>
-                                </li>
-                            )}
-
-
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handleNextPage}
-                                    disabled={currentPage === totalPages}>
-                                    Next
-                                </Link>
-                            </li>
-
-                        </ul>
+                <div>
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel="Next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={totalPages}
+                        previousLabel="< Previous"
+                        renderOnZeroPageCount={null}
+                        marginPagesDisplayed={2}
+                        containerClassName="pagination "
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        activeClassName="active"
+                    />
+                </div>
                 {/* <Modal show={showDelete} onHide={handleDeleteClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are You Sure?</Modal.Title>
