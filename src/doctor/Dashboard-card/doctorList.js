@@ -25,7 +25,7 @@ export default function DoctorList() {
     const getDoctorList = () => {
         getdoctors(currentPage, pageSize)
             .then((result) => {
-                setFilterData(result.doctorList)
+                setFilterData(result.result)
                 setDoctorData(result.doctorList)
                 setTotalPages(result.doctorListPages)
             })
@@ -35,30 +35,33 @@ export default function DoctorList() {
         setDoctorData(res)
     }
     const handleShowProfile = (details) => {
-        if(details.isSubscribed ===  false){
-            history.push(`/subscriptionnewdr/${details._id}`);
-        }else{
-            history.push(`/doctorProfile/${details._id}`)
-        }
+        // if(details.isSubscribed ===  false){
+        //     history.push(`/subscriptionnewdr/${details._id}`);
+        // }else{
+        //     history.push(`/doctorProfile/${details._id}`)
+        // }
+        history.push(`/doctorProfile/${details._id}`)
+
     }
 
     const BookAppointments = (details) => {
-        if(details.isSubscribed ===  false){
+        if (details.isSubscribed === false) {
             history.push(`/subscriptionnewdr/${details._id}`);
-        }else{
+        } else {
             history.push(`/loginpatient/${details._id}`)
         }
     }
 
     const ViewAppointments = (details) => {
-        if(details.isSubscribed ===  false){
-            history.push(`/subscriptionnewdr/${details._id}`);
-        }else{
-            history.push(`/patientappointment/${details._id}`)
-        }
+        // if(details.isSubscribed ===  false){
+        //     history.push(`/subscriptionnewdr/${details._id}`);
+        // }else{
+        //     history.push(`/patientappointment/${details._id}`)
+        // }
+        history.push(`/patientappointment/${details._id}`)
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1)
     }
     return (
         <Wrapper>
@@ -67,7 +70,7 @@ export default function DoctorList() {
                     <div className="row">
                         <li className='float-none margin-top' style={{ fontSize: 'inherit' }}>Doctor-List</li>
                         <div id="custom-search-input">
-                            <input type="text" onChange={(e) => searchDoctor(e.target.value)} className="search-query" placeholder="Search Doctor" />
+                            <input type="text" onChange={(e) => searchDoctor(e.target.value)} className="search-query" placeholder="Search Doctor By Name" />
                             <input type="submit" className="btn_search" value="Search" />
                         </div>
                         <div className="mx-2 mt-2">
@@ -108,10 +111,10 @@ export default function DoctorList() {
                                         </span>
                                         <UpgradeSubscription doctorId={details._id} />
                                         <div className='cardSpan appointmentBtn'>
-                                            <Link onClick={()=>BookAppointments(details)}>
+                                            <Link onClick={() => BookAppointments(details)}>
                                                 <button className='btn appColor helperBtn'>Book Appoinment</button>
                                             </Link>
-                                            <Link onClick={()=>ViewAppointments(details)}>
+                                            <Link onClick={() => ViewAppointments(details)}>
                                                 <button className='btn appColor helperBtn'>View Appoinments</button>
                                             </Link>
                                         </div>

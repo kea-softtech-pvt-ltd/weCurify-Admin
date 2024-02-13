@@ -54,8 +54,8 @@ function AddDoctorClinicInfo(props) {
     const handleSearchClose = () => setShowSearch(false)
     const handleSearchShow = () => setShowSearch(true)
 
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
 
     const sessionClose = () => {

@@ -7,8 +7,6 @@ import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
 import SubscriptionApi from "../../services/SubscriptionApi";
-import { useRecoilState } from "recoil";
-import { setDoctorId } from "../../recoil/atom/setDoctorId";
 import AuthApi from "../../services/AuthApi";
 export default function SubscriptionCard() {
     const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlans } = SubscriptionApi()

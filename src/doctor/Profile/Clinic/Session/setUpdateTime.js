@@ -61,7 +61,7 @@ function SetUpdateTime(props) {
     }
     const handleToTimeSelection = (time) => {
         setToTime(time);
-        setSelectedSlots(checkTimeSlot(fromTime, moment(time).format('HH:mm'), sessionTime.timeSlot))
+        setSelectedSlots(checkTimeSlot(moment(fromTime).format('HH:mm'), moment(time).format('HH:mm'), sessionTime.timeSlot))
 
     }
 

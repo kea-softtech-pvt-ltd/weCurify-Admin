@@ -41,8 +41,8 @@ export default function Completed(props) {
                 alink.click();
             })
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
 
     return (

@@ -18,11 +18,11 @@ export default function Sharing(props) {
     }
 
     return (
-        <div className='whatsApp'>
+        <div className='whatsApp '>
             <WhatsappShareButton
                 quote='Prescription'
                 url={shareUrl}>
-                <WhatsappIcon size={30} round={true} />
+                <WhatsappIcon size={35} round={true} />
             </WhatsappShareButton >
         </div>
     )

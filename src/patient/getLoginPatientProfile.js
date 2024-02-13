@@ -52,7 +52,6 @@ export default function GetLoginPatientProfile() {
                         </div>
                     </div>
                 </div>
-          
         </Wrapper >
         </>
     )

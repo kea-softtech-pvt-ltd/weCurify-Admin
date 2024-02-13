@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import PatientApi from '../services/PatientApi';
-export default function GetDependent() {
-    const { patientId } = useParams();
-    const [ fetchPatientData, setFetchPatientData] = useState([])
-    const { patientDetailsData} = PatientApi()
+import { useRecoilState } from 'recoil';
+import { setDependentId } from '../recoil/atom/setDependentId';
+export default function GetDependent(props) {
+    const { patientId } = props;
+    const [fetchPatientData, setFetchPatientData] = useState([])
+    const [dependentId, setDependentsId] = useRecoilState(setDependentId)
+    const { patientDetailsData } = PatientApi()
+    const history = useHistory()
     useEffect(() => {
         getAllPatientData()
     }, [])
 
     function getAllPatientData() {
         patientDetailsData({ patientId })
-            .then( (response)=> {
+            .then((response) => {
                 setFetchPatientData(response[0].dependent)
             })
+    }
+    const handleClick = (item) => {
+        history.push(`/appointmentbookingsection/${item._id}`)
+        setDependentsId(item._id)
     }
     return (
         <>
@@ -28,16 +36,14 @@ export default function GetDependent() {
                                     </div>
                                 </div>
                                 <div className="patientDataStyle">
-
                                     {fetchPatientData.map((item) => {
                                         return (
                                             <div className="row">
                                                 <div className='col-md-7'>
-                                                    {/* <label className="mx-2"><b>Name :</b></label> */}
                                                     {item.name}
                                                 </div>
                                                 <div className='col-md-5' align='right'>
-                                                    <Link to={`/appointmentbookingsection/${patientId}`} className="btn">
+                                                    <Link onClick={() => handleClick(item)} className="btn">
                                                         <i className="arrow_carrot-right_alt" style={{ fontSize: 20 }}></i>
                                                     </Link>
                                                 </div>

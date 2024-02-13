@@ -32,7 +32,7 @@ export default function Subscription() {
         }
         subscription(bodyData)
             .then(() => {
-                history.push(`/editdoctorprofile/${doctorId}`)
+                history.push(`/subscriptionconfirmation/${doctorId}`)
             })
 
     }

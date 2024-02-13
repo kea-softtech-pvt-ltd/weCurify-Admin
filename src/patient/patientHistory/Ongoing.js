@@ -34,13 +34,14 @@ export default function Ongoing(props) {
     function getPatientDetails(currentPage) {
         getpaymentData({ patientId }, currentPage, pageSize)
             .then((result) => {
+                console.log(result, '--------------')
                 const totalPages = result.totalOngoingPages;
                 setTotalPages(totalPages)
                 setPatientList(result.ongoing)
             })
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
 
     function cancelAppointment(id) {
@@ -55,35 +56,40 @@ export default function Ongoing(props) {
         <>
             <div className='row'>
                 {patientList.map((details, i) => {
+                    console.log(details,'-------')
                     return (
                         <>
-                            <div key={i} className="col-md-4">
-                                <div className="cardDiv">
-                                    <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
-                                    <span className='cardSpan time'>
-                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                        <span className=''>
-                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()}
-                                            ,{details.slotTime}
-                                            <span className='timeS'>
-                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                {details.timeSlot} Min.
+                            {!details.dependentId ?
+                                <div key={i} className="col-md-4">
+                                    <div className="cardDiv">
+                                        <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
+                                        {/* <span className='patientName'>
+                                            Dr.{name}
+                                        </span> */}
+                                        <span className='cardSpan time'>
+                                            <i className='pe-7s-date m-1 color patientListIcon' />
+                                            <span className=''>
+                                                {moment(details.selectedDate).format('YYYY-MM-DD').toString()}
+                                                ,{details.slotTime}
+                                                <span className='timeS'>
+                                                    <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                    {details.timeSlot} Min.
+                                                </span>
                                             </span>
                                         </span>
-                                    </span>
 
-                                    <div className=' appointmentBtn' align='right'>
-                                        <Link to={`/doctorprofile/${details.doctorId}`}>
-                                            <button className="btn appColor helperBtn ">View Profile</button>
-                                        </Link>
-                                        <Link onClick={() => handleCancelShow(details)} >
-                                            <button className='btn btn-default btnMargin ' >Cancel</button>
-                                        </Link>
+                                        <div className=' appointmentBtn' align='right'>
+                                            <Link to={`/doctorprofile/${details.doctorId}`}>
+                                                <button className="btn appColor helperBtn ">View Profile</button>
+                                            </Link>
+                                            <Link onClick={() => handleCancelShow(details)} >
+                                                <button className='btn btn-default btnMargin ' >Cancel</button>
+                                            </Link>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
+                                : null}
                         </>
                     )
 

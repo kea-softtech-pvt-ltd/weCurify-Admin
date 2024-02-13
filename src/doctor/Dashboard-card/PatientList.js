@@ -51,6 +51,7 @@ export default function PatientList(props) {
     function getPatientDetails(currentPage) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result, i) => {
+                console.log('========result', result)
                 setTotalPages(result.totalOngoingPages)
                 setPatientList(result.ongoing)
                 result.test.filter((data) => {
@@ -73,8 +74,8 @@ export default function PatientList(props) {
                 handleCancelClose()
             })
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
     const handleShowProfile = (patientId) => {
         history.push(`/patientProfile/${patientId}`)

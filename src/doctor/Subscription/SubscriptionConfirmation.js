@@ -10,19 +10,19 @@ import SubscriptionApi from "../../services/SubscriptionApi";
 export default function SubscriptionConfirmation() {
     const { doctorId } = useParams()
     const { getDrInfo } = AuthApi()
-    const [ doctorData, setDoctorData] = useState([])
-    const [ getSubData, setGetSubData] = useState([])
+    const [doctorData, setDoctorData] = useState([])
+    const [getSubData, setGetSubData] = useState([])
     const { getSubscriptionData } = SubscriptionApi()
-    
+
     useEffect(() => {
         fetchSubscription()
     }, [getSubData])
 
     const fetchSubscription = () => {
         getDrInfo({ doctorId })
-        .then((res) => {
-            setDoctorData(res.result[0])
-        })
+            .then((res) => {
+                setDoctorData(res.result[0])
+            })
         getSubscriptionData({ doctorId })
             .then((sub) => {
                 const returndata = sub.filter((item, i) => {
@@ -59,7 +59,7 @@ export default function SubscriptionConfirmation() {
                                 {/* <div> Your Subscription is Upgraded Successfully!</div> */}
                                 <div >Now your Subscription  is ( {getSubData.selected_plan} )</div>
                             </div>
-                            <Link to={`/doctorList`}>
+                            <Link to={`/doctorprofile/${doctorId}`}>
                                 <button align='right' className='btn appColor helperBtn'>Done</button>
                             </Link>
                         </div>

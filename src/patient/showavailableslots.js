@@ -7,9 +7,11 @@ import PatientApi from "../services/PatientApi";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { setDependentId } from "../recoil/atom/setDependentId";
 const ShowInClinicAppointSlots = (props) => {
-    const { sessionSlot, selectedDate, session, slotDate, doctorId } = props;
-    const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
+    const { sessionSlot, selectedDate, session, slotDate } = props;
+    const [ patientId, setPatientsId] = useRecoilState(setNewPatientId)
+    const [ dependentId, setDependentsId] = useRecoilState(setDependentId)
     const [bookingSlots, setBookingSlots] = useState([]);
     const [show, setShow] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
@@ -36,7 +38,7 @@ const ShowInClinicAppointSlots = (props) => {
             "ClinicId": session.clinicId,
             "slotId": slotId,
             "patientId": patientId,
-            // "order_id": payCheck.orderId,
+            "dependentId":dependentId,
             "transactionId": '123',
             "currency": 'INR',
             "fees": session.fees,
@@ -52,8 +54,9 @@ const ShowInClinicAppointSlots = (props) => {
         }
         paymentInfo(transactionData)
             .then((res) => {
-                handleClose()
                 history.push(`/bookingconfirmation/${res._id}`)
+                setDependentsId(" ")
+                handleClose()
             })
 
     }

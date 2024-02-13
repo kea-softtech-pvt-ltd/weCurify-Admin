@@ -25,25 +25,31 @@ export default function UpgradeSubscription(props) {
             })
     }
 
-    const handleSubscription = (details) => {
+    const handleSubscription = () => {
         history.push(`/subscriptioncard/${doctorId}`)
+    }
+    const handleNewSubscription = () => {
+        history.push(`/subscriptionnewdr/${doctorId}`)
     }
 
     return (
         <span className='row' >
             <span className=' '>
                 <i className="pe-7s-date col-md-1 color patientListIcon" />
-                <Link className='' onClick={() => handleSubscription(subscription)} >
-                    {subscription.Status === "Running" ?
+                {subscription.Status === "Running" ?
+                    <Link className='' onClick={() => handleSubscription()} >
                         <>
                             <span className="col-md-2"> {"(" + subscription.selected_plan + ")"}</span>
                             {moment(new Date(subscription.expiryDate)).format('YYYY-MM-DD')}
                         </>
-                        :
-                        <span className="col-md-2">Pleas Upgrade subscription</span>
-                    }
-                    <span className="greenColor col-md-2" > Upgrade </span>
-                </Link>
+                        <span className="greenColor col-md-2" > Upgrade </span>
+                    </Link>
+                    :
+                    <Link onClick={() => handleNewSubscription()}>
+                        <span className="col-md-2">Upgrade Your Subscription</span>
+                        <span className="greenColor col-md-2" > Upgrade </span>
+                    </Link>
+                }
             </span>
         </span>
     )

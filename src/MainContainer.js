@@ -1,10 +1,8 @@
 import { Switch, Route } from "react-router-dom";
-import Home from "./common/Home";
 import LoginAdmin from "./doctor/Profile/LoginAdmin";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
 import PatientMedicalReport from "./doctor/Report/PatientMedicalReport";
-import SearchLocationInput from "./common/demo";
 import User from "./user";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import Logout from "./doctor/Profile/LogoutForm";
@@ -30,6 +28,7 @@ import SubscriptionConfirmation from "./doctor/Subscription/SubscriptionConfirma
 import { setloggedIn } from "./recoil/atom/setloggedIn";
 import { useRecoilState } from "recoil";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import Dependent from "./doctor/Dashboard-card/Dependent";
 
 function MainContainer() {
   const [loggedIn, setLoggedIn] = useRecoilState(setloggedIn);
@@ -96,7 +95,7 @@ function MainContainer() {
       <Route path="/allpatient">
         {loggedIn ? <AllPatients /> : <Redirect to="/" />}
       </Route>
-      <Route path="/appointmentbookingsection/:doctorId">
+      <Route path="/appointmentbookingsection/:patientId">
         {loggedIn ? <AppointmentBookingSection /> : <Redirect to="/" />}
       </Route>
       <Route path="/patientprofile/:patientId">
@@ -126,10 +125,13 @@ function MainContainer() {
       <Route path="/subscriptionconfirmation/:doctorId">
         {loggedIn ? <SubscriptionConfirmation /> : <Redirect to="/" />}
       </Route>
+      <Route path="/dependentdata/:patientId">
+        {loggedIn ? <Dependent /> : <Redirect to="/" />}
+      </Route>
       {/* <Route path="/medicinelist/:doctorId">
         <MedicineList />
       </Route> */}
-       {/* <Route path="/home">
+      {/* <Route path="/home">
         <Home />
       </Route> */}
       {/* <Route path="/demo">

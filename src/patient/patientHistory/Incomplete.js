@@ -27,8 +27,8 @@ export default function Incomplete(props) {
                 setPatientHistoryData(result.incomplete)
             })
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
     return (
         <>

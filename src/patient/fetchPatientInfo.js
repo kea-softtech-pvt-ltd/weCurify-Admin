@@ -43,7 +43,7 @@ function FetchPatientInfo(props) {
                 </div>
                 <div align='right'>
                     <div className="radius appColor buttonPatient" align='center'>
-                        <Link to={`/appointmentbookingsection/${doctorId}`} className="btn">
+                        <Link to={`/appointmentbookingsection/${patientId}`} className="btn">
                             <span className=" appColor">Book Appointment</span>
                         </Link>
                     </div>

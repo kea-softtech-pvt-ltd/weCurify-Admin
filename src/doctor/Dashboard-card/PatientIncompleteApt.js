@@ -25,8 +25,8 @@ export default function PatientIncompleteApt(props) {
                 setPatientHistoryData(result.incomplete)
             })
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
     return (
         <>
@@ -35,35 +35,61 @@ export default function PatientIncompleteApt(props) {
                     {patientHistoryData.map((details, i) => {
                         return (
                             <>
-                                <div className="col-md-4 " key={i}>
-                                    <div className="cardDiv">
-                                        <span className='cardSpan '>
-                                            <i className='icon-user color patientListIcon' />
-                                            <span className='patientName'>{details['patientDetails'][0].name}</span>
-                                        </span>
-                                        <span className='cardSpan'>
-                                            <i className='icon-mobile-1 color patientListIcon' />
-                                            <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
-                                        </span>
-                                        <span className='cardSpan '>
-                                            <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
-                                            <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
-                                        </span>
-                                        <span className='cardSpan time'>
-                                            <i className='pe-7s-date m-1 color patientListIcon' />
-                                            <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
-                                                <span className='ml-2'>
+                                {!details.dependentId ?
+                                    <div key={i} className="col-md-4 ">
+                                        <div className="cardDiv">
+                                            <span className='cardSpan'>
+                                                <i className='icon-user color patientListIcon' />
+                                                <span className='patientName'>{details['patientDetails'][0].name}</span>
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-mobile-1 color patientListIcon' />
+                                                <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
+                                            </span>
+                                            <span className='cardSpan '>
+                                                <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                                <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
+                                            </span>
+                                            <span className='cardSpan time'>
+                                                <i className='pe-7s-date m-1 color patientListIcon' />
+                                                <span className='slotTime'>
+                                                    {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
                                                     {details.slotTime}
-                                                </span>
-                                                <span className='timeSlot'>
-                                                    <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                    {details.timeSlot} Min.
+                                                    <span className='timeSlot'>
+                                                        <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                        {details.timeSlot} Min.
+                                                    </span>
                                                 </span>
                                             </span>
-                                        </span>
 
+                                        </div>
                                     </div>
-                                </div>
+                                    : <div className="col-md-4 ">
+                                        <div className="cardDiv">
+                                            <span className='cardSpan '>
+                                                <i className='icon-user color patientListIcon' />
+                                                <span className='patientName'>{details['dependentDetails'][0].name}</span>
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-mobile-1 color patientListIcon' />
+                                                <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
+                                            </span>
+                                            <span className='cardSpan '>
+                                                <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                                <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
+                                            </span>
+                                            <span className='cardSpan time'>
+                                                <i className='pe-7s-date m-1 color patientListIcon' />
+                                                <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                                    <span className='timeSlot'>
+                                                        <AccessTimeRounded style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                        {details.timeSlot} Min.
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
 
                             </>
                         )

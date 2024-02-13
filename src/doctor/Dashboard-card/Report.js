@@ -49,7 +49,7 @@ export default function Report(props) {
                     <div className="col-md-4 ">
                         <div className="cardDiv">
                             <span className='cardSpan '>
-                                <span className='report m-3'>Total Appoinment - </span>
+                                <span className='report m-3'>Completed Appoinment - </span>
                                 <span className='report m-3'>{patientList.length}</span>
                             </span>
                         </div>

@@ -11,7 +11,6 @@ import { setDoctorId } from "../recoil/atom/setDoctorId";
 export default function LoginPatient() {
     const [DoctorName, setDoctorsName] = useState([])
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
-    console.log('======================',DoctorId)
     const { doctorId } = useParams()
     const { getDrInfo } = AuthApi()
 

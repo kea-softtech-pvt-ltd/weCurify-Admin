@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 import ReactPaginate from "react-paginate";
+import { Group } from "@material-ui/icons";
 
 export default function AllPatients() {
     const [patientData, setPatientData] = useState([])
@@ -23,21 +24,26 @@ export default function AllPatients() {
     const getPatientList = () => {
         getAllPatient(currentPage, pageSize)
             .then((res) => {
+                console.log('==========================',res.patientList)
                 setFilterData(res.patientList)
                 setPatientData(res.patientList)
                 setTotalPages(res.totalPages)
             })
     }
+
     const searchPatient = (value) => {
         const res = filterData.filter(name => name.name.toLowerCase().includes(value.toLowerCase()))
         setPatientData(res)
     }
+
     const handleShowProfile = (details) => {
         history.push(`/patientprofile/${details._id}`)
     }
-    const handlePageClick = () => {
-        setCurrentPage(currentPage + 1)
+
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
     }
+
     return (
         <Wrapper>
             <MainNav>
@@ -48,7 +54,6 @@ export default function AllPatients() {
                             <input type="text" onChange={(e) => searchPatient(e.target.value)} className="search-query" placeholder="Search Doctor" />
                             <input type="submit" className="btn_search" value="Search" />
                         </div>
-
                     </div>
                 </ul>
             </MainNav>
@@ -81,7 +86,12 @@ export default function AllPatients() {
                                                 <Link to={`/patienthistory/${details._id}`} >
                                                     <button className='btn appColor helperBtn'>Appoinment Details</button>
                                                 </Link>
-
+                                                {details['dependent'].length > 0 ?
+                                                    <Link
+                                                        to={`/dependentdata/${details._id}`}>
+                                                        <Group style={{ fontSize: 40 }} />
+                                                    </Link>
+                                                    : null}
                                             </div>
                                         </div>
                                     </div>
