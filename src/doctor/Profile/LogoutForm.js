@@ -3,15 +3,19 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { setloggedIn } from "../../recoil/atom/setloggedIn";
+import { setNewPatientId } from "../../recoil/atom/setNewPatientId";
+
 function Logout(){
     const [doctorId , setDoctor] = useRecoilState(setDoctorId);
     const [loggedIn , setLoggedIn] = useRecoilState(setloggedIn);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const [patientId, setPatientId] = useRecoilState(setNewPatientId)
 
     useEffect(() =>{
         setDoctor("")
-        setHelpersData('')
         setLoggedIn('')
+        setPatientId('')
+        setHelpersData('')
     }, [])
 
     return(

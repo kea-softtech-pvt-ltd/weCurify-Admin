@@ -133,9 +133,8 @@ export default function PatientList(props) {
                                         <div className="cardDiv">
                                             <span className='cardSpan '>
                                                 <i className='icon-user color patientListIcon' />
-                                                <Link to="#" className='underLine' onClick={() => handleShowProfile(details.dependentId)}>
-                                                    <span className='patientName'>{details['dependentDetails'][0].name}</span>
-                                                </Link>
+                                                <span className='patientName'>{details['dependentDetails'][0].name}</span>
+                                                <span className='dependent'>dependent</span>
                                             </span>
                                             <span className='cardSpan'>
                                                 <i className='icon-mobile-1 color patientListIcon' />

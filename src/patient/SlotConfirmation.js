@@ -13,15 +13,14 @@ import AppointmentApi from "../services/AppointmentApi";
 
 export default function SlotConfirmation() {
     const { patientAppointmentId } = useParams()
-    const { getDrInfo } = AuthApi()
-    const { fetchPatient } = PatientApi()
     const [patientId, setPatientId] = useRecoilState(setNewPatientId)
-    const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
-    const doctorId = DoctorId
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [doctorData, setDoctorData] = useState([])
     const [patientData, setPatientData] = useState([])
     const [AppoinmentData, setAppointmentData] = useState([])
     const { getappointment } = AppointmentApi()
+    const { getDrInfo } = AuthApi()
+    const { fetchPatient } = PatientApi()
     useEffect(() => {
         doctorInfo()
         patientInfo()

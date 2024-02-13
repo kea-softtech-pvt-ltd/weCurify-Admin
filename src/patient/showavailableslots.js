@@ -38,7 +38,7 @@ const ShowInClinicAppointSlots = (props) => {
             "ClinicId": session.clinicId,
             "slotId": slotId,
             "patientId": patientId,
-            "dependentId":dependentId,
+            "dependentId":dependentId !== " " ? dependentId : null,
             "transactionId": '123',
             "currency": 'INR',
             "fees": session.fees,

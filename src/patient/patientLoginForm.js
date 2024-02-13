@@ -8,7 +8,7 @@ import PatientApi from "../services/PatientApi";
 
 function PatientLoginForm(props) {
     const { redirection, doctorId } = props
-    const [patientId, setPatientId] = useState(0);
+    const [patientId, setPatientId] = useState([]);
     const [mobile, setMobile] = useState("");
     const [isError, setIsError] = useState(false);
     const [showOTP, setShowOTP] = useState(false)
@@ -31,8 +31,6 @@ function PatientLoginForm(props) {
                     setShowOTP(true)
 
                 })
-
-
         }
     };
 
@@ -65,7 +63,7 @@ function PatientLoginForm(props) {
                                 </div>
 
                                 {showOTP === true ?
-                                    <LoginPatientOtp patientId={patientId} loginData={loginData} redirection={redirection} />
+                                    <LoginPatientOtp patientId={patientData} loginData={loginData} redirection={redirection} />
                                     : null}
                             </div>
                         </div>

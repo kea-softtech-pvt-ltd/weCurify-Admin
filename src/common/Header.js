@@ -1,27 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, } from "react-router-dom";
-import { doctorIdState } from "../recoil/selector/doctorIdState"
-import { setHelperData } from "../recoil/atom/setHelperData";
-import { setDoctorId } from "../recoil/atom/setDoctorId";
-import { useRecoilValue, useRecoilState } from "recoil";
+import {useRecoilState } from "recoil";
 import appLogo from '../../src/img/small_wecurify.png'
 import { setloggedIn } from "../recoil/atom/setloggedIn";
-// import { BroadcastChannel } from "broadcast-channel";
-// import { EventListener } from "event-listener";
 
 export default function Header() {
-    // const doctorId = useRecoilValue(doctorIdState)
-    const [doctorId, setDoctor] = useRecoilState(setDoctorId);
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [loggedIn, setLoggedIn] = useRecoilState(setloggedIn);
-
-
-    const handleLogout = () => {
-        // Perform logout actions here
-        // logoutChannel.postMessage("Logout");
-        //   logoutEventListener.trigger("logout");
-
-    };
 
     return (
         <header style={{ zIndex: '2' }} className="header_sticky">
