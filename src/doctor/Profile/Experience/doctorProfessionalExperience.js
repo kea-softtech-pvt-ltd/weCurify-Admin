@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { FetchExperience } from "./Partial/fetchExperience";
 import { AddDoctorProfessionalExperience } from "./Partial/addDoctorProfessionalExperience";
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
 function DoctorProfessionalExperience(props) {

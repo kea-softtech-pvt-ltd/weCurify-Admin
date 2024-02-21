@@ -3,7 +3,7 @@ import AddHelper from './partial/AddHelper';
 import HelperList from './partial/helperList';
 import { useParams, Link } from 'react-router-dom';
 import { MainNav } from '../../mainComponent/mainNav';
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";

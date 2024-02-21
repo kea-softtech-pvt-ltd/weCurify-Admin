@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
-import {useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 
@@ -29,7 +29,12 @@ export default function Dependent() {
             <MainNav>
                 <ul className="clearfix">
                     <div className="row">
-                        <li className='float-none margin-top' style={{ fontSize: 'inherit' }}>Patient-List</li>
+                        <li>
+                            <Link to={`/allpatient`}>
+                                <i className="arrow_back backArrow " title="back button"></i>
+                            </Link>
+                        </li>
+                        <li className='float-none margin-top' style={{ fontSize: 'inherit' }}>Dependent-List</li>
                     </div>
                 </ul>
             </MainNav>

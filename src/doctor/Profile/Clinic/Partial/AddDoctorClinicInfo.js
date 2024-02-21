@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import ClinicApi from "../../../../services/ClinicApi";
-import { Icon } from "@material-ui/core";
+import { Icon } from "@mui/material";
 import AuthApi from "../../../../services/AuthApi";
 import { SearchClinic } from "./searchClinic";
 import ReactPaginate from "react-paginate";

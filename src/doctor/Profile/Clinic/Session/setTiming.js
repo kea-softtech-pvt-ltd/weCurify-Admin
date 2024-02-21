@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import { TimePicker, MuiPickersUtilsProvider } from '@mui/x-date-pickers';
+import { TimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
@@ -140,16 +140,16 @@ function SetTiming(props) {
                     <div className="form-group">
                         <div className="k-widget k-timepicker">
                             <label><b>From Time</b></label>
-                            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={sessionTime.fromTime}
+                                    value={moment(sessionTime.fromTime).format("HH:mm")}
                                     name="fromTime"
                                     ampm={false}
                                     minutesStep={5}
                                     onChange={handleFromTimeSelection}
                                 />
-                            </MuiPickersUtilsProvider> */}
+                            </LocalizationProvider>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ function SetTiming(props) {
                 <div className="col-lg-6">
                     <div className="form-group">
                         <label><b>To Time</b></label>
-                        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <TimePicker
                                 renderInput={(props) => <TextField {...props} />}
                                 value={sessionTime.toTime}
@@ -166,7 +166,7 @@ function SetTiming(props) {
                                 minutesStep={5}
                                 onChange={handleToTimeSelection}
                             />
-                        </MuiPickersUtilsProvider> */}
+                        </LocalizationProvider>
                         {error && <span className="validation">Please enter valid time</span>}
                     </div>
                 </div>

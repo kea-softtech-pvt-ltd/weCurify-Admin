@@ -1,6 +1,6 @@
-import Tabs from '@material-ui/core/Tabs';
-import Paper from '@material-ui/core/Paper';
-import Tab from '@material-ui/core/Tab';
+import Tabs from '@mui/material/Tabs';
+import Paper from '@mui/material/Paper';
+import Tab from '@mui/material/Tab';
 
 const MainTabs = (props) =>{
     return(
@@ -10,6 +10,7 @@ const MainTabs = (props) =>{
                 onChange={props.onChange}
                 indicatorColor="primary"
                 textColor="primary"
+                TabIndicatorProps={{ style: { background: " #1a3c8b" }}}
             >
                 <Tab label={props.label}  />
                 <Tab label={props.label1} />

@@ -5,7 +5,7 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { Modal } from "react-bootstrap";
 import { AddClinic } from "./addclinic";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import ClinicApi from "../../../../services/ClinicApi";
 
 const SearchClinic = (props) => {

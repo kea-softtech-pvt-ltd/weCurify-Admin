@@ -6,6 +6,7 @@ import { MainButtonInput } from '../../../../mainComponent/mainButtonInput';
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import ExperienceApi from '../../../../services/ExperienceApi';
+import moment from 'moment';
 function EditExperience(props) {
     const { ExId } = props;
     const [error, setError] = useState('')
@@ -97,18 +98,17 @@ function EditExperience(props) {
                 <div className="row">
                     <div className="col-md-6 ">
                         <i className="icon-calendar:before" title="Edit profile"></i>
-
                         <MainMuiPickers
                             name="startYear"
-                            value={startYear}
+                            value={moment(new Date(startYear)).format('MM-YYYY')}
                             onChange={handleStartYearChange}>Start Year
                         </MainMuiPickers>
                     </div>
                     <div className="col-md-6 ">
-
+                    {/* //moment(new Date(subscription.expiryDate)).format('YYYY-MM-DD') */}
                         <MainMuiPickers
                             name="startYear"
-                            value={endYear}
+                            value={moment((endYear)).format('MM-YYYY')}
                             onChange={handleEndYearChange}>End Year
                         </MainMuiPickers>
                     </div>

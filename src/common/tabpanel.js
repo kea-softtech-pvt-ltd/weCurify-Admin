@@ -1,5 +1,4 @@
-import Box from '@material-ui/core/Box';
-
+import Box from '@mui/material/Box';
 function TabPanel(props) {
     //for tab
     const { children, value, index } = props;

@@ -512,9 +512,9 @@ a.btn_1 {
 .symptomsData {
 	display: flex;
 }
-.addSymptomBtn{
+.addSymptomBtn {
 	position: relative;
-    right: 43px;
+	right: 43px;
 }
 
 .getSymptoms {
@@ -3156,7 +3156,7 @@ a.social_bt {
 	height: 75%;
 	width: 75%;
 }
-.doctorPic{
+.doctorPic {
 	height: 200px;
 }
 .patientData {
@@ -3185,24 +3185,24 @@ a.social_bt {
 .profile ul.contacts li {
 	margin-bottom: 15px;
 }
-.whiteCard{
+.whiteCard {
 	background-color: white;
 	margin: 20px;
-    margin-right: 25px;
-    margin-left: 55px;
+	margin-right: 25px;
+	margin-left: 55px;
 	border-radius: 5px;
 }
-.cardListScroll{
+.cardListScroll {
 	height: 200px;
 	overflow: auto;
 }
-.Nav-active{
-	background-color:#e1e9fa;
-	color:white;
-    position: relative;
-    top: 4px;
-    left: 7px;
-    border-radius: 5px;
+.Nav-active {
+	background-color: #e1e9fa;
+	color: white;
+	position: relative;
+	top: 4px;
+	left: 7px;
+	border-radius: 5px;
 }
 .profile ul.contacts li h6 {
 	font-size: 14px;
@@ -4023,7 +4023,7 @@ ul.treatments.checkout li strong {
 .cards {
 	margin-top: 28px;
 }
-.margin-top{
+.margin-top {
 	margin-top: 8px;
 }
 .appLogo {
@@ -4031,11 +4031,11 @@ ul.treatments.checkout li strong {
 	width: 140px;
 	/* z-index: 1; */
 }
-.radioButton{
+.radioButton {
 	font-size: 0.875rem;
-    min-height: 40px;
+	min-height: 40px;
 }
-.radio_button{
+.radio_button {
 	accent-color: #1a3c8b;
 	color: white;
 	margin: 10px;
@@ -4552,7 +4552,6 @@ input[type="file"]::-webkit-file-upload-button {
 .validation {
 	color: red;
 	float: right;
-
 }
 .drValidation {
 	color: red;
@@ -4872,13 +4871,20 @@ a.box_feat_about h3 {
 }
 .timeSlot {
 	position: relative;
-	left:90px
+	left: 90px;
 }
 
 .timeS {
 	margin-left: 85px;
 }
-
+.dependent {
+    background-color: #1a3c8b;
+    color: white;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 4px;
+    font-weight: 700;
+}
 .time {
 	font-weight: 600;
 }
@@ -4890,8 +4896,6 @@ a.box_feat_about h3 {
 	border: 1px solid #ddddf7;
 	margin-bottom: 30px;
 }
-
- 
 
 #ck-button {
 	margin: 4px;
@@ -4922,7 +4926,7 @@ a.box_feat_about h3 {
 	top: -135px;
 }
 
-.cardListScroll{
+.cardListScroll {
 	height: 200px;
 	overflow: auto;
 }
@@ -4966,7 +4970,7 @@ a.box_feat_about h3 {
 	height: 60px;
 	width: 60px;
 }
-.borderRadius{
+.borderRadius {
 	border-radius: 5px;
 }
 .clinicLocation {
@@ -5540,12 +5544,12 @@ ul.bullets li:before {
 }
 
 .page-item.active .page-link {
-	background-color:#1a3c8b;
-	border-color:#1a3c8b;
+	background-color: #1a3c8b;
+	border-color: #1a3c8b;
 }
 .page-item.active {
 	background-color: #1a3c8b;
-	border-color:#1a3c8b;
+	border-color: #1a3c8b;
 }
 .page-item.disabled .page-link {
 	color: #999;

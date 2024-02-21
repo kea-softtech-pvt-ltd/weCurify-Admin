@@ -29,7 +29,6 @@ export default function DoctorProfile() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>General info</li>
-                  
                     <li>
                         <Link
                             to={`/editdoctorprofile/${doctorId}`}>

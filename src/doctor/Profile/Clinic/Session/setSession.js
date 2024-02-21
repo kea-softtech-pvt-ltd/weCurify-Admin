@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { updateSession } from '../../../../recoil/atom/setUpdateSession'
 import SetUpdateTime from "./setUpdateTime";
-import { Icon } from '@material-ui/core';
+import { Icon } from '@mui/material';
 import SessionApi from '../../../../services/SessionApi';
 import moment from 'moment';
 function SetSession(props) {

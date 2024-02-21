@@ -50,6 +50,14 @@ export default function Cancelled(props) {
                                                 </span>
                                             </span>
                                         </span>
+                                        {!details.dependentId ?
+                                            <div align='left' className='ml-3 '>
+                                                <span className='patientName'>Patient:  </span> {details['patientDetails'][0].name}
+                                            </div>
+                                            :
+                                            <div align='left' className='ml-3 fontSize'>
+                                                <span className='patientName'>Patient:  </span>  {details['dependentDetails'][0].name}
+                                            </div>}
                                     </div>
                                 </div>
 

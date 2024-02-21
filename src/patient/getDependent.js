@@ -36,9 +36,9 @@ export default function GetDependent(props) {
                                     </div>
                                 </div>
                                 <div className="patientDataStyle">
-                                    {fetchPatientData.map((item) => {
+                                    {fetchPatientData.map((item,i) => {
                                         return (
-                                            <div className="row">
+                                            <div key={i} className="row">
                                                 <div className='col-md-7'>
                                                     {item.name}
                                                 </div>

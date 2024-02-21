@@ -1,6 +1,6 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import GetSymptomsData from './GetSymptomsData'
 import ReportApi from '../../../services/ReportApi';

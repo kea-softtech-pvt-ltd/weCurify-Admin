@@ -61,7 +61,8 @@
 
 // export default User;
 import React from 'react';
-import { Card, makeStyles } from '@material-ui/core';
+import { Card } from '@mui/material';
+import {  makeStyles } from '@mui/styles';
 
 export default function CarouselSlide(props) {
     const { backgroundColor, title } = props.content;
@@ -76,7 +77,7 @@ export default function CarouselSlide(props) {
             boxShadow: '20px 20px 20px black',
             display: 'flex',
             justifyContent: 'center',
-        } 
+        }
     }));
 
     const classes = useStyles();

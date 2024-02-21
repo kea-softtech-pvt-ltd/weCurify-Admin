@@ -1,8 +1,8 @@
 import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import { TimePicker, MuiPickersUtilsProvider } from '@mui/x-date-pickers';
+import { TimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useRecoilState } from 'recoil';
 import { updateSession } from "../../../../recoil/atom/setUpdateSession";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
@@ -139,35 +139,35 @@ function SetUpdateTime(props) {
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="form-group">
-                            {/* <div className="k-widget k-timepicker">
+                            <div className="k-widget k-timepicker">
                                 <label><b>From Time</b></label>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <TimePicker
                                         renderInput={(props) => <TextField {...props} />}
-                                        value={fromTime}
+                                        value={moment(sessionTime.fromTime).format("HH:mm")}
                                         name="fromTime"
                                         ampm={false}
                                         minutesStep={5}
                                         onChange={handleFromTimeSelection}
                                     />
-                                </MuiPickersUtilsProvider>
-                            </div> */}
+                                </LocalizationProvider>
+                            </div>
                         </div>
                     </div>
 
                     <div className="col-lg-6">
                         <div className="form-group">
                             <label><b>To Time</b></label>
-                            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={toTime}
+                                    value={moment(sessionTime.toTime).format("HH:mm")}
                                     ampm={false}
                                     name="toTime"
                                     minutesStep={5}
                                     onChange={handleToTimeSelection}
                                 />
-                            </MuiPickersUtilsProvider> */}
+                            </LocalizationProvider>
                             {error && (<span className="validation"> {error} </span>)}
                         </div>
                     </div>

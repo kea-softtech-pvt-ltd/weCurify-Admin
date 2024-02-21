@@ -93,12 +93,15 @@ export default function PatientsClinicHistory(props) {
                                     </div>
                                     : <div className="col-md-4 ">
                                         <div className="cardDiv">
-                                            <span className='cardSpan'>
-                                                <i className='icon-user color patientListIcon' />
-                                                <span className=' patientName'>
-                                                    {details['dependentDetails'][0].name}
-                                                </span>
-                                            </span>
+                                            <div className='cardSpan row'>
+                                                <div align='left' className='col-md-9' >
+                                                    <i className=' icon-user color patientListIcon' />
+                                                    <span className=' patientName'>{details['dependentDetails'][0].name}</span>
+                                                </div>
+                                                <div className='col-md-3'>
+                                                    <span className='dependent'>Dependent</span>
+                                                </div>
+                                            </div>
                                             <span className='cardSpan'>
                                                 <i className='icon-mobile-1 color patientListIcon' />
                                                 {details['patientDetails'][0].mobile}

@@ -24,7 +24,6 @@ export default function AllPatients() {
     const getPatientList = () => {
         getAllPatient(currentPage, pageSize)
             .then((res) => {
-                console.log('==========================',res.patientList)
                 setFilterData(res.patientList)
                 setPatientData(res.patientList)
                 setTotalPages(res.totalPages)

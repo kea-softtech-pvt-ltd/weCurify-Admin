@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 import {
     TableContainer,
     Table,
@@ -7,7 +7,7 @@ import {
     TableRow,
     TableCell,
     TableBody,
-} from '@material-ui/core';
+} from '@mui/material';
 import ReportApi from '../../../services/ReportApi';
 
 const GetMedicinePriscription = (props) => {

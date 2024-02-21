@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import GetLabPrescription from './getLabPrescription';
 import ReportApi from '../../../services/ReportApi';
 import "react-toastify/dist/ReactToastify.css"

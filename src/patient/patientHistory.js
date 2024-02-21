@@ -23,7 +23,7 @@ export default function PatientHistory() {
         patientData()
     }, [])
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (event,newValue) => {
         setValue(newValue);
     };
     const patientData = () => {

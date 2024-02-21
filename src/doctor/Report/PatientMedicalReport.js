@@ -1,9 +1,9 @@
 import React from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import PatientPersonalInfo from './partial/PatientPersonalInfo';

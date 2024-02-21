@@ -2,7 +2,7 @@ import React from 'react';
 import { FetchEducation } from "./Partial/fetchEducation";
 import { AddDoctorEducation } from "./Partial/addDoctorEducation";
 import { useState } from "react";
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
 function DoctorEducation(props) {
