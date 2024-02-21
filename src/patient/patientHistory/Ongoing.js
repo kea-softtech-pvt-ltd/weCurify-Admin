@@ -34,7 +34,6 @@ export default function Ongoing(props) {
     function getPatientDetails(currentPage) {
         getpaymentData({ patientId }, currentPage, pageSize)
             .then((result) => {
-                console.log(result, '--------------')
                 const totalPages = result.totalOngoingPages;
                 setTotalPages(totalPages)
                 setPatientList(result.ongoing)
