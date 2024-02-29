@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { setDependentId } from "../recoil/atom/setDependentId";
+import moment from "moment";
+
 const ShowInClinicAppointSlots = (props) => {
     const { sessionSlot, selectedDate, session, slotDate } = props;
     const [ patientId, setPatientsId] = useRecoilState(setNewPatientId)
@@ -20,7 +22,7 @@ const ShowInClinicAppointSlots = (props) => {
 
     useEffect(() => {
         availableSlots()
-    }, [])
+    }, [props])
     
     const handleShow = (item) => {
         setShow(true)
@@ -28,6 +30,13 @@ const ShowInClinicAppointSlots = (props) => {
     }
     const handleClose = () => {
         setShow(false)
+    }
+
+    const checkSlotAvailability = (slot) => {
+        const currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm")
+        const slotDateTime = moment(new Date(selectedDate)).format("YYYY-MM-DD") + " " + slot.time
+        const returnData = currentDate > slotDateTime || bookingSlots.some(func => (func.slotId === slot._id && func.status !== "Cancelled")  )
+        return returnData
     }
 
     const handleSelectedSlot = (item) => {
@@ -82,8 +91,7 @@ const ShowInClinicAppointSlots = (props) => {
                         {sessionSlot.map((item, index) => (
                             <>
                                 <div key={index}>
-                                    {bookingSlots.some(func =>
-                                        func.slotId === item._id && func.status !== "Cancelled")
+                                    {checkSlotAvailability(item)
                                         ?
                                         <div>
                                             <div
