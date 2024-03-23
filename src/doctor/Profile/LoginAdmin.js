@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
@@ -9,7 +9,7 @@ import { setloggedIn} from '../../recoil/atom/setloggedIn';
 export default function LoginAdmin() {
     const [loginData, setLoginData] = useState("");
     const [loggedIn, setLoggedIn] = useRecoilState(setloggedIn)
-    const history = useHistory()
+    const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -31,7 +31,7 @@ export default function LoginAdmin() {
                     setIsError("Please Enter Valid Username And Password")
                 }
                 else {
-                    history.push(`/doctorlist`)
+                    navigate(`/doctors`)
                 }
             })
     }

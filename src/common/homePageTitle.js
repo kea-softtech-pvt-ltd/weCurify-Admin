@@ -1,20 +1,20 @@
 import { API } from "../config";
 import React, { useState ,useEffect } from "react";
 //import LinearProgress from "@material-ui/core/LinearProgress";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import FilterResults  from 'react-filter-search';
 
 function HomePageTitle(){
     //const [loading, setLoading] = useState(false);
 	const [value ,setValue ] = useState({});
-    let history = useHistory();
+    let navigate = useNavigate();
     const handleButtonClick = () => {
 		// if (!loading) {
 		//   setLoading(true);
 		//   timer.current = window.setTimeout(() => {
 		// 	setLoading(false);
-			//history.push(`/doctorlist`);
+			//navigate(`/doctors`);
 		  //}, 2000);
 	//	}
 	};

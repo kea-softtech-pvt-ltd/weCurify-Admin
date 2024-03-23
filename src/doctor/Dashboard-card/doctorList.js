@@ -2,24 +2,24 @@ import React, { useEffect } from "react";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AuthApi from "../../services/AuthApi";
 import { useState } from "react";
 import { Icon } from "@mui/material";
 import UpgradeSubscription from "./partial/upgradeSubscription";
 import ReactPaginate from "react-paginate";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 export default function DoctorList() {
-    const [doctorData, setDoctorData] = useState([])
-    const [filterData, setFilterData] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
+    const [doctorData, setDoctorData] = useState([]);
+    const [filterData, setFilterData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const { getdoctors } = AuthApi()
-    const history = useHistory()
+    const { getdoctors } = AuthApi();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getDoctorList(currentPage)
-    }, [currentPage])
+    }, [currentPage]);
 
     const pageSize = 6;
     const getDoctorList = () => {
@@ -34,35 +34,29 @@ export default function DoctorList() {
         const res = filterData.filter(name => name.name.toLowerCase().includes(value.toLowerCase()))
         setDoctorData(res)
     }
-    const handleShowProfile = (details) => {
-        // if(details.isSubscribed ===  false){
-        //     history.push(`/subscriptionnewdr/${details._id}`);
-        // }else{
-        //     history.push(`/doctorProfile/${details._id}`)
-        // }
-        history.push(`/doctorProfile/${details._id}`)
 
+    const handleShowProfile = (details, e) => {
+        e.preventDefault();
+        navigate(`profile/${details._id}`)
     }
 
-    const BookAppointments = (details) => {
+    const BookAppointments = (details, e) => {
+        e.preventDefault();
         if (details.isSubscribed === false) {
-            history.push(`/subscriptionnewdr/${details._id}`);
+            navigate(`/subscriptions/${details._id}`);
         } else {
-            history.push(`/loginpatient/${details._id}`)
+            navigate(`patient/${details._id}`)
         }
     }
 
-    const ViewAppointments = (details) => {
-        // if(details.isSubscribed ===  false){
-        //     history.push(`/subscriptionnewdr/${details._id}`);
-        // }else{
-        //     history.push(`/patientappointment/${details._id}`)
-        // }
-        history.push(`/patientappointment/${details._id}`)
+    const ViewAppointments = (details, e) => {
+        e.preventDefault();
+        navigate(`appointment/${details._id}`)
     }
     const handlePageClick = (data) => {
         setCurrentPage(data.selected + 1)
     }
+
     return (
         <Wrapper>
             <MainNav>
@@ -74,9 +68,9 @@ export default function DoctorList() {
                             <input type="submit" className="btn_search" value="Search" />
                         </div>
                         <div className="mx-2 mt-2">
-                            <Link to={`/addnewdoctor`}>
+                            <NavLink to={`/doctors/addnewdoctor`} >
                                 <Icon className="addiconbutton" style={{ fontSize: 50 }}>add</Icon>
-                            </Link>
+                            </NavLink>
                         </div>
                     </div>
                 </ul>
@@ -92,9 +86,9 @@ export default function DoctorList() {
                                         <span className='cardSpan row'>
                                             <i className='icon-user col-md-1 color patientListIcon' />
                                             <span align='left' className='patientName col-md-9'>
-                                                <Link to="#" className='underLine' onClick={() => handleShowProfile(details)}>
+                                                <NavLink to="#" className='underLine' onClick={(e) => handleShowProfile(details, e)}>
                                                     Dr.{details.name}
-                                                </Link>
+                                                </NavLink>
                                             </span>
                                         </span>
                                         <span className='cardSpan'>
@@ -111,12 +105,12 @@ export default function DoctorList() {
                                         </span>
                                         <UpgradeSubscription doctorId={details._id} />
                                         <div className='cardSpan appointmentBtn'>
-                                            <Link onClick={() => BookAppointments(details)}>
-                                                <button className='btn appColor helperBtn'>Book Appoinment</button>
-                                            </Link>
-                                            <Link onClick={() => ViewAppointments(details)}>
-                                                <button className='btn appColor helperBtn'>View Appoinments</button>
-                                            </Link>
+                                            <NavLink onClick={(e) => BookAppointments(details, e)}>
+                                                <button className='btn appColor helperBtn'>Book Appointment</button>
+                                            </NavLink>
+                                            <NavLink onClick={(e) => ViewAppointments(details, e)}>
+                                                <button className='btn appColor helperBtn'>View Appointments</button>
+                                            </NavLink>
                                         </div>
                                     </div>
                                 </div>
@@ -147,6 +141,7 @@ export default function DoctorList() {
                         : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>
+            <Outlet />
         </Wrapper >
     )
 

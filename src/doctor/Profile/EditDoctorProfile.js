@@ -7,14 +7,14 @@ import { DoctorEducation } from "./Education/doctorEducation";
 import { DoctorPersonalInformation } from "./Personal/DoctorPersonalInformation";
 import { MainNav } from '../../mainComponent/mainNav';
 import { MainTabs } from '../../mainComponent/mainTabs';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import AuthApi from '../../services/AuthApi';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 export default function EditDoctorProfile() {
     const { getDrInfo } = AuthApi()
     const { doctorId } = useParams();
@@ -22,7 +22,8 @@ export default function EditDoctorProfile() {
     //for using tab
     const [tabValue, setTabValue] = useState(0);
     const [DoctorName, setDoctorsName] = useState([])
-    const history = useHistory()
+    const navigate = useNavigate();
+
     useEffect(() => {
         doctorInfo()
     }, [])
@@ -48,14 +49,14 @@ export default function EditDoctorProfile() {
     }
 
     const DoneClick = () => {
-        history.push(`/doctorlist`)
+        navigate(`/doctors`)
     }
     return (
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/doctorprofile/${doctorId}`}>
+                        <Link to={`/doctors/profile/${doctorId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                         <span to="#section_1" className="active ml-3">
@@ -74,7 +75,7 @@ export default function EditDoctorProfile() {
                 <div className="white-box">
                     <div align='right'>
                         {/* <Button className='appColor '  >
-                            <Link className='appColor  ' to={`/doctorlist`}>
+                            <Link className='appColor  ' to={`/doctors`}>
                                 Done
                             </Link>
                         </Button> */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../../mainComponent/mainInput';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
-import { useHistory } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import HelperApi from '../../../services/HelperApi';
 
 export default function AddHelper(props) {
@@ -11,7 +11,7 @@ export default function AddHelper(props) {
     const [checked, setChecked] = useState([]);
     const [loginData, setLoginData] = useState([]);
 
-    const history = useHistory()
+    const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -61,7 +61,7 @@ export default function AddHelper(props) {
 
         createHelper(bodyData)
             .then((res) => {
-                history.push(`/dashboard/${props.doctorId}`)
+                navigate(`/dashboard/${props.doctorId}`)
             })
     }
     return (

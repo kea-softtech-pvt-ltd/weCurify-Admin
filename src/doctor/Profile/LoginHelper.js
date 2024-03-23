@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
-import AuthApi from "../../services/AuthApi";
-import { useHistory } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import HelperApi from "../../services/HelperApi";
@@ -11,7 +10,7 @@ export default function LoginDoctor() {
     const [loginData, setLoginData] = useState({});
     const [isError, setIsError] = useState(false);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const history = useHistory()
+    const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -30,7 +29,7 @@ export default function LoginDoctor() {
                     setIsError("Please Enter Valid Username And Password")
                 }
                 else {
-                    history.push(`/dashboard/${res.doctorId}`)
+                    navigate(`/dashboard/${res.doctorId}`)
                 }
             })
     }

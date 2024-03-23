@@ -6,7 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useHistory } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { makeStyles } from '@mui/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
@@ -27,9 +27,9 @@ export default function MedicineHistory(props) {
     }));
     const classes = useStyles();
     //for history button
-    let history = useHistory();
+    let navigate = useNavigate();
     function handleClick() {
-        history.push("/MedicineHistory");
+        navigate("/MedicineHistory");
     }
     
     return (

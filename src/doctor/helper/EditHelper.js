@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../mainComponent/mainInput';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
-import AuthApi from '../../services/AuthApi';
 import { MainNav } from '../../mainComponent/mainNav';
-import { Link } from 'react-router-dom';
-import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import HelperApi from '../../services/HelperApi';
@@ -16,7 +14,7 @@ export default function EditHelper() {
     const { helperId } = useParams();
     const [getHelperData, setGetHelperData] = useState([]);
     const [doctorId, setDoctorId] = useState('')
-    const history = useHistory()
+    const navigate = useNavigate()
     const handleChange = (e) => {
         const { name, value } = e.target;
         setGetHelperData({ ...getHelperData, [name]: value });
@@ -79,7 +77,7 @@ export default function EditHelper() {
         }
         updateHelperData(helperId, bodyData)
             .then((res) => {
-                history.push(`/helper/${getHelperData.doctorId}`)
+                navigate(`/helper/${getHelperData.doctorId}`)
             })
     }
     return (

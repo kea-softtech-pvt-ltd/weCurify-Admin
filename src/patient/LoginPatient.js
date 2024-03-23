@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PatientLoginForm } from "../patient/patientLoginForm";
 import { Wrapper } from "../mainComponent/Wrapper";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom";
 import { MainNav } from "../mainComponent/mainNav";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import AuthApi from "../services/AuthApi";
@@ -29,7 +29,7 @@ export default function LoginPatient() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/doctorList`}>
+                        <Link to={`/doctors`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>

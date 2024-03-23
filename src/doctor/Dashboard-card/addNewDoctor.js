@@ -6,6 +6,7 @@ import AuthApi from "../../services/AuthApi";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
+import { Link, Outlet } from "react-router-dom";
 
 export default function AddNewDoctor() {
     //for show otp input
@@ -36,6 +37,11 @@ export default function AddNewDoctor() {
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
+                    <li>
+                        <Link to={`/doctors`}>
+                            <i className="arrow_back backArrow" title="back button"></i>
+                        </Link>
+                    </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Add-Doctor</li>
                 </ul>
             </MainNav>
@@ -69,7 +75,10 @@ export default function AddNewDoctor() {
 
                                             </div>
                                             {showOTP === true ?
-                                                <ShowLoginOtp loginData={loginData} />
+                                                <>
+                                                    <ShowLoginOtp loginData={loginData} />
+                                                    <Outlet />
+                                                </>
                                                 : null}
                                         </div>
                                     </div>

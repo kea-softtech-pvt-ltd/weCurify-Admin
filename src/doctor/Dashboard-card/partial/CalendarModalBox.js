@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import AuthApi from "../../../services/AuthApi";
 import PatientProfile from "../../../img/profile.png"
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ReportApi from "../../../services/ReportApi";
+import { Link,useNavigate } from "react-router-dom";
 function CalendarModalBox(props) {
     const { patientId, doctorId, patientList } = props;
     const [patientDetails, setPatientDetails] = useState([]);
     const { patientDetailsData } = AuthApi()
     const { MedicineReportData } = ReportApi()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getPatientInfoById();
@@ -24,7 +24,7 @@ function CalendarModalBox(props) {
         }
         MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/consultation/${res._id}`, { data: { fees: patientList.fees } })
+                navigate(`consultation/${res._id}`, { data: { fees: patientList.fees } })
             })
     }
 

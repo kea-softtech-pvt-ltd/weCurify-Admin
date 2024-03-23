@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import moment from 'moment';
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
@@ -9,17 +9,18 @@ import ReportApi from '../../services/ReportApi';
 import AppointmentApi from '../../services/AppointmentApi';
 import ReactPaginate from 'react-paginate';
 
-
 export default function PatientList(props) {
     const { doctorId } = props
-    let history = useHistory();
+    let navigate = useNavigate();
     const [patientList, setPatientList] = useState(null);
     const [showCancel, setCancelDelete] = useState(false);
     const [id, setId] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { MedicineReportData, } = ReportApi()
-    const { getPatientListDetails, cancelPatientAppointment, updateIncompleteStatus } = AppointmentApi()
+    const { getPatientListDetails,
+        cancelPatientAppointment,
+        updateIncompleteStatus } = AppointmentApi()
 
     useEffect(() => {
         getPatientDetails(currentPage);
@@ -32,7 +33,8 @@ export default function PatientList(props) {
 
     const handleCancelClose = () => setCancelDelete(false)
 
-    function saveData(item) {
+    function saveData(item, e) {
+        e.preventDefault();
         const bodyData = {
             "doctorId": doctorId,
             "patientId": item.patientId,
@@ -43,7 +45,8 @@ export default function PatientList(props) {
         }
         MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
+                navigate(`consultation/${res._id}`, { state: { fees: item.fees } })
+                console.log({ state: { fees: item.fees } })
             })
     }
 
@@ -55,7 +58,9 @@ export default function PatientList(props) {
                 setPatientList(result.ongoing)
                 result.test.filter((data) => {
                     const patientAppointmentId = data._id;
-                    if (moment(data.selectedDate).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD ") && data.status !== "Completed" && data.status !== "Cancelled") {
+                    const currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm")
+                    const selectedDate = moment(data.selectedDate).format("YYYY-MM-DD") + " " + data.slotTime
+                    if (selectedDate < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
                         const bodyData = {
                             'status': "Incomplete"
                         }
@@ -77,7 +82,7 @@ export default function PatientList(props) {
         setCurrentPage(data.selected + 1);
     }
     const handleShowProfile = (patientId) => {
-        history.push(`/patientProfile/${patientId}`)
+        navigate(`patientinfo/${patientId}`)
     }
     return (
         <>
@@ -92,9 +97,9 @@ export default function PatientList(props) {
                                             <span className='cardSpan'>
                                                 <i className='icon-user color patientListIcon' />
                                                 <span className='patientName '>
-                                                    <Link to="#" className='underLine' onClick={() => handleShowProfile(details.patientId)}>
+                                                    <NavLink to="#" className='underLine' onClick={() => handleShowProfile(details.patientId)}>
                                                         {details['patientDetails'][0].name}
-                                                    </Link>
+                                                    </NavLink>
                                                 </span>
                                             </span>
                                             <span className='cardSpan'>
@@ -118,12 +123,12 @@ export default function PatientList(props) {
                                             </span>
 
                                             <div className='cardSpan appointmentBtn'>
-                                                <Link to="#" onClick={() => saveData(details)}>
+                                                <NavLink to="#" onClick={(e) => saveData(details, e)}>
                                                     <button className="btn appColor helperBtn ">Start Consultation</button>
-                                                </Link>
-                                                <Link onClick={() => handleCancelShow(details)} >
+                                                </NavLink>
+                                                <NavLink onClick={() => handleCancelShow(details)} >
                                                     <button className='btn btn-default helperBtn'>Cancel</button>
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
                                         </div>
@@ -158,12 +163,12 @@ export default function PatientList(props) {
                                             </span>
 
                                             <div className='cardSpan appointmentBtn'>
-                                                <Link to="#" onClick={() => saveData(details)}>
+                                                <NavLink to="#" onClick={(e) => saveData(details, e)}>
                                                     <button className="btn appColor helperBtn">Start Consultation</button>
-                                                </Link>
-                                                <Link onClick={() => handleCancelShow(details)} >
+                                                </NavLink>
+                                                <NavLink onClick={() => handleCancelShow(details)} >
                                                     <button className='btn btn-default helperBtn ' >Cancel</button>
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
                                         </div>

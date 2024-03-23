@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import PatientApi from "../services/PatientApi";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 function FetchPatientInfo(props) {
     const { patientId, doctorId } = props;
     const [fetchPatientData, setFetchPatientData] = useState([])
     const { fetchPatient } = PatientApi()
+    
     useEffect(() => {
         getAllPatientData()
     }, [])
@@ -43,7 +44,7 @@ function FetchPatientInfo(props) {
                 </div>
                 <div align='right'>
                     <div className="radius appColor buttonPatient" align='center'>
-                        <Link to={`/appointmentbookingsection/${patientId}`} className="btn">
+                        <Link to={"booking"} className="btn">
                             <span className=" appColor">Book Appointment</span>
                         </Link>
                     </div>

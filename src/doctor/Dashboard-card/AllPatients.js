@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 import ReactPaginate from "react-paginate";
 import { Group } from "@material-ui/icons";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function AllPatients() {
     const [patientData, setPatientData] = useState([])
@@ -14,7 +14,7 @@ export default function AllPatients() {
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
     const { getAllPatient } = PatientApi()
-    const history = useHistory()
+    const navigate = useNavigate();
 
     useEffect(() => {
         getPatientList(currentPage)
@@ -35,8 +35,9 @@ export default function AllPatients() {
         setPatientData(res)
     }
 
-    const handleShowProfile = (details) => {
-        history.push(`/patientprofile/${details._id}`)
+    const handleShowProfile = (details, e) => {
+        e.preventDefault();
+        navigate(`patientinfo/${details}`)
     }
 
     const handlePageClick = (data) => {
@@ -79,15 +80,15 @@ export default function AllPatients() {
                                             </span>
 
                                             <div className='cardSpan appointmentBtn'>
-                                                <Link to="#" onClick={() => handleShowProfile(details)}>
+                                                <Link to='#' onClick={(e) => handleShowProfile(details._id, e)}>
                                                     <button className="btn appColor helperBtn ">View Profile</button>
                                                 </Link>
-                                                <Link to={`/patienthistory/${details._id}`} >
-                                                    <button className='btn appColor helperBtn'>Appoinment Details</button>
+                                                <Link to={`patientappointment/${details._id}`} >
+                                                    <button className='btn appColor helperBtn'>Appointment Details</button>
                                                 </Link>
                                                 {details['dependent'].length > 0 ?
                                                     <Link
-                                                        to={`/dependentdata/${details._id}`}>
+                                                        to={`dependentdata/${details._id}`}>
                                                         <Group style={{ fontSize: 40 }} />
                                                     </Link>
                                                     : null}
@@ -122,6 +123,7 @@ export default function AllPatients() {
                         : <div className="clinicHistory" ><b>Data is Not Available</b></div>}
                 </div >
             </div>
+            <Outlet/>
         </Wrapper>
     )
 

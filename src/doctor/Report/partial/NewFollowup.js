@@ -19,7 +19,7 @@ export default function NewFollowup(props) {
     const onSubmit = () => {
         handleClose();
     };
-    // const history = useHistory()
+   
     const addDatePicker = (date) => {
         setDate(date)
     }

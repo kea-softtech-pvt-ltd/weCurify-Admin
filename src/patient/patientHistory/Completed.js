@@ -7,11 +7,14 @@ import PatientApi from '../../services/PatientApi';
 import GetDoctorData from './getDoctorData';
 import AppointmentApi from '../../services/AppointmentApi';
 import ReactPaginate from 'react-paginate';
+import { useRecoilState } from 'recoil';
+import { setDoctorId } from '../../recoil/atom/setDoctorId';
 
 export default function Completed(props) {
     const { patientId } = props
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [totalPages, setTotalPages] = useState(0);
     const { downloadPrescription } = AppointmentApi()
     const { getpaymentData } = PatientApi()
@@ -67,15 +70,15 @@ export default function Completed(props) {
                                             </span>
                                         </span>
                                         {!details.dependentId ?
-                                        <div align='left' className='ml-3 '>
-                                           <span className='patientName'>Patient:  </span> {details['patientDetails'][0].name}
-                                        </div>
-                                        :
-                                        <div align='left' className='ml-3 fontSize'>
-                                             <span className='patientName'>Patient:  </span>  {details['dependentDetails'][0].name}
-                                        </div>}
+                                            <div align='left' className='ml-3 '>
+                                                <span className='patientName'>Patient:  </span> {details['patientDetails'][0].name}
+                                            </div>
+                                            :
+                                            <div align='left' className='ml-3 fontSize'>
+                                                <span className='patientName'>Patient:  </span>  {details['dependentDetails'][0].name}
+                                            </div>}
                                         <div className='cardSpan appointmentBtn historyBtn'>
-                                            <Link to={`/patient-history/${details.medicalReportId}`}>
+                                            <Link to={`/doctors/appointment/${doctorId}/report/${details.medicalReportId}`}>
                                                 <Button className="appColor helperBtn" > View</Button>
                                             </Link>
                                             <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>

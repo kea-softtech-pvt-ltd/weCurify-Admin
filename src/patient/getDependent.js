@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import PatientApi from '../services/PatientApi';
 import { useRecoilState } from 'recoil';
 import { setDependentId } from '../recoil/atom/setDependentId';
+import { Link, useNavigate } from 'react-router-dom';
+
 export default function GetDependent(props) {
     const { patientId } = props;
     const [fetchPatientData, setFetchPatientData] = useState([])
     const [dependentId, setDependentsId] = useRecoilState(setDependentId)
     const { patientDetailsData } = PatientApi()
-    const history = useHistory()
+    const navigate = useNavigate()
+
     useEffect(() => {
         getAllPatientData()
     }, [])
@@ -19,8 +21,9 @@ export default function GetDependent(props) {
                 setFetchPatientData(response[0].dependent)
             })
     }
-    const handleClick = (item) => {
-        history.push(`/appointmentbookingsection/${item._id}`)
+    const handleClick = (item,e) => {
+        e.preventDefault();
+        navigate("booking")
         setDependentsId(item._id)
     }
     return (
@@ -36,14 +39,14 @@ export default function GetDependent(props) {
                                     </div>
                                 </div>
                                 <div className="patientDataStyle">
-                                    {fetchPatientData.map((item,i) => {
+                                    {fetchPatientData.map((item, i) => {
                                         return (
                                             <div key={i} className="row">
                                                 <div className='col-md-7'>
                                                     {item.name}
                                                 </div>
                                                 <div className='col-md-5' align='right'>
-                                                    <Link onClick={() => handleClick(item)} className="btn">
+                                                    <Link onClick={(e) => handleClick(item,e)} className="btn">
                                                         <i className="arrow_carrot-right_alt" style={{ fontSize: 20 }}></i>
                                                     </Link>
                                                 </div>

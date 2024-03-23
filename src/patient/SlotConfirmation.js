@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";
 import AuthApi from "../services/AuthApi";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { setNewPatientId } from "../recoil/atom/setNewPatientId";
@@ -21,6 +20,7 @@ export default function SlotConfirmation() {
     const { getappointment } = AppointmentApi()
     const { getDrInfo } = AuthApi()
     const { fetchPatient } = PatientApi()
+    
     useEffect(() => {
         doctorInfo()
         patientInfo()
@@ -51,18 +51,17 @@ export default function SlotConfirmation() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/allpatient`}>
+                        <Link to={`/doctors/patient/${doctorId}/patientprofile/${patientId}/booking`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Booking Confirmation</li>
                     <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {doctorData.name}</li>
-
                 </ul>
             </MainNav>
             <div className='row'>
                 <UserLinks />
-                <div className="container margin_60">
+                <div className="container common_box margin_60">
                     <div className=" patientFetch">
                         <div className="box_general_3">
                             <h1 className='color'>Thank You For Book Your Appoinment</h1>
@@ -72,7 +71,7 @@ export default function SlotConfirmation() {
                                 Dr. {doctorData.name}
                                 <div> On {AppoinmentData.date} At {AppoinmentData.slotTime}</div>
                             </div>
-                            <Link  to={`/doctorList`}>
+                            <Link to={`/doctors/appointment/${doctorId}`}>
                                 <button align='right' className='btn appColor helperBtn'>Done</button>
                             </Link>
                         </div>

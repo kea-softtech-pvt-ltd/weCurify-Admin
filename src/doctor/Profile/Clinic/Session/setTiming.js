@@ -121,7 +121,6 @@ function SetTiming(props) {
                         <option value={30}> 30 min</option>
                     </MainSelect>
                 </div>
-
                 <div className="col-lg-6">
                     <label><b>Clinic Fees</b></label>
                     <MainInput
@@ -143,7 +142,7 @@ function SetTiming(props) {
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={moment(sessionTime.fromTime).format("HH:mm")}
+                                    value={sessionTime.fromTime}
                                     name="fromTime"
                                     ampm={false}
                                     minutesStep={5}

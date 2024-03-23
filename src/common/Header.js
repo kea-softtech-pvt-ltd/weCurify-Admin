@@ -20,7 +20,7 @@ export default function Header() {
                 <div className="row">
                     <div className="col-lg-3 col-6">
                         <div id="logo_home" align='left'>
-                            <Link to={`/doctorList`}>
+                            <Link to={`/doctors`}>
                                 <img className='appLogo' src={appLogo} alt="Something Went Wrong" />
                             </Link>
                         </div>

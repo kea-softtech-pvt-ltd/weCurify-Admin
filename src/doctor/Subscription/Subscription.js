@@ -100,7 +100,7 @@ export default function Subscription() {
             </MainNav>
             <div className='row'>
                 <UserLinks />
-                <div className='white-box'>
+                <div className='common_box '>
                     <TableContainer component={Paper} className=''>
                         <Table className={classes.table} size="large" aria-label="a dense table">
                             <TableHead>
@@ -134,7 +134,6 @@ export default function Subscription() {
                                                         />
                                                     </Modal.Body>
                                                 </Modal>
-
                                                 <TableRow className="rowHieght">
                                                     <TableCell align="left">
                                                         {item.name}
@@ -208,7 +207,6 @@ export default function Subscription() {
                 <Modal.Body>
                     <SubscriptionModal onClick={handleSubClose} />
                 </Modal.Body>
-
             </Modal>
 
             <Modal show={feature} onHide={handleFeatureClose}>

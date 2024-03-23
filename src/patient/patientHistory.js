@@ -18,7 +18,6 @@ export default function PatientHistory() {
     const [value, setValue] = useState(0);
     const [patientName, setPatientName] = useState([]);
 
-
     useEffect(() => {
         patientData()
     }, [])
@@ -26,6 +25,7 @@ export default function PatientHistory() {
     const handleChange = (event,newValue) => {
         setValue(newValue);
     };
+    
     const patientData = () => {
         fetchPatient({ patientId })
             .then((res) => {

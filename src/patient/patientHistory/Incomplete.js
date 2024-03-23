@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import moment from "moment";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import PatientApi from "../../services/PatientApi";
 import GetDoctorData from "./getDoctorData";
 import ReactPaginate from "react-paginate";

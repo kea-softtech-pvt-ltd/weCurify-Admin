@@ -64,7 +64,7 @@ export default function PatientProfile() {
             helperId={helpersData._id}
             accessModule={helpersData.access_module}
           />
-          <div className="col-lg-10">
+          <div className="col-lg-10 common_box">
             <div className="white-box">
               <MainTabs
                 value={value}

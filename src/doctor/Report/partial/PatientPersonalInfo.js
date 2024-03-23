@@ -23,20 +23,6 @@ export default function PatientPersonalInfo(props) {
         setChangeData({ ...changeData, [name]: value })
     }
 
-    // const changeD = useRef('');
-    // const clearData = () => {
-    //     setChangeData({
-    //         age: "",
-    //         weight: "",
-    //         height: "",
-    //         BMI: "",
-    //         temp: "",
-    //         bp: "",
-    //         pulse: "",
-    //         problem: ""
-    //     })
-
-    // }
     const saveData = (e) => {
         e.preventDefault();
         const bodyData = {
@@ -51,11 +37,8 @@ export default function PatientPersonalInfo(props) {
         }
         insertPatientVitalSignsData({ reportId }, bodyData)
             .then((res) => {
-                //     setSavingData(res)
-                //     // setPatientId(res.patientId)
             })
         toast.success("Saved Successfully!")
-        // clearData()
 
     }
 

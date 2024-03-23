@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
@@ -82,9 +82,9 @@ export default function PatientsClinicHistory(props) {
                                             </span>
 
                                             <div className='cardSpan appointmentBtn historyBtn'>
-                                                <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                <NavLink to={`report/${details.medicalReportId}`}>
                                                     <Button className="appColor helperBtn" > View</Button>
-                                                </Link>
+                                                </NavLink>
                                                 <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
                                                 <Sharing reportId={details.medicalReportId} />
                                             </div>
@@ -122,9 +122,9 @@ export default function PatientsClinicHistory(props) {
                                             </span>
 
                                             <div className='cardSpan appointmentBtn historyBtn'>
-                                                <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                <NavLink to={`report/${details.medicalReportId}`}>
                                                     <Button className="appColor helperBtn" > View</Button>
-                                                </Link>
+                                                </NavLink>
                                                 <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
                                                 <Sharing reportId={details.medicalReportId} />
                                             </div>

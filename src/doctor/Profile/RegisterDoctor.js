@@ -1,7 +1,7 @@
 import { API } from "../../config";
 import React from 'react';
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { handleSelect } from '../googlemap';
@@ -13,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useParams } from "react-router-dom";
 //not using
 export default function RegisterDoctor() {
-    let history = useHistory();
+    let navigate = useNavigate();
     let { doctorId } = useParams();
     //insert
     const [input, setInput] = useState({});
@@ -29,7 +29,7 @@ export default function RegisterDoctor() {
             email: data.email,
         }
         axios.post(`${API}/update/${doctorId}`, updateData)
-        history.push(`/editdoctorprofile`);
+        navigate(`edit`);
     };
 
     function handleChange(event) {

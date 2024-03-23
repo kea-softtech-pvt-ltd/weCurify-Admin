@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "./partial/uselinks";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import PatientApi from "../../services/PatientApi";
 

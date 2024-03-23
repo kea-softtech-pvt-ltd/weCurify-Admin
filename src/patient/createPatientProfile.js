@@ -1,4 +1,4 @@
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { PatientRegistrationForm } from "../patient/patientRegistrationForm";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";
@@ -9,19 +9,18 @@ import AuthApi from "../services/AuthApi";
 import { useEffect, useState } from "react";
 
 export default function CreatePatientProfile() {
-    const history = useHistory()
+    const navigate = useNavigate()
     const { patientId } = useParams()
     const { getDrInfo } = AuthApi()
-    const [DoctorName, setDoctorsName] = useState([])
-    const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
-    const doctorId = DoctorId
+    const [doctorName, setDoctorsName] = useState([])
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
 
     useEffect(() => {
         doctorInfo()
     }, [])
 
     function handalChange() {
-        history.push(`/getLoginPatientProfile/${patientId}`)
+        navigate(`/doctors/patient/${doctorId}/patientprofile/${patientId}`)
     }
     const doctorInfo = () => {
         getDrInfo({ doctorId })
@@ -29,17 +28,18 @@ export default function CreatePatientProfile() {
                 setDoctorsName(res[0].name)
             })
     }
+    
     return (
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/allpatient`}>
+                        <Link to={`/doctors`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Walkin Patient</li>
-                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {doctorName}</li>
 
                 </ul>
             </MainNav>

@@ -60,7 +60,6 @@ export default function Ongoing(props) {
                             <div key={i} className="col-md-4">
                                 <div className="cardDiv">
                                     <GetDoctorData clinicId={details.clinicId} doctorId={details.doctorId} />
-
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className=''>
@@ -81,7 +80,7 @@ export default function Ongoing(props) {
                                              <span className='patientName'>Patient:  </span>  {details['dependentDetails'][0].name}
                                         </div>}
                                     <div className=' appointmentBtn' align='right'>
-                                        <Link to={`/doctorprofile/${details.doctorId}`}>
+                                        <Link to={`/doctors/profile/${details.doctorId}`}>
                                             <button className="btn appColor helperBtn ">View Profile</button>
                                         </Link>
                                         <Link onClick={() => handleCancelShow(details)} >

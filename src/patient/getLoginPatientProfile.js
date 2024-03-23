@@ -1,10 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import { FetchPatientInfo } from "./fetchPatientInfo";
 import { Wrapper } from "../mainComponent/Wrapper";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
 import { MainNav } from "../mainComponent/mainNav";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import { useEffect, useState } from "react";
 import AuthApi from "../services/AuthApi";
@@ -15,9 +14,11 @@ export default function GetLoginPatientProfile() {
     const [DoctorName, setDoctorsName] = useState([])
     const [DoctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const doctorId = DoctorId
+
     useEffect(() => {
         doctorInfo()
     }, [])
+    
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
@@ -41,7 +42,7 @@ export default function GetLoginPatientProfile() {
                 </MainNav>
                 <div className='row'>
                     <UserLinks/>
-                    <div className="container margin_60">
+                    <div className="container common_box margin_60">
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box_general_4 cart patientDetails">

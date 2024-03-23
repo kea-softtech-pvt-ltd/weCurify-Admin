@@ -130,14 +130,17 @@ const AddClinic = (props) => {
 
                 </div>
                 <div className="form-group">
-                    <label><b>Clinic Number </b></label>
-                    <MainInput
-                        type="text"
-                        name="clinicNumber"
-                        onChange={handleChange}
-                        value={clinicInfo.clinicnumber}
-                        placeholder="Enter clinic number">
-                    </MainInput>
+                <label><b>Clinic Number</b></label>
+                <MainInput
+                    type="text"
+                    name="clinicNumber"
+                    onChange={handleChange}
+                    pattern="[+-]?\d+(?:[.,]\d+)?"
+                    maxLength={10}
+                    value={clinicInfo.clinicnumber}
+                    placeholder="Clinic Number (+XX)">
+                </MainInput>
+
                 </div>
                 {/* <div className='align-left '>
                     <div align='left' className="patientData mb-2">

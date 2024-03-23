@@ -6,7 +6,7 @@ export default function Footer(){
 		<div className="container margin_60_35">
 			<div className="row">
 				<div className="col-lg-3 col-md-12">
-					<Link to={`/doctorList`}>
+					<Link to={`/doctors`}>
 					<img className='appLogo' src={appLogo} alt="Something Went Wrong" />
 					</Link>
 				</div>

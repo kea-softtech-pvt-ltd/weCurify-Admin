@@ -1,13 +1,13 @@
 import { TextField } from '@mui/material';
 import Autocomplete from '@material-ui/lab/Autocomplete/Autocomplete';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AppointmentApi from '../../../services/AppointmentApi';
 import ReportApi from '../../../services/ReportApi';
 import { Button, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 export default function Payment(props) {
     const { reportId, appointmentId, fees, doctorId } = props;
-    const history = useHistory()
+    const navigate = useNavigate()
     const [saveMode, setSaveMode] = useState([]);
     const [patientFees, setPatientFees] = useState(fees);
     const [show, setShow] = useState(false);
@@ -66,7 +66,7 @@ export default function Payment(props) {
         }
         UpdateStatusBookingdata({ appointmentId }, bodyData)
             .then((res) => {
-                history.push(`/patientappointment/${doctorId}`)
+                navigate(`/doctors/appointment/${doctorId}`)
             })
         createPDF({ reportId })
     };

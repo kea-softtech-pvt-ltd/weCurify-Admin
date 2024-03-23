@@ -1,6 +1,6 @@
 import LinearProgress from "@material-ui/core/LinearProgress";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { useState} from "react";
 import { doctorIdState} from "../recoil/selector/doctorIdState";
 import { useRecoilValue } from "recoil";
@@ -12,13 +12,13 @@ export default function Home(){
 	const doctorId = useRecoilValue(doctorIdState);
 	const [loading] = useState(false);
 	
-	let history = useHistory();
+	let navigate = useNavigate();
     const handleButtonClick = () => {
 		// if (!loading) {
 		//   setLoading(true);
 		//   timer.current = window.setTimeout(() => {
 		// 	setLoading(false);
-			history.push(`/doctorlist`);
+		navigate(`/doctors`);
 		  //}, 2000);
 	//	}
 	};
@@ -37,7 +37,7 @@ export default function Home(){
 
 					<MostViewedDoctorsInHome doctorId={doctorId}/>
 						
-					<div className="text-center add_top_30"><Link to="/doctorlist" disabled={loading}  onClick={handleButtonClick} className="btn_1 medium">View all Doctors</Link></div>
+					<div className="text-center add_top_30"><Link to="/doctors" disabled={loading}  onClick={handleButtonClick} className="btn_1 medium">View all Doctors</Link></div>
 				</div>
 			</div>
 

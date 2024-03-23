@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from "../../../mainComponent/mainInput";
 import { useRecoilState } from "recoil";
@@ -8,39 +8,30 @@ import AuthApi from "../../../services/AuthApi";
 
 function ShowLoginOtp(props) {
     const { otp, _id, isSubscribed } = props.loginData;
-    const getOTP = otp
-    const [id, setId] = useRecoilState(setDoctorId)
-    const { loginOtp } = AuthApi()
-    let history = useHistory()
+    const getOTP = otp;
+    const [id, setId] = useRecoilState(setDoctorId);
+    const { loginOtp } = AuthApi();
+    let navigate = useNavigate();
     const [loginotp, setLoginOtp] = useState('');
     const [errormessage, setErrormessage] = useState(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await loginOtp({ getOTP, _id }) //axios call
+        loginOtp({ getOTP, _id }) //axios call
             .then(response => {
                 setId(_id)
                 if (getOTP !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {
                     if (isSubscribed === true) {
-                        history.push(`/doctorprofile/${_id}`)
+                        navigate(`/doctors/profile/${_id}`)
                     } else {
-                        history.push(`/subscriptionnewdr/${_id}`);
+                        navigate(`/subscriptions/${_id}`);
                     }
                 }
-
             })
     }
-    // if (getOTP !== loginotp) {
-    //     setErrormessage("Please enter correct OTP");
-    // } else {
-    //     if (isSubscribed === true) {
-    //         history.push(`/dashboard/${_id}`)
-    //     } else {
-    //         history.push(`/subscription/${_id}`);
-    //     }
-    // }
+
     return (
         <>
             <div className="row">

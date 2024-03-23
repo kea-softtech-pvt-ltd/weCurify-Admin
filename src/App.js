@@ -11,11 +11,9 @@ function App() {
     <div className="App">
       <RecoilRoot>
         <Router>
-          <Route>
-            <Header></Header>
-            <MainContainer></MainContainer>
-            <Footer></Footer>
-          </Route>
+          <Header></Header>
+          <MainContainer></MainContainer>
+          <Footer></Footer>
         </Router>
       </RecoilRoot>
     </div>

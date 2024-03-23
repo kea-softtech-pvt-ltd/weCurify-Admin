@@ -62,7 +62,6 @@ function SetUpdateTime(props) {
     const handleToTimeSelection = (time) => {
         setToTime(time);
         setSelectedSlots(checkTimeSlot(moment(fromTime).format('HH:mm'), moment(time).format('HH:mm'), sessionTime.timeSlot))
-
     }
 
     const handleChange = (event, index) => {
@@ -135,7 +134,6 @@ function SetUpdateTime(props) {
                         </MainInput>
                     </div>
                 </div>
-
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="form-group">
@@ -168,10 +166,11 @@ function SetUpdateTime(props) {
                                     onChange={handleToTimeSelection}
                                 />
                             </LocalizationProvider>
-                            {error && (<span className="validation"> {error} </span>)}
+                            {error && <span className="validation">Please enter valid time</span>}
                         </div>
                     </div>
                 </div>
+                
 
                 {selectedSlots ?
                     <section className="borderSlots">

@@ -1,9 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { FaClinicMedical } from 'react-icons/fa';
 import moment from 'moment';
-import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import AppointmentApi from '../../services/AppointmentApi';
 import ReactPaginate from 'react-paginate';
 import { AccessTimeRounded } from '@material-ui/icons';

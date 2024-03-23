@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import UserLinks from "../Dashboard-card/partial/uselinks";
@@ -13,11 +12,12 @@ export default function SubscriptionCard() {
     const [getSubData, setGetSubData] = useState([])
     const [subscriptionId, setScriptionId] = useState([])
     const { doctorId } = useParams();
-    const history = useHistory()
+    const navigate = useNavigate()
     const [show, setShow] = useState(false);
     const [getPlan, setGetPlan] = useState(null);
     const [getSubscription, setGetSubscription] = useState([])
-    const [DoctorName, setDoctorsName] = useState([])
+    const [doctorName, setDoctorsName] = useState([])
+    const [duration, setDuration] = useState('')
     const { getDrInfo } = AuthApi()
 
     useEffect(() => {
@@ -34,6 +34,7 @@ export default function SubscriptionCard() {
                         return d
                     }
                 })
+                setDuration(Data[0].duration)
                 setGetPlan(Data[0].selected_plan)
                 setScriptionId(Data[0]._id)
             })
@@ -73,10 +74,10 @@ export default function SubscriptionCard() {
             "duration": plan.frequency,
             "status": "Running"
         }
-        updateSubscriptionData( subscriptionId , bodyData)
+        updateSubscriptionData(subscriptionId, bodyData)
             .then((res) => {
             })
-        history.push(`/subscriptionconfirmation/${doctorId}`)
+        navigate(`/doctors/subscription/${doctorId}/confirmation`)
         handleClose()
     }
 
@@ -86,15 +87,15 @@ export default function SubscriptionCard() {
                 <MainNav>
                     <ul className="clearfix">
                         <li>
-                            <Link to={`/doctorlist`}>
+                            <NavLink to={`/doctors`}>
                                 <i className="arrow_back backArrow" title="back button"></i>
-                            </Link>
+                            </NavLink>
                         </li>
                         <li className='float-none' style={{ fontSize: 'inherit' }}>
                             Subscription
                         </li>
                         <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>
-                            Dr. {DoctorName}
+                            Dr. {doctorName}
                         </li>
                     </ul>
                 </MainNav>
@@ -102,43 +103,51 @@ export default function SubscriptionCard() {
                     <UserLinks
                         doctorId={doctorId}
                     />
-                    <div className="col-sm-10">
-                        <div className='row'>
-                            {getSubscription.map((item, i) => {
-                                return (
-                                    <div className="whiteCard  col-3" key={i}>
-                                        <span>
-                                            <h4 className="add_top_20 ">{item.name}</h4>
-                                        </span>
-                                        <h5> <FaRupeeSign />-{item.amount}</h5>
-                                        <ul className="card-text cardListScroll underline" >
-                                            {item.features.map((data, i) => {
-                                                return (
-                                                    <li key={i} className="card-list">
-                                                        <i className="icon-right-circled" title="right-tick"></i>
-                                                        {data}
-                                                    </li>
-                                                )
-                                            })}
+                    <div className='common_box '>
+                        {/* <div className="col-sm-10"> */}
+                            <div className='row'>
+                                {getSubscription.map((item, i) => {
+                                    return (
+                                        <div className="whiteCard  col-3" key={i}>
+                                            <span>
+                                                <h4 className="add_top_20 ">{item.name}</h4>
+                                            </span>
+                                            <h5> <FaRupeeSign />-{item.amount}</h5>
+                                            <ul className="card-text cardListScroll underline" >
+                                                {item.features.map((data, i) => {
+                                                    return (
+                                                        <li key={i} className="card-list">
+                                                            <i className="icon-right-circled" title="right-tick" />
+                                                            {data}
+                                                        </li>
+                                                    )
+                                                })}
 
-                                        </ul>
-                                        {getPlan === item.name ?
-                                            <button
-                                                onClick={handleClose}
-                                                className="btn disabled-card add_bottom_15 shadow-none disabled"
-                                            >Subscribed
-                                            </button>
-                                            : <button
-                                                onClick={() => handleShow(item)}
-                                                className="sub-card-btn add_bottom_15 shadow-none btn btn-primary">
-                                                Get Started
-                                            </button>
-                                        }
+                                            </ul>
+                                            {getPlan === item.name ?
+                                                <button
+                                                    onClick={handleClose}
+                                                    className="btn disabled-card add_bottom_15 shadow-none disabled"
+                                                >Subscribed
+                                                </button> :
+                                                item.frequency < parseInt(duration) ?
+                                                    <button
+                                                        onClick={handleClose}
+                                                        className="btn disabled-card add_bottom_15 shadow-none disabled"
+                                                    >Get Started
+                                                    </button> :
+                                                    <button
+                                                        onClick={() => handleShow(item)}
+                                                        className="sub-card-btn add_bottom_15 shadow-none btn btn-primary">
+                                                        Get Started
+                                                    </button>
+                                            }
 
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        {/* </div> */}
                     </div>
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>

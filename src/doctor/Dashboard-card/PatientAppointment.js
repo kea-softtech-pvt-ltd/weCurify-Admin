@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { TabPanel } from "../../common/tabpanel";
 import { MainNav } from "../../mainComponent/mainNav";
 import { MainTabs } from "../../mainComponent/mainTabs";
@@ -36,9 +36,9 @@ export default function PatientAppointment() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/doctorlist`}>
+                        <NavLink to={`/doctors`}>
                             <i className="arrow_back backArrow" title="back button"></i>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Patient Information</li>
                     <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {DoctorName}</li>

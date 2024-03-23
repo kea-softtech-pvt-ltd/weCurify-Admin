@@ -40,7 +40,6 @@ export default function Calender() {
       .then((result) => {
         const calendarData = []
         result.map((item) => {
-          setPatientList(item)
           if (item.dependentId) {
             calendarData.push({
               title: item['dependentDetails'][0].name,
@@ -62,8 +61,9 @@ export default function Calender() {
               status: item.status,
             })
           }
+          setPatientList(item)
+          setGetData(calendarData);
         })
-        setGetData(calendarData);
       })
 
   }

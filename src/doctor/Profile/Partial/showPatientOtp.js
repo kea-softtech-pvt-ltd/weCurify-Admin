@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from "../../../mainComponent/mainInput";
 import { useRecoilState } from "recoil";
@@ -11,7 +11,7 @@ function ShowPatientOtp(props) {
     const getOTP = otp
     const [id, setId] = useRecoilState(setDoctorId)
     const { loginOtp } = AuthApi()
-    let history = useHistory()
+    let navigate = useNavigate()
     const [loginotp, setLoginOtp] = useState('');
     const [errormessage, setErrormessage] = useState(false);
 
@@ -24,9 +24,9 @@ function ShowPatientOtp(props) {
                     setErrormessage("Please enter correct OTP");
                 } else {
                     if (isLoggedIn === true) {
-                        history.push(`/patientprofile/${_id}`)
+                       navigate(`patientinfo/${_id}`)
                      }else {
-                       history.push(`/appointment/${_id}`);
+                      navigate(`/appointment/${_id}`);
                      }
                 }
             })

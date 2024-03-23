@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
@@ -8,7 +8,6 @@ import ReportApi from '../../services/ReportApi';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import { MainNav } from '../../mainComponent/mainNav';
 import UserLinks from '../Dashboard-card/partial/uselinks';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
 import AuthApi from '../../services/AuthApi';
 
 export default function ViewMedicalReport() {
@@ -24,8 +23,7 @@ export default function ViewMedicalReport() {
     useEffect(() => {
         getMedicineReportData()
         doctorInfo()
-
-    }, [])
+    }, [doctorName])
 
     const getMedicineReportData = () => {
         getMedicineReport({ reportId })
@@ -40,11 +38,11 @@ export default function ViewMedicalReport() {
             })
 
     }
-   
+
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorName(res[0].name)
+                setDoctorName(res.result[0].name)
             })
     }
     return (
@@ -52,7 +50,7 @@ export default function ViewMedicalReport() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/patientappointment/${doctorId}`}>
+                        <Link to={`/doctors/appointment/${doctorId}`}>
                             <i className="arrow_back backArrow m-3" title="back button"></i>
                         </Link>
                     </li>

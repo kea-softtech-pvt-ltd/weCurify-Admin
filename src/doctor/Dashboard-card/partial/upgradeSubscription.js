@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SubscriptionApi from "../../../services/SubscriptionApi";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UpgradeSubscription(props) {
     const { doctorId } = props
     const { getSubscriptionData } = SubscriptionApi()
     const [subscription, setsubscription] = useState([])
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getSubscriptionList()
@@ -25,11 +25,13 @@ export default function UpgradeSubscription(props) {
             })
     }
 
-    const handleSubscription = () => {
-        history.push(`/subscriptioncard/${doctorId}`)
+    const handleSubscription = (e) => {
+        e.preventDefault()
+        navigate(`subscription/${doctorId}`)
     }
-    const handleNewSubscription = () => {
-        history.push(`/subscriptionnewdr/${doctorId}`)
+    const handleNewSubscription = (e) => {
+        e.preventDefault();
+        navigate(`/subscriptions/${doctorId}`)
     }
 
     return (
@@ -37,7 +39,7 @@ export default function UpgradeSubscription(props) {
             <span className=' '>
                 <i className="pe-7s-date col-md-1 color patientListIcon" />
                 {subscription.Status === "Running" ?
-                    <Link className='' onClick={() => handleSubscription()} >
+                    <Link className='' onClick={(e) => handleSubscription(e)} >
                         <>
                             <span className="col-md-2"> {"(" + subscription.selected_plan + ")"}</span>
                             {moment(new Date(subscription.expiryDate)).format('YYYY-MM-DD')}
@@ -45,7 +47,7 @@ export default function UpgradeSubscription(props) {
                         <span className="greenColor col-md-2" > Upgrade </span>
                     </Link>
                     :
-                    <Link onClick={() => handleNewSubscription()}>
+                    <Link onClick={(e) => handleNewSubscription(e)}>
                         <span className="col-md-2">Upgrade Your Subscription</span>
                         <span className="greenColor col-md-2" > Upgrade </span>
                     </Link>

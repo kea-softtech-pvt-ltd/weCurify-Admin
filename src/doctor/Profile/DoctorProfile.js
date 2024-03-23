@@ -24,14 +24,14 @@ export default function DoctorProfile() {
                 <ul className="clearfix">
                     <li>
                         <Link
-                            to={`/doctorlist`}>
+                            to={`/doctors`}>
                             <i className="arrow_back backArrow" title="back button"> </i>
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>General info</li>
                     <li>
                         <Link
-                            to={`/editdoctorprofile/${doctorId}`}>
+                            to={"edit"}>
                             <i className="icon_pencil-edit" title="Edit profile"></i>
                         </Link>
                     </li>
