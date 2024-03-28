@@ -46,7 +46,6 @@ export default function PatientList(props) {
         MedicineReportData(bodyData)
             .then((res) => {
                 navigate(`consultation/${res._id}`, { state: { fees: item.fees } })
-                console.log({ state: { fees: item.fees } })
             })
     }
 

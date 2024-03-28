@@ -9,6 +9,8 @@ import { Wrapper } from '../../mainComponent/Wrapper';
 import { MainNav } from '../../mainComponent/mainNav';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import AuthApi from '../../services/AuthApi';
+import { useRecoilState } from 'recoil';
+import { setDoctorId } from '../../recoil/atom/setDoctorId';
 
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
@@ -16,27 +18,25 @@ export default function ViewMedicalReport() {
     const { getDrInfo } = AuthApi();
     const { patientDetailsData } = PatientApi();
     const [viewData, setViewData] = useState([]);
-    const [doctorId, setDoctorId] = useState([]);
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [doctorName, setDoctorName] = useState([]);
     const [patientDetails, setPatientDetails] = useState([]);
 
     useEffect(() => {
         getMedicineReportData()
         doctorInfo()
-    }, [doctorName])
+    }, [viewData])
 
     const getMedicineReportData = () => {
         getMedicineReport({ reportId })
             .then((res) => {
                 setViewData(res[0])
-                setDoctorId(res[0].doctorId)
                 const patientId = res[0].patientId
                 patientDetailsData({ patientId })
                     .then((response) => {
                         setPatientDetails(response[0])
                     })
             })
-
     }
 
     const doctorInfo = () => {

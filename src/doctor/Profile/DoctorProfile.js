@@ -42,19 +42,21 @@ export default function DoctorProfile() {
                     doctorId={doctorId}
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module} />
-                <div className="white-box" >
-                    <div id="section_1" className="col-lg-12">
-                        <div >
-                            <FetchDoctorPersonalDetails doctorId={doctorId} />
+                <div className='common_box'>
+                    <div className="white-box" >
+                        <div id="section_1" className="col-lg-12">
+                            <div >
+                                <FetchDoctorPersonalDetails doctorId={doctorId} />
+                            </div>
                         </div>
-                    </div>
-                    <div id="section_1" className="col-lg-12">
-                        <div>
-                            <Report doctorId={doctorId} />
+                        <div id="section_1" className="col-lg-12">
+                            <div>
+                                <Report doctorId={doctorId} />
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </Wrapper>
     )
 }

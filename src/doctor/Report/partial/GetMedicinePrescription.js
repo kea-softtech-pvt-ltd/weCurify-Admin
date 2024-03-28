@@ -13,7 +13,7 @@ import ReportApi from '../../../services/ReportApi';
 const GetMedicinePriscription = (props) => {
     const { reportId } = props;
     const { getMedicinePrescriptionData } = ReportApi();
-    const [showMedicineData, setShowMedicineData] = useState('')
+    const [showMedicineData, setShowMedicineData] = useState([])
 
     useEffect(() => {
         getMedicineData()
@@ -23,7 +23,6 @@ const GetMedicinePriscription = (props) => {
         getMedicinePrescriptionData(reportId)
             .then((result) => {
                 setShowMedicineData(result);
-
             })
     }
 
@@ -31,7 +30,6 @@ const GetMedicinePriscription = (props) => {
         <>
             {showMedicineData.length > 0 ?
                 <>
-                    {/* <label><h6><b className='mx-2' >Medicine</b></h6></label> */}
                     <div className=' '>
                         <TableContainer component={Paper}>
                             <Table>
@@ -45,7 +43,7 @@ const GetMedicinePriscription = (props) => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {showMedicineData && showMedicineData.map((item, i) => {
+                                    {showMedicineData.map((item, i) => {
                                         return (
                                             <TableRow key={i}>
                                                 <TableCell align='center'>{i + 1}</TableCell>

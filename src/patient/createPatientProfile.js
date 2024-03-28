@@ -25,7 +25,7 @@ export default function CreatePatientProfile() {
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorsName(res[0].name)
+                setDoctorsName(res.result[0].name)
             })
     }
     

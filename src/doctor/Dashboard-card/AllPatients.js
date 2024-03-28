@@ -51,7 +51,7 @@ export default function AllPatients() {
                     <div className="row">
                         <li className='float-none margin-top' style={{ fontSize: 'inherit' }}>Patient-List</li>
                         <div id="custom-search-input">
-                            <input type="text" onChange={(e) => searchPatient(e.target.value)} className="search-query" placeholder="Search Doctor" />
+                            <input type="text" onChange={(e) => searchPatient(e.target.value)} className="search-query" placeholder="Search Patient By Name" />
                             <input type="submit" className="btn_search" value="Search" />
                         </div>
                     </div>
